@@ -74,9 +74,9 @@
                 <label> Last Name </label>
                     <input type="text" name="lname" size="26" required><br/>
                 <label> Birth Date </label>
-                    <input type="text" id="datepicker" size="26" name="bday" required><br/>
+                    <input type="text" class="datepicker" size="26" name="bday" required><br/>
                 <label> Check-In Date </label>
-                    <input type="text" id="datepicker" size="26" name="cday" required><br/>
+                    <input type="text" class="datepicker" size="26" name="cday" required><br/>
                 <label> Gender </label> 
                     <input type="radio" name="sex" value="male">Male &nbsp
                     <input type="radio" name="sex" value="female">Female<br/>
@@ -98,17 +98,21 @@
         <script>
             $(document).ready(function () {
                 // add datepicker
-                $( "#datepicker" ).datepicker();
+                $( ".datepicker" ).each(function(){
+                    $(this).datepicker({
+                        yearRange: "-100:+0",
+                        changeMonth: true,
+                        changeYear: true
+                    });
+                });
                 // validate form input
                 $('form#patientForm :input').blur(function() {
-                    console.log("here")
                     if( $(this).val().length == 0 ) { // input is empty
                         $(this).after($("<span class='error'> Please fill this in </span>"));
                     }
                 });
                 // remove warning message when on focus
                 $('form#patientForm :input').focus(function() { 
-                    console.log("herehere")
                     $(this).next("span").empty();
                 });
             });
