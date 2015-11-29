@@ -1,6 +1,4 @@
-<!-- To do: 1. php:  check_user.php, register_user.php
-            2. Validate Form Data With PHP
-            3. align form input boxes
+<!-- To do: 
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -116,9 +114,9 @@
             <!-- Login -->
             <form action="check_user.php" class="formfield" method="POST">
                 <label> User Email </label>
-                    <input type="text" name="username" required>@ahn.org<br/>
+                    <input type="text" name="username" size="26" required>@ahn.org<br/>
                 <label> Password </label>
-                    <input type="password" name="password" required><br/>
+                    <input type="password" name="password" size="26" required><br/>
                 <input type="submit" value="Login">
             </form><br/>
             <!-- Registration -->
@@ -132,11 +130,11 @@
                 <!--<p class="error" style="margin-left: 6em;">All fields are required</p>-->
                 <form class="formfield" id="registerForm" method="POST" action="login.php">
                     <label>Hospital Email</label>
-                        <input type="text" name="email">@ahn.org<br/>
+                        <input type="text" name="email" size="26">@ahn.org<br/>
                     <label>New Password</label>
-                        <input type="password" name="password" id="pw1"><br/>
+                        <input type="password" name="password" id="pw1" size="26"><br/>
                     <label>Re-type Password</label>
-                        <input type="password" name="password2" id="pw2"><br/> 
+                        <input type="password" name="password2" id="pw2" size="26"><br/> 
                     <input type="submit" value="Register" class="button">
                 </form>
             </div>  
@@ -144,9 +142,11 @@
         <script>
         // show or hide register box
         $(document).ready(function () {
+            // show or hide register box
             $("#register").change(function () { 
                 $("#register_box").fadeToggle(this.checked);
             }).change();
+            // validate form input
             $('form#registerForm :input').blur(function() {
                 if( $(this).val().length == 0 ) { // input is empty
                     $(this).after($("<span class='error'> Please fill this in </span>"));
@@ -161,6 +161,7 @@
                     }
                 }
             });
+            // remove warning message when on focus
             $('form#registerForm :input').focus(function() {
                 $(this).next("span").empty();
             });
