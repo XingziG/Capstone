@@ -108,6 +108,7 @@
                 // add datepicker
                 $( ".datepicker" ).each(function(){
                     $(this).datepicker({
+                        dateFormat: "yy-mm-dd",
                         yearRange: "-100:+0",
                         changeMonth: true,
                         changeYear: true
