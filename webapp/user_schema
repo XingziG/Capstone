@@ -7,11 +7,14 @@ PRIMARY KEY (user_id)
 
 
 CREATE TABLE patients (
-patient_id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+patient_id VARCHAR(100) NOT NULL,
 patient_fname VARCHAR(50) NOT NULL,
 patient_lname VARCHAR(50) NOT NULL,
 birthdate DATETIME NOT NULL,
 checkin DATETIME NOT NULL,
 checkout DATETIME,
+gender VARCHAR(6) NOT NULL,
+diabetes VARCHAR(3) NOT NULL,
+insurance VARCHAR(25) NOT NULL,
 PRIMARY KEY (patient_id)
 );

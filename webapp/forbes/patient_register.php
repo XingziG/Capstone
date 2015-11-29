@@ -1,5 +1,4 @@
-<!-- To do: 1. php: add_patient.php
-            2. check radio button input
+<!-- To do: 1. after success, redirect to main page
 -->
 <!DOCTYPE html>
 <html>
@@ -58,11 +57,45 @@
     <body>
         <!-- php code here -->
         <?php
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+            require ('../mysqli_connect.php'); // Connect to the db.
 
+            $id = mysqli_real_escape_string($dbc, trim($_POST['id']));
 
+            $fn = mysqli_real_escape_string($dbc, trim($_POST['fname']));
 
+            $ln = mysqli_real_escape_string($dbc, trim($_POST['lname']));
 
+            $bd = mysqli_real_escape_string($dbc, trim($_POST['bday']));
+
+            $cd = mysqli_real_escape_string($dbc, trim($_POST['cday']));
+
+            $sex = mysqli_real_escape_string($dbc, trim($_POST['sex']));
+
+            $diab = mysqli_real_escape_string($dbc, trim($_POST['diabetes']));
+
+            $insur = mysqli_real_escape_string($dbc, trim($_POST['insurance']));
+
+            //make a query:
+            $q = "INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES ('$id', '$fn', '$ln', STR_TO_DATE('$bd', '%Y-%m-%d'), STR_TO_DATE('$cd','%Y-%m-%d'), '$sex', '$diab', '$insur')";
+
+            $r = @mysqli_query($dbc, $q); // Run the query.
+
+            if ($r) { // If it ran OK.
+                $success = true;
+
+                echo '<h1>Successful!</h1>';
+                
+            } else {
+                // Public message:
+                echo '<h1>System Error</h1>
+               <p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>';
+                    // Debugging message:
+                echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
+            }
+            mysqli_close($dbc); // Close the database connection.
+        }
         ?>
         <!-- Displays the Registration Page -->
         <div class="main"> 
@@ -74,7 +107,7 @@
                 Please fill in the patient information below. 
             </p>
             <!-- Patient Registration fields -->
-            <form class="formfield" id="patientForm" method="post" action="add_patient.php">
+            <form class="formfield" id="patientForm" method="POST" action="patient_register.php">
                 <label> Patient ID </label>
                     <input type="text" name="id" size="26" required><br/>
                 <label> First Name </label>

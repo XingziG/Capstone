@@ -85,9 +85,6 @@
             $r = @mysqli_query($dbc, $q); // Run the query.
             if ($r) { // If it ran OK.
                 $successRegister = true;
-
-                echo'<h1>Successfully Registered!</h1>';
-
             } else {
                 // Public message:
                 echo '<h1>System Error</h1>
