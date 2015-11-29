@@ -130,11 +130,11 @@
                 <!--<p class="error" style="margin-left: 6em;">All fields are required</p>-->
                 <form class="formfield" id="registerForm" method="POST" action="login.php">
                     <label>Hospital Email</label>
-                        <input type="text" name="email" size="26">@ahn.org<br/>
+                        <input type="text" name="email" size="26" required>@ahn.org<br/>
                     <label>New Password</label>
-                        <input type="password" name="password" id="pw1" size="26"><br/>
+                        <input type="password" name="password" id="pw1" size="26" required><br/>
                     <label>Re-type Password</label>
-                        <input type="password" name="password2" id="pw2" size="26"><br/> 
+                        <input type="password" name="password2" id="pw2" size="26" required><br/> 
                     <input type="submit" value="Register" class="button">
                 </form>
             </div>  

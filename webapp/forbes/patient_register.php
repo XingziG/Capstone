@@ -1,4 +1,5 @@
 <!-- To do: 1. php: add_patient.php
+            2. check radio button input
 -->
 <!DOCTYPE html>
 <html>
@@ -85,13 +86,13 @@
                 <label> Check-In Date </label>
                     <input type="text" class="datepicker" size="26" name="cday" required><br/>
                 <label> Gender </label> 
-                    <input type="radio" name="sex" value="male">Male &nbsp
-                    <input type="radio" name="sex" value="female">Female<br/>
+                    <input type="radio" name="sex" value="male" checked="checked"> Male &nbsp
+                    <input type="radio" name="sex" value="female"> Female <br/>
                 <label> Have diabetes? </label>
-                    <input type="radio" name="diabetes" value="yes">Yes &nbsp
-                    <input type="radio" name="diabetes" value="no">No<br/>
+                    <input type="radio" name="diabetes" value="no" checked="checked"> No &nbsp
+                    <input type="radio" name="diabetes" value="yes"> Yes <br/>
                 <label> Insurance </label>
-                        <select id="insurance" required>
+                        <select name="insurance" required>
                             <option value="highmark">Highmark Inc.</option>
                             <option value="ibc">Independence Blue Cross</option> 
                             <option value="cbc">Capital Blue Cross</option>
@@ -111,16 +112,6 @@
                         changeMonth: true,
                         changeYear: true
                     });
-                });
-                // validate form input
-                $('form#patientForm :input').blur(function() {
-                    if( $(this).val().length == 0 ) { // input is empty
-                        $(this).after($("<span class='error'> Please fill this in </span>"));
-                    }
-                });
-                // remove warning message when on focus
-                $('form#patientForm :input').focus(function() { 
-                    $(this).next("span").empty();
                 });
             });
         </script>    
