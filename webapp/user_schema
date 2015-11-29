@@ -4,3 +4,14 @@ email VARCHAR(60) NOT NULL,
 pass CHAR(40) NOT NULL,
 PRIMARY KEY (user_id)
 );
+
+
+CREATE TABLE patients (
+patient_id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+patient_fname VARCHAR(50) NOT NULL,
+patient_lname VARCHAR(50) NOT NULL,
+birthdate DATETIME NOT NULL,
+checkin DATETIME NOT NULL,
+checkout DATETIME,
+PRIMARY KEY (patient_id)
+);

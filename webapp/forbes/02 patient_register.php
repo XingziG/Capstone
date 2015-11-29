@@ -56,6 +56,13 @@
     </head>
     <body>
         <!-- php code here -->
+        <?php
+
+
+
+
+
+        ?>
         <!-- Displays the Registration Page -->
         <div class="main"> 
             <img src="head.jpg" alt="Allegheny Health Network">
