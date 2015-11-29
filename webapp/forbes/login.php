@@ -140,7 +140,6 @@
             </div>  
         </div> 
         <script>
-        // show or hide register box
         $(document).ready(function () {
             // show or hide register box
             $("#register").change(function () { 

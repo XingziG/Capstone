@@ -1,11 +1,11 @@
 <!-- To do: 1. php: add_patient.php
-            2. response when user type in info 
-            3. align form input boxes
 -->
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <title> Patient Registration </title>
         <style>
             html { 
@@ -17,86 +17,47 @@
                 -moz-background-size: cover;
                 -o-background-size: cover;
                 background-size: cover;
-            }                      
-            .main { /* This defines the div displaying the page */
-                font: 1em Hoefler Text, Times New Roman, Times, serif;
-                width: 60%; 
-                margin: 50px auto;
-                padding: 10px;
-                background-color: #FFFFFF;
-            }           
-            h1 { /* This defines the header */
-                text-align: center;
-                font-family: Times New Roman, Times, serif;
-            }
+            }   
             img { /* This defines the header image */
                 float: left;
                 width: 250px;
                 height: 80px;
                 padding-top: 15px;
                 /*display: block; margin-left: auto; margin-right: auto*/
+            }         
+            h1 { /* This defines the header */
+                text-align: center;
+                font-family: Times New Roman, Times, serif;
             }
+            hr { /* This defines the hr line style */
+                height: 2px; background-color: #599BB3; width: 80%; border: none;
+            }
+            .main { /* This defines the div displaying the page */
+                font: 1em Hoefler Text, Times New Roman, Times, serif;
+                width: 60%; 
+                margin: 50px auto;
+                padding: 10px;
+                background-color: #FFFFFF;
+            }  
             .info { /* This defines the page information */
                 font: italic bold 1.0em Times New Roman;  
                 margin-left: 4em; margin-right: 4em;
             }
+            .error { color: #FF0000; font: italic bold 0.9em Times New Roman;  }
             .formfield { /* This defines the login form display */
-                font-size: 1em; 
-                margin-left: 6em; 
-                line-height: 250%;
-            }  
-            hr { /* This defines the hr line style */
-                height: 2px; background-color: #599BB3; width: 80%; border: none;
-            }
-        </style>                      
+                font-size: 1em; margin-left: 6em; line-height: 200%;
+            }         
+            label {
+                display: inline-block;
+                width:10em;
+                text-align: left;
+            } 
+        </style> 
     </head>
     <body>
-        <?php // define variables and set to empty values
-            $emailErr = $nameErr = $passwordErr = $password2Err = "";
-            $id = $fname = $lname = $bday = $sex = $diabetes = $insurance = "";
-
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (empty($_POST["name"])) {
-                    $nameErr = "Name is required";
-                } else {
-                    $name = test_input($_POST["name"]);
-                    // check if username exists in the system
-                }
-
-                if (empty($_POST["email"])) {
-                    $emailErr = "Email is required";
-                } else {
-                    $email = test_input($_POST["email"]);
-                    // check if e-mail address is well-formed
-                    if (!check_email($email)) {
-                        $emailErr = "Invalid email format"; 
-                    }
-                }
-
-                if (empty($_POST["password"])) {
-                    $passwordErr = "Password is required";
-                } else {
-                    $password = test_input($_POST["password"]);
-                }
-
-                if (empty($_POST["password2"])) {
-                    $password2Err = "Please retype password";
-                } else {
-                    $password2 = test_input($_POST["password2"]);
-                    // check if password matches 
-                    if ($password2==$password) {
-                        $password2Err = "Password does not match";
-                    }
-                }
-            }
-            function test_input($data) {
-               $data = trim($data);
-               $data = stripslashes($data);
-               $data = htmlspecialchars($data);
-               return $data;
-            }
-        ?>
-        <div class="main"> <!-- Displays the Registration Page -->
+        <!-- php code here -->
+        <!-- Displays the Registration Page -->
+        <div class="main"> 
             <img src="head.jpg" alt="Allegheny Health Network">
             <h1>Forbes Regional Hospital <br/>
                 CABG Expense Analyzer </h1><hr>
@@ -104,18 +65,25 @@
             <p class="info"><br/>
                 Please fill in the patient information below. 
             </p>
-            <!-- Registration fields -->
-            <form action="add_patient.php" class="formfield">
-                Patient ID <input id="a" type="text" name="id" required><br/>
-                First Name <input type="text" name="fname" required><br/>
-                Last Name  <input type="text" name="lname" required><br/>
-                Birth Date <input type="date" name="bday" required><br/>
-                Gender  <input type="radio" name="sex" value="male">Male &nbsp
-                        <input type="radio" name="sex" value="female">Female<br/>
-                Does patient have diabetes?
-                        <input type="radio" name="diabetes" value="yes">Yes &nbsp
-                        <input type="radio" name="diabetes" value="no">No<br/>
-                Insurance
+            <!-- Patient Registration fields -->
+            <form class="formfield" id="patientForm" method="post" action="add_patient.php">
+                <label> Patient ID </label>
+                    <input type="text" name="id" size="26" required><br/>
+                <label> First Name </label>
+                    <input type="text" name="fname" size="26" required><br/>
+                <label> Last Name </label>
+                    <input type="text" name="lname" size="26" required><br/>
+                <label> Birth Date </label>
+                    <input type="text" id="datepicker" size="26" name="bday" required><br/>
+                <label> Check-In Date </label>
+                    <input type="text" id="datepicker" size="26" name="cday" required><br/>
+                <label> Gender </label> 
+                    <input type="radio" name="sex" value="male">Male &nbsp
+                    <input type="radio" name="sex" value="female">Female<br/>
+                <label> Have diabetes? </label>
+                    <input type="radio" name="diabetes" value="yes">Yes &nbsp
+                    <input type="radio" name="diabetes" value="no">No<br/>
+                <label> Insurance </label>
                         <select id="insurance" required>
                             <option value="highmark">Highmark Inc.</option>
                             <option value="ibc">Independence Blue Cross</option> 
@@ -124,17 +92,26 @@
                             <option value="upmc"> UPMC Health Plan </option>
                             <option value="other"> Others </option>
                         </select><br/>
-                Check-In Date <input type="date" name="cday" required><br/>
                 <input type="submit" value="Register Paient">
-            </form><br/>   
+            </form><br/>  
         </div> 
         <script>
-        // show or hide register box
-        $(document).ready(function () {
-            $("#register").change(function () {
-                $("#register_box").fadeToggle(this.checked);
-            }).change();
-        });
+            $(document).ready(function () {
+                // add datepicker
+                $( "#datepicker" ).datepicker();
+                // validate form input
+                $('form#patientForm :input').blur(function() {
+                    console.log("here")
+                    if( $(this).val().length == 0 ) { // input is empty
+                        $(this).after($("<span class='error'> Please fill this in </span>"));
+                    }
+                });
+                // remove warning message when on focus
+                $('form#patientForm :input').focus(function() { 
+                    console.log("herehere")
+                    $(this).next("span").empty();
+                });
+            });
         </script>    
     </body>
 </html>
