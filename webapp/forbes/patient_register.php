@@ -86,7 +86,7 @@
                 $success = true;
 
                 echo '<h1>Successful!</h1>';
-                
+
             } else {
                 // Public message:
                 echo '<h1>System Error</h1>
