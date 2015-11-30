@@ -146,8 +146,8 @@
                 list ($check, $data) = check_login($dbc, $_POST['username'], $_POST['userpass']);
                 if ($check) { // OK!
                     // Set the cookies:
-                    setcookie ('user_id', $data['user_id']);
-                    setcookie ('first_name', $data['first_name']);
+                    setcookie ('email', $data['email']);
+                    setcookie ('pass', $data['pass']);
                     // Redirect:
                     redirect_user('main.php');
                 } else { // Unsuccessful!
