@@ -68,9 +68,20 @@
     </head>
     <body>
         <!-- php -->
+        <?php // The user is redirected here from login.php.
+        if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
+            require ('includes/login_functions. inc.php');
+            redirect_user();
+        }
+        
+        // Set the page title and include the HTML header:
+        $page_title = 'Welcome!';
+        // Print a customized message:
+        echo "<h1>Welcome!</h1><p>You are now logged in, {$_COOKIE['email']}!</p>
+        <p><a href=\"logout.php\">Logout</a></p>";
+        ?>
         <!-- Displays the main Page -->
         <div class="main">
-            <h1>Welcome!</h1>
         </div>
     </body>
 </html>
