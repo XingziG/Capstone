@@ -47,11 +47,25 @@
             .formfield { /* This defines the login form display */
                 font-size: 1em; margin-left: 6em; line-height: 200%;
             }         
-            label {
+            label { /* Defines form labels */
                 display: inline-block;
                 width:10em;
                 text-align: left;
             } 
+            input[type=submit] { /* Defines submit button */
+                padding:5px 15px; 
+                background:-moz-linear-gradient(top, #1280a8 5%, #21444a 100%);
+                border:0 none;
+                cursor:pointer;
+                -webkit-border-radius: 15px;
+                border-radius: 15px; 
+                text-align: center;
+                color:#ffffff;
+                font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+                font-size:0.8em;
+                font-weight:bold;
+                padding:0.5em 1.5em;
+            }
         </style> 
     </head>
     <body>

@@ -69,11 +69,18 @@
     <body>
         <!-- php -->
         <?php // The user is redirected here from login.php.
-        if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
-            require ('includes/login_functions. inc.php');
-            redirect_user();
+        function redirect_user ($page) {
+            // Start defining the URL...
+            $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+            $url = rtrim($url, '/\\');
+            $url .= '/' . $page;
+            // Redirect the user: 
+            header("Location: $url"); exit(); // Quit the script.
         }
-        
+        if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
+            require ('includes/login_functions.inc.php');
+            redirect_user();
+        }        
         // Set the page title and include the HTML header:
         $page_title = 'Welcome!';
         // Print a customized message:
