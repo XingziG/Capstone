@@ -72,7 +72,7 @@
         // redirect user to another webpage based on login result
         function redirect_user ($page = 'index. php') {
             // Start defining the URL...
-            $url = 'http://' . $_SERVER['HTTP_ HOST'] . dirname($_SERVER['PHP_SELF']);
+            $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
             $url = rtrim($url, '/\\');
             $url .= '/' . $page;
             // Redirect the user: 
