@@ -1,351 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Bootstrap Case</title>
+        <title>Activities</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
+        <style>          
+            .container-fluid { /* Set background color and height */
+                background: 
+                    url("bg01.jpg") no-repeat center center fixed; 
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+            } 
+            img { /* This defines the header image */
+                float: left;
+                width: 250px;
+                height: 95px;
+                padding-top: 20px;
+            }
+            h1 { /* This defines the header text */
+                text-align: center;
+                font-family: Times New Roman, Times, serif;
+                font-weight: bold;
+            }
+            .sidenav { /* This defines the sidebar */
+                padding-top: 120px; margin: 50px auto; 
+            }
+            .main { background-color: #ffffff; height:auto; padding:10px; margin: 50px auto; }
+        </style>
     </head>
     <body>
-        <div class="container">
-            <h2> Welcome </h2>
-            <!-- Header with surgery & postop care selection -->
-            <ul class="nav nav-pills nav-justified">
-                <li class="active"><a data-toggle="pill" href="#surgery"> CABG Surgery </a></li>
-                <li><a data-toggle="pill" href="#postop"> Post-Op Care </a></li>
-            </ul>
-            <!-- Activity Content -->
-            <div class="tab-content">
-                <!-- Surgery Activity Content -->
-                <div id="surgery" class="tab-pane fade in active">
-                    <h3> Surgery Activities </h3>
-                    <p>Please type in the activities.</p>
-                    <div class="panel-group" id="surgery2">
-                        <div class="panel panel-default">
-                            <!--Direct labor-->
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#surgery2" href="#labor"> Direct Labor </a>
-                                </h4>
-                            </div>
-                            <div id="labor" class="panel-collapse collapse in">
-                                <div class="panel-body">
-                                    Direct labor
-                                </div>
-                            </div>
-                            <!--Direct material-->
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#surgery2" href="#material"> Direct Material </a>
-                                </h4>
-                            </div>
-                            <div id="material" class="panel-collapse collapse in">
-                                <div class="panel-body">
-                                    Direct material
-                                </div>
-                            </div>   
-                            <!--Overhead-->
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#surgery2" href="#overhead"> Overhead </a>
-                                </h4>
-                            </div>
-                            <div id="overhead" class="panel-collapse collapse in">
-                                <div class="panel-body">
-                                    Overhead
-                                </div>
-                            </div>                             
-                        </div>
+        <div class="container-fluid">
+            <div class="row content">
+                <!-- Sidebar -->
+                <div class="col-sm-2 sidenav">
+                    <!-- Home button -->
+                    <a href="#" class="btn btn-info btn-lg">
+                      <span class="glyphicon glyphicon-home"></span> Home
+                    </a><br/><br/>
+                    <!-- User -->
+                    <div class="well well">
+                        <h5>Welcome,</h5>User!<!-- Add username here -->
                     </div>
+                    <!-- Patient -->
+                    <div class="well well">
+                        <h5>Patient Info</h5>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li>Name:</li>
+                            <li>Id:</li>
+                            <li>Gender:</li>
+                        </ul>
+                    </div>
+                    <!-- Logout -->
+                    <a href="#" class="btn btn-info btn-lg">
+                      <span class="glyphicon glyphicon-log-out"></span> Log out
+                    </a>
                 </div>
-                <!-- Post-Op Care Content -->
-                <div id="postop" class="tab-pane fade in active">
-                    <h3> Post-Operative Activities </h3>
-                    <p>Please click on the day of the care, and then the actor.</p>
-                    <!-- Post-Op Day Selection -->
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#day0"> Day 0 </a></li>
-                        <li><a data-toggle="pill" href="#day1"> Day 1 </a></li>
-                        <li><a data-toggle="pill" href="#day2"> Day 2 - Day X </a></li>
-                        <li><a data-toggle="pill" href="#dday"> Discharge Day </a></li>
+                <!-- Main Content -->
+                <div class="col-sm-10 main">
+                    <img src="head.jpg" alt="Allegheny Health Network">
+                    <h1 class="head">Forbes Regional Hospital <br/> CABG Expense Analyzer </h1><hr>
+                    <!-- Header with surgery & postop care selection -->
+                    <ul class="nav nav-pills nav-justified">
+                        <li class="active"><a data-toggle="pill" href="#surgery"> CABG Surgery </a></li>
+                        <li><a data-toggle="pill" href="#postop"> Post-Op Care </a></li>
                     </ul>
-                    <!-- Content for each Post-Op Day -->
+                    <!-- Activity Content -->
                     <div class="tab-content">
-                        <div id="day0" class="tab-pane fade in active">
-                            <h3> Day 0 </h3>
-                            <div class="panel-group" id="postday0">
-                                <!--RN-->
-                                <div class="panel panel-default">
+                        <!-- Surgery Activity Content -->
+                        <div id="surgery" class="tab-pane fade in active">
+                            <h3> Surgery Activities </h3>
+                            <p>Please type in the activities.</p>
+                            <div class="panel-group" id="surgery2">
+                                <div class="panel panel-info">
+                                    <!--Direct labor-->
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#postday0" href="#postday0-rn"> Registered Nurse </a>
+                                            <a data-toggle="collapse" data-parent="#surgery2" href="#labor"> Direct Labor </a>
                                         </h4>
                                     </div>
-                                    <!--RN table-->
-                                    <div id="postday0-rn" class="panel-collapse collapse in">
+                                    <div id="labor" class="panel-collapse collapse in">
                                         <div class="panel-body">
-                                            <table id="example" class="display" cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Activity</th>
-                                                        <th>Frequency</th>
-                                                        <th>Time (Hours)</th>
-                                                        <th>Performer</th>
-                                                        <th>Total Time</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                    <td>Stay With Patient (Shift 1)</td>
-                                                        <td><input type="text" id="row-1-freq" name="row-1-freq" value="1"></td>
-                                                        <td><input type="text" id="row-1-time" name="row-1-time" value="8"></td>
-                                                        <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
-                                                        <td><input type="text" id="row-1-total" name="row-1-totaltime" value="8"></td>                                                        
-                                                    </tr>
-                                                    <tr>
-                                                    <td>Stay With Patient (Shift 2)</td>
-                                                        <td><input type="text" id="row-2-freq" name="row-2-freq" value="1"></td>
-                                                        <td><input type="text" id="row-2-time" name="row-2-time" value="8"></td>
-                                                        <td><input type="text" id="row-2-perf" name="row-2-performer"></td>
-                                                        <td><input type="text" id="row-2-total" name="row-2-totaltime" value="8"></td>                                                        
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            Direct labor
                                         </div>
                                     </div>
-                                </div>
-                                <!--PA-->
-                                <div class="panel panel-default">
+                                    <!--Direct material-->
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#postday0" href="#postday0-pa">Physician Assistant</a>
+                                            <a data-toggle="collapse" data-parent="#surgery2" href="#material"> Direct Material </a>
                                         </h4>
                                     </div>
-                                    <div id="postday0-pa" class="panel-collapse collapse">
+                                    <div id="material" class="panel-collapse collapse in">
                                         <div class="panel-body">
-                                            <table id="example" class="display" cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Activity</th>
-                                                        <th>Frequency</th>
-                                                        <th>Time (Min)</th>
-                                                        <th>Performer</th>                                                        
-                                                        <th>Total Time</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                    <td>Placing Orders</td>
-                                                        <td><input type="text" id="row-3-freq" name="row-3-freq" value="1"></td>
-                                                        <td><input type="text" id="row-3-time" name="row-3-time" value="10"></td>
-                                                        <td><input type="text" id="row-3-perf" name="row-3-performer"></td>
-                                                        <td><input type="text" id="row-3-total" name="row-3-totaltime" value="10"></td>                                                        
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            Direct material
                                         </div>
-                                    </div>
-                                </div>
-                                <!--RT-->
-                                <div class="panel panel-default">
+                                    </div>   
+                                    <!--Overhead-->
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#postday0" href="#postday0-rt">Respiratory Therapist</a>
+                                            <a data-toggle="collapse" data-parent="#surgery2" href="#overhead"> Overhead </a>
                                         </h4>
                                     </div>
-                                    <div id="postday0-rt" class="panel-collapse collapse">
+                                    <div id="overhead" class="panel-collapse collapse in">
                                         <div class="panel-body">
-                                            <table id="example" class="display" cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Activity</th>
-                                                        <th>Frequency</th>
-                                                        <th>Time (Min)</th>
-                                                        <th>Performer</th>                                                        
-                                                        <th>Total Time</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                    <td>Connect Ventilator</td>
-                                                        <td><input type="text" id="row-4-freq" name="row-4-freq" value="1"></td>
-                                                        <td><input type="text" id="row-4-time" name="row-4-time" value="20"></td>
-                                                        <td><input type="text" id="row-4-perf" name="row-4-performer"></td>
-                                                        <td><input type="text" id="row-4-total" name="row-4-totaltime" value="20"></td>                                                        
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            Overhead
                                         </div>
-                                    </div>
+                                    </div>                             
                                 </div>
                             </div>
                         </div>
-                        <div id="day1" class="tab-pane fade">
-                            <h3>Day 1</h3>                            
-                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                            <div class="panel-group" id="postday1"></div>
-                        </div>
-                        <div id="day2" class="tab-pane fade">
-                            <h3>Day 2 - Day X</h3>
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-                            <div class="panel-group" id="postday2"></div>
-                        </div>
-                        <div id="dday" class="tab-pane fade">
-                            <h3>Discharge Day</h3>
-                            <div class="panel-group" id="postdday">
-                                <!--RN-->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#postdday" href="#postdday-rn"> Registered Nurse </a>
-                                        </h4>
-                                    </div>
-                                    <!--RN table-->
-                                    <div id="postdday-rn" class="panel-collapse collapse in">
-                                        <div class="panel-body">
-                                            <table id="example" class="display" cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Activity</th>
-                                                        <th>Frequency</th>
-                                                        <th>Time (Min)</th>
-                                                        <th>Performer</th>
-                                                        <th>Total Time</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                    <td>Check Vitals</td>
-                                                        <td><input type="text" id="row-1-freq" name="row-1-freq" value="1"></td>
-                                                        <td><input type="text" id="row-1-time" name="row-1-time" value="5"></td>
-                                                        <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
-                                                        <td><input type="text" id="row-1-total" name="row-1-totaltime" value="5"></td>                                                        
-                                                    </tr>
-                                                    <tr>
-                                                    <td>Give Medicine</td>
-                                                        <td><input type="text" id="row-1-freq" name="row-1-freq" value="2"></td>
-                                                        <td><input type="text" id="row-1-time" name="row-1-time" value="5"></td>
-                                                        <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
-                                                        <td><input type="text" id="row-1-total" name="row-1-totaltime" value="10"></td>                                                        
-                                                    </tr>
-                                                    <tr>
-                                                    <td>Check X-Ray, EKG</td>
-                                                        <td><input type="text" id="row-1-freq" name="row-1-freq" value="1"></td>
-                                                        <td><input type="text" id="row-1-time" name="row-1-time" value="10"></td>
-                                                        <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
-                                                        <td><input type="text" id="row-1-total" name="row-1-totaltime" value="10"></td>                                                        
-                                                    </tr>  
-                                                    <tr>
-                                                    <td>Provide Meals</td>
-                                                        <td><input type="text" id="row-1-freq" name="row-1-freq" value="2"></td>
-                                                        <td><input type="text" id="row-1-time" name="row-1-time" value="15"></td>
-                                                        <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
-                                                        <td><input type="text" id="row-1-total" name="row-1-totaltime" value="30"></td>                                                        
-                                                    </tr>
-                                                    <tr>
-                                                    <td>Monitor Intake Output</td>
-                                                        <td><input type="text" id="row-1-freq" name="row-1-freq" value="2"></td>
-                                                        <td><input type="text" id="row-1-time" name="row-1-time" value="10"></td>
-                                                        <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
-                                                        <td><input type="text" id="row-1-total" name="row-1-totaltime" value="20"></td>                                                        
-                                                    </tr>  
-                                                    <tr>
-                                                    <td>Stand Patient</td>
-                                                        <td><input type="text" id="row-1-freq" name="row-1-freq" value="2"></td>
-                                                        <td><input type="text" id="row-1-time" name="row-1-time" value="15"></td>
-                                                        <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
-                                                        <td><input type="text" id="row-1-total" name="row-1-totaltime" value="30"></td>                                                        
-                                                    </tr> 
-                                                    <tr>
-                                                    <td>Walk Patient</td>
-                                                        <td><input type="text" id="row-1-freq" name="row-1-freq" value="2"></td>
-                                                        <td><input type="text" id="row-1-time" name="row-1-time" value="10"></td>
-                                                        <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
-                                                        <td><input type="text" id="row-1-total" name="row-1-totaltime" value="20"></td>                                                        
-                                                    </tr>
-                                                    <tr>
-                                                    <td>Family Education</td>
-                                                        <td><input type="text" id="row-1-freq" name="row-1-freq" value="1"></td>
-                                                        <td><input type="text" id="row-1-time" name="row-1-time" value="90"></td>
-                                                        <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
-                                                        <td><input type="text" id="row-1-total" name="row-1-totaltime" value="90"></td>                                                        
-                                                    </tr>                                                    
-                                                </tbody>
-                                            </table>
+                        <!-- Post-Op Care Content -->
+                        <div id="postop" class="tab-pane fade in">
+                            <h3> Post-Operative Activities </h3>
+                            <p>Please click on the day of the care, and then the actor.</p>
+                            <!-- Post-Op Day Selection -->
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#day0"> Day 0 </a></li>
+                                <li><a data-toggle="pill" href="#day1"> Day 1 </a></li>
+                                <li><a data-toggle="pill" href="#day2"> Day 2 - Day X </a></li>
+                                <li><a data-toggle="pill" href="#dday"> Discharge Day </a></li>
+                            </ul>
+                            <!-- Content for each Post-Op Day -->
+                            <div class="tab-content">
+                                <div id="day0" class="tab-pane fade in active">
+                                    <h3> Day 0 </h3>
+                                    <div class="panel-group" id="postday0">
+                                        <!--RN-->
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#postday0" href="#postday0-rn"> Registered Nurse </a>
+                                                </h4>
+                                            </div>
+                                            <!--RN table-->
+                                            <div id="postday0-rn" class="panel-collapse collapse in">
+                                                <div class="panel-body">
+                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Activity</th>
+                                                                <th>Frequency</th>
+                                                                <th>Time (Hours)</th>
+                                                                <th>Performer</th>
+                                                                <th>Total Time</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                            <td>Stay With Patient (Shift 1)</td>
+                                                                <td><input type="text" id="row-1-freq" name="row-1-freq" value="1"></td>
+                                                                <td><input type="text" id="row-1-time" name="row-1-time" value="8"></td>
+                                                                <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
+                                                                <td><input type="text" id="row-1-total" name="row-1-totaltime" value="8"></td>                                                        
+                                                            </tr>
+                                                            <tr>
+                                                            <td>Stay With Patient (Shift 2)</td>
+                                                                <td><input type="text" id="row-2-freq" name="row-2-freq" value="1"></td>
+                                                                <td><input type="text" id="row-2-time" name="row-2-time" value="8"></td>
+                                                                <td><input type="text" id="row-2-perf" name="row-2-performer"></td>
+                                                                <td><input type="text" id="row-2-total" name="row-2-totaltime" value="8"></td>                                                        
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--PA-->
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#postday0" href="#postday0-pa">Physician Assistant</a>
+                                                </h4>
+                                            </div>
+                                            <div id="postday0-pa" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Activity</th>
+                                                                <th>Frequency</th>
+                                                                <th>Time (Minutes)</th>
+                                                                <th>Performer</th>                                                        
+                                                                <th>Total Time</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                            <td>Placing Orders</td>
+                                                                <td><input type="text" id="row-3-freq" name="row-3-freq" value="1"></td>
+                                                                <td><input type="text" id="row-3-time" name="row-3-time" value="10"></td>
+                                                                <td><input type="text" id="row-3-perf" name="row-3-performer"></td>
+                                                                <td><input type="text" id="row-3-total" name="row-3-totaltime" value="10"></td>                                                        
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--RT-->
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#postday0" href="#postday0-rt">Respiratory Therapist</a>
+                                                </h4>
+                                            </div>
+                                            <div id="postday0-rt" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Activity</th>
+                                                                <th>Frequency</th>
+                                                                <th>Time (Minutes)</th>
+                                                                <th>Performer</th>                                                        
+                                                                <th>Total Time</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                            <td>Connect Ventilator</td>
+                                                                <td><input type="text" id="row-4-freq" name="row-4-freq" value="1"></td>
+                                                                <td><input type="text" id="row-4-time" name="row-4-time" value="20"></td>
+                                                                <td><input type="text" id="row-4-perf" name="row-4-performer"></td>
+                                                                <td><input type="text" id="row-4-total" name="row-4-totaltime" value="20"></td>                                                        
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!--PA-->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#postdday" href="#postdday-pa">Physician Assistant</a>
-                                        </h4>
-                                    </div>
-                                    <div id="postdday-pa" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <table id="example" class="display" cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Activity</th>
-                                                        <th>Frequency</th>
-                                                        <th>Time (Min)</th>
-                                                        <th>Performer</th>                                                        
-                                                        <th>Total Time</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                    <td>Write Discharge Summary</td>
-                                                        <td><input type="text" id="row-1-freq" name="row-1-freq" value="1"></td>
-                                                        <td><input type="text" id="row-1-time" name="row-1-time" value="75"></td>
-                                                        <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
-                                                        <td><input type="text" id="row-1-total" name="row-1-totaltime" value="75"></td>                                                        
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                <div id="day1" class="tab-pane fade">
+                                    <h3>Day 1</h3>                            
+                                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                    <div class="panel-group" id="postday1"></div>
                                 </div>
-                                <!--RT-->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#postdday" href="#postdday-cm">Case Manger</a>
-                                        </h4>
-                                    </div>
-                                    <div id="postdday-cm" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <table id="example" class="display" cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Activity</th>
-                                                        <th>Frequency</th>
-                                                        <th>Time (Min)</th>
-                                                        <th>Performer</th>                                                        
-                                                        <th>Total Time</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                    <td>Talk to Patient, Family, etc</td>
-                                                        <td><input type="text" id="row-1-freq" name="row-1-freq" value="1"></td>
-                                                        <td><input type="text" id="row-1-time" name="row-1-time" value="120"></td>
-                                                        <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
-                                                        <td><input type="text" id="row-1-total" name="row-1-totaltime" value="120"></td>                                                        
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                <div id="day2" class="tab-pane fade">
+                                    <h3>Day 2 - Day X</h3>
+                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                                    <div class="panel-group" id="postday2"></div>
                                 </div>
-                            </div>                            
-                        </div>
+                                <div id="dday" class="tab-pane fade">
+                                    <h3>Discharge Day</h3>
+                                    <div class="panel-group" id="postdday">
+                                        <!--RN-->
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#postdday" href="#postdday-rn"> Registered Nurse </a>
+                                                </h4>
+                                            </div>
+                                            <!--RN table-->
+                                            <div id="postdday-rn" class="panel-collapse collapse in">
+                                                <div class="panel-body">
+                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Activity</th>
+                                                                <th>Frequency</th>
+                                                                <th>Time (Minutes)</th>
+                                                                <th>Performer</th>
+                                                                <th>Total Time</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                            <td>Check Vitals</td>
+                                                                <td><input type="text" id="row-1-freq" name="row-1-freq" value="1"></td>
+                                                                <td><input type="text" id="row-1-time" name="row-1-time" value="5"></td>
+                                                                <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
+                                                                <td><input type="text" id="row-1-total" name="row-1-totaltime" value="5"></td>                                                        
+                                                            </tr>
+                                                            <tr>
+                                                            <td>Give Medicine</td>
+                                                                <td><input type="text" id="row-1-freq" name="row-1-freq" value="2"></td>
+                                                                <td><input type="text" id="row-1-time" name="row-1-time" value="5"></td>
+                                                                <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
+                                                                <td><input type="text" id="row-1-total" name="row-1-totaltime" value="10"></td>                                                        
+                                                            </tr>
+                                                            <tr>
+                                                            <td>Check X-Ray, EKG</td>
+                                                                <td><input type="text" id="row-1-freq" name="row-1-freq" value="1"></td>
+                                                                <td><input type="text" id="row-1-time" name="row-1-time" value="10"></td>
+                                                                <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
+                                                                <td><input type="text" id="row-1-total" name="row-1-totaltime" value="10"></td>                                                        
+                                                            </tr>  
+                                                            <tr>
+                                                            <td>Provide Meals</td>
+                                                                <td><input type="text" id="row-1-freq" name="row-1-freq" value="2"></td>
+                                                                <td><input type="text" id="row-1-time" name="row-1-time" value="15"></td>
+                                                                <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
+                                                                <td><input type="text" id="row-1-total" name="row-1-totaltime" value="30"></td>                                                        
+                                                            </tr>
+                                                            <tr>
+                                                            <td>Monitor Intake Output</td>
+                                                                <td><input type="text" id="row-1-freq" name="row-1-freq" value="2"></td>
+                                                                <td><input type="text" id="row-1-time" name="row-1-time" value="10"></td>
+                                                                <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
+                                                                <td><input type="text" id="row-1-total" name="row-1-totaltime" value="20"></td>                                                        
+                                                            </tr>  
+                                                            <tr>
+                                                            <td>Stand Patient</td>
+                                                                <td><input type="text" id="row-1-freq" name="row-1-freq" value="2"></td>
+                                                                <td><input type="text" id="row-1-time" name="row-1-time" value="15"></td>
+                                                                <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
+                                                                <td><input type="text" id="row-1-total" name="row-1-totaltime" value="30"></td>                                                        
+                                                            </tr> 
+                                                            <tr>
+                                                            <td>Walk Patient</td>
+                                                                <td><input type="text" id="row-1-freq" name="row-1-freq" value="2"></td>
+                                                                <td><input type="text" id="row-1-time" name="row-1-time" value="10"></td>
+                                                                <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
+                                                                <td><input type="text" id="row-1-total" name="row-1-totaltime" value="20"></td>                                                        
+                                                            </tr>
+                                                            <tr>
+                                                            <td>Family Education</td>
+                                                                <td><input type="text" id="row-1-freq" name="row-1-freq" value="1"></td>
+                                                                <td><input type="text" id="row-1-time" name="row-1-time" value="90"></td>
+                                                                <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
+                                                                <td><input type="text" id="row-1-total" name="row-1-totaltime" value="90"></td>                                                        
+                                                            </tr>                                                    
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--PA-->
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#postdday" href="#postdday-pa">Physician Assistant</a>
+                                                </h4>
+                                            </div>
+                                            <div id="postdday-pa" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Activity</th>
+                                                                <th>Frequency</th>
+                                                                <th>Time (Minutes)</th>
+                                                                <th>Performer</th>                                                        
+                                                                <th>Total Time</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                            <td>Write Discharge Summary</td>
+                                                                <td><input type="text" id="row-1-freq" name="row-1-freq" value="1"></td>
+                                                                <td><input type="text" id="row-1-time" name="row-1-time" value="75"></td>
+                                                                <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
+                                                                <td><input type="text" id="row-1-total" name="row-1-totaltime" value="75"></td>                                                        
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--CM-->
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#postdday" href="#postdday-cm">Case Manger</a>
+                                                </h4>
+                                            </div>
+                                            <div id="postdday-cm" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Activity</th>
+                                                                <th>Frequency</th>
+                                                                <th>Time (Minutes)</th>
+                                                                <th>Performer</th>                                                        
+                                                                <th>Total Time</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                            <td>Talk to Patient, Family, etc</td>
+                                                                <td><input type="text" id="row-1-freq" name="row-1-freq" value="1"></td>
+                                                                <td><input type="text" id="row-1-time" name="row-1-time" value="120"></td>
+                                                                <td><input type="text" id="row-1-perf" name="row-1-performer"></td>
+                                                                <td><input type="text" id="row-1-total" name="row-1-totaltime" value="120"></td>                                                        
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                            
+                                </div>
+                            </div>
+                        </div>                
                     </div>
-                </div>                
+                    <center>
+                        <button type="button" class="btn btn-info btn-lg">Submit</button>
+                    </center>                    
+                </div>
             </div>
         </div>
     </body>
