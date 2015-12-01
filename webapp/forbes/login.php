@@ -93,10 +93,10 @@
             }
             if (empty($errors)) { // If everything's OK.
                 // Retrieve for the email/password combination:
-                $q = "SELECT email, pass FROM users WHERE email='$e' AND pass='$p'";
+                $q = "SELECT email, name FROM users WHERE email='$e' AND pass='$p'";
                 $r = @mysqli_query ($dbc, $q); // run query       
                 // Check the result:
-                if (mysqli_num_rows($r) == 1) { // Fetch the record               
+                if (mysqli_num_rows($r) == 1) { // Fetch the record            
                     $row = mysqli_fetch_array ($r, MYSQLI_ASSOC);
                     return array(true, $row);
                 } else { // Not a match!
@@ -115,7 +115,13 @@
                 } else {
                     $email = mysqli_real_escape_string($dbc, trim($_POST['email']));
                 }
-
+                
+                if (empty($_POST["fname"])) {
+                    $errors['fnameErr'] = 'Name is required';
+                } else {
+                    $fname = mysqli_real_escape_string($dbc, trim($_POST['fname']));
+                }
+                
                 if (!empty($_POST["password"])) {
                     if ($_POST['password2'] != $_POST["password"]) {
                         $errors['password2Err'] = "Please retype password";
@@ -128,7 +134,7 @@
 
                 if (empty($errors)) { //everything is OK, register the user into the db
                     //make a query:
-                    $q = "INSERT INTO users (email, pass) VALUES ('$email', '$password')";
+                    $q = "INSERT INTO users (email, name, pass) VALUES ('$email', $fname, '$password')";
                     $r = @mysqli_query($dbc, $q); // Run the query.
                     if ($r) { // If it ran OK.
                         $successRegister = true;
@@ -147,7 +153,7 @@
                 if ($check) { // OK!
                     // Set the cookies:
                     setcookie ('email', $data['email']);
-                    setcookie ('pass', $data['pass']);
+                    setcookie ('name', $data['name']);
                     // Redirect:
                     redirect_user('main.php');
                 } else { // Unsuccessful!
@@ -190,6 +196,8 @@
                 <form class="formfield" id="registerForm" method="POST" action="login.php">
                     <label> Hospital Email </label>
                         <input type="text" name="email" size="26" required>@ahn.org<br/>
+                    <label> Full Name </label>
+                        <input type="text" name="fname" size="26" required><br/>
                     <label> New Password </label>
                         <input type="password" name="password" id="pw1" size="26" required><br/>
                     <label> Re-type Password </label>
