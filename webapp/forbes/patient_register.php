@@ -3,69 +3,54 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
         <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <title> Patient Registration </title>
-        <style>
-            html { 
-                /* The background code is referenced from:
-                https://css-tricks.com/perfect-full-page-background-image/ */
+        <style> 
+            .container-fluid { /* Set background color and height */
                 background: 
                     url("bg01.jpg") no-repeat center center fixed; 
                 -webkit-background-size: cover;
                 -moz-background-size: cover;
                 -o-background-size: cover;
                 background-size: cover;
-            }   
+            } 
             img { /* This defines the header image */
                 float: left;
                 width: 250px;
-                height: 80px;
+                height: 90px;
                 padding-top: 15px;
                 /*display: block; margin-left: auto; margin-right: auto*/
             }         
-            h1 { /* This defines the header */
+            h1 { /* This defines the header text */
                 text-align: center;
                 font-family: Times New Roman, Times, serif;
+                font-weight: bold;
+            }
+            .sidenav { /* This defines the sidebar */
+                padding-top: 110px; margin: 50px auto; 
             }
             hr { /* This defines the hr line style */
                 height: 2px; background-color: #599BB3; width: 80%; border: none;
             }
             .main { /* This defines the div displaying the page */
-                font: 1em Hoefler Text, Times New Roman, Times, serif;
-                width: 60%; 
+                width: 70%; 
                 margin: 50px auto;
-                padding: 10px;
+                padding: 40px;
                 background-color: #FFFFFF;
             }  
             .info { /* This defines the page information */
                 font: italic bold 1.0em Times New Roman;  
                 margin-left: 4em; margin-right: 4em;
             }
-            .error { color: #FF0000; font: italic bold 0.9em Times New Roman;  }
-            .formfield { /* This defines the login form display */
-                font-size: 1em; margin-left: 6em; line-height: 200%;
-            }         
+            .error { color: #FF0000; font: italic bold 0.9em Times New Roman;  }         
             label { /* Defines form labels */
                 display: inline-block;
                 width:10em;
                 text-align: left;
             } 
-            input[type=submit] { /* Defines submit button */
-                padding:5px 15px; 
-                background:-moz-linear-gradient(top, #1280a8 5%, #21444a 100%);
-                border:0 none;
-                cursor:pointer;
-                -webkit-border-radius: 15px;
-                border-radius: 15px; 
-                text-align: center;
-                color:#ffffff;
-                font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
-                font-size:0.8em;
-                font-weight:bold;
-                padding:0.5em 1.5em;
-            }
         </style> 
     </head>
     <body>
@@ -112,48 +97,105 @@
         }
         ?>
         <!-- Displays the Registration Page -->
-        <div class="main"> 
-            <img src="head.jpg" alt="Allegheny Health Network">
-            <h1>Forbes Regional Hospital <br/>
-                CABG Expense Analyzer </h1><hr>
-            <!-- Page Information -->
-            <p class="info"><br/>
-                Please fill in the patient information below. 
-            </p>
-            <!-- Patient Registration fields -->
-            <form class="formfield" id="patientForm" method="POST" action="patient_register.php">
-                <label> Patient ID </label>
-                    <input type="text" name="id" size="26" required><br/>
-                <label> First Name </label>
-                    <input type="text" name="fname" size="26" required><br/>
-                <label> Last Name </label>
-                    <input type="text" name="lname" size="26" required><br/>
-                <label> Birth Date </label>
-                    <input type="text" class="datepicker" size="26" name="bday" required><br/>
-                <label> Check-In Date </label>
-                    <input type="text" class="datepicker" size="26" name="cday" required><br/>
-                <label> Gender </label> 
-                    <input type="radio" name="sex" value="male" checked="checked"> Male &nbsp
-                    <input type="radio" name="sex" value="female"> Female <br/>
-                <label> Have diabetes? </label>
-                    <input type="radio" name="diabetes" value="no" checked="checked"> No &nbsp
-                    <input type="radio" name="diabetes" value="yes"> Yes <br/>
-                <label> Insurance </label>
-                        <select name="insurance" required>
-                            <option value="highmark">Highmark Inc.</option>
-                            <option value="ibc">Independence Blue Cross</option> 
-                            <option value="cbc">Capital Blue Cross</option>
-                            <option value="aetna">Aetna Health</option>
-                            <option value="upmc"> UPMC Health Plan </option>
-                            <option value="other"> Others </option>
-                        </select><br/>
-                <input type="submit" value="Register Paient">
-            </form><br/>  
-        </div> 
+        <div class="container-fluid">
+            <div class="row content">
+                <!-- Sidebar -->
+                <div class="col-sm-2 sidenav">
+                    <!-- Home button -->
+                    <a href="#" class="btn btn-info btn-lg">
+                      <span class="glyphicon glyphicon-home"></span> Home
+                    </a><br/><br/>
+                    <!-- User -->
+                    <div class="well well">
+                        <h5>Welcome,</h5>User!<!-- Add username here -->
+                    </div>
+                    <!-- Logout -->
+                    <a href="#" class="btn btn-info btn-lg">
+                      <span class="glyphicon glyphicon-log-out"></span> Log out
+                    </a>
+                </div>
+                <!-- Main Content -->
+                <div class="col-sm-10 main">
+                    <!-- Header -->
+                    <img src="head.jpg" alt="Allegheny Health Network">
+                    <h1 class="head">Forbes Regional Hospital <br/> CABG Expense Analyzer </h1><hr>
+                    <!-- Page Information -->
+                    <div class="panel panel-default" style="margin-left: 4em; margin-right: 4em">
+                        <div class="panel-heading"> Please fill in the patient information below. </div>
+                    </div>
+                    <!-- Patient Registration fields -->
+                    <form class="form-horizontal" id="patientForm" method="POST" action="patient_register.php">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4"> Patient ID </label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" name="id" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4"> First Name </label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" name="fname" required>
+                            </div>
+                        </div>    
+                        <div class="form-group">
+                            <label class="control-label col-sm-4"> Last Name </label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" name="lname" required>
+                            </div>    
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4"> Birth Date </label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" id="datepicker" name="bday" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4"> Check-In Date </label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" id="datepicker2" name="cday" required>
+                            </div>    
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4"> Gender </label> 
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" value="male" checked="checked"> Male
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" value="female"> Female
+                            </label> 
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4"> Have diabetes? </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="diabetes" value="no" checked="checked"> No
+                            </label>    
+                            <label class="radio-inline">
+                                <input type="radio" name="diabetes" value="yes"> Yes 
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4"> Insurance </label>
+                                <select class="form-control" name="insurance" style="width:300px" required>
+                                    <option value="highmark">Highmark Inc.</option>
+                                    <option value="ibc">Independence Blue Cross</option> 
+                                    <option value="cbc">Capital Blue Cross</option>
+                                    <option value="aetna">Aetna Health</option>
+                                    <option value="upmc"> UPMC Health Plan </option>
+                                    <option value="other"> Others </option>
+                                </select>
+                        </div>
+                        <!--<input type="submit" value="Register Paient">-->
+                        <center>
+                            <button type="submit" class="btn btn-info btn-lg">Submit</button>
+                        </center>      
+                    </form><br/>  
+                </div> 
+            </div>
+        </div>
         <script>
             $(document).ready(function () {
                 // add datepicker
-                $( ".datepicker" ).each(function(){
+                $( "#datepicker, #datepicker2" ).each(function(){
                     $(this).datepicker({
                         dateFormat: "yy-mm-dd",
                         yearRange: "-100:+0",
