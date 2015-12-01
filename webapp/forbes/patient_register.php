@@ -41,16 +41,7 @@
                 padding: 40px;
                 background-color: #FFFFFF;
             }  
-            .info { /* This defines the page information */
-                font: italic bold 1.0em Times New Roman;  
-                margin-left: 4em; margin-right: 4em;
-            }
             .error { color: #FF0000; font: italic bold 0.9em Times New Roman;  }         
-            label { /* Defines form labels */
-                display: inline-block;
-                width:10em;
-                text-align: left;
-            } 
         </style> 
     </head>
     <body>
@@ -107,7 +98,7 @@
                     </a><br/><br/>
                     <!-- User -->
                     <div class="well well">
-                        <h5>Welcome, <br/> <?php echo '{$_COOKIE['name']}' ?>!</h5>
+                        <h5>Welcome, <br/> <?php echo "{$_COOKIE['name']}" ?>!</h5>
                     </div>
                     <!-- Logout -->
                     <a href="#" class="btn btn-info btn-lg">

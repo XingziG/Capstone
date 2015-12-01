@@ -3,67 +3,44 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <title> Main </title>
-                <style>
-            html { 
-                /* The background code is referenced from:
-                https://css-tricks.com/perfect-full-page-background-image/ */
+        <style>
+            .container-fluid { /* Set background color and height */
                 background: 
                     url("bg01.jpg") no-repeat center center fixed; 
                 -webkit-background-size: cover;
                 -moz-background-size: cover;
                 -o-background-size: cover;
                 background-size: cover;
-            }   
+            } 
             img { /* This defines the header image */
                 float: left;
                 width: 250px;
-                height: 80px;
+                height: 90px;
                 padding-top: 15px;
                 /*display: block; margin-left: auto; margin-right: auto*/
             }         
-            h1 { /* This defines the header */
+            h1 { /* This defines the header text */
                 text-align: center;
                 font-family: Times New Roman, Times, serif;
+                font-weight: bold;
+            }
+            .sidenav { /* This defines the sidebar */
+                padding-top: 110px; margin: 50px auto; 
             }
             hr { /* This defines the hr line style */
                 height: 2px; background-color: #599BB3; width: 80%; border: none;
             }
             .main { /* This defines the div displaying the page */
-                font: 1em Hoefler Text, Times New Roman, Times, serif;
-                width: 60%; 
+                width: 70%; 
                 margin: 50px auto;
-                padding: 10px;
+                padding: 40px;
                 background-color: #FFFFFF;
             }  
-            .info { /* This defines the page information */
-                font: italic bold 1.0em Times New Roman;  
-                margin-left: 4em; margin-right: 4em;
-            }
-            .error { color: #FF0000; font: italic bold 0.9em Times New Roman;  }
-            .formfield { /* This defines the login form display */
-                font-size: 1em; margin-left: 6em; line-height: 200%;
-            }         
-            label { /* Defines form labels */
-                display: inline-block;
-                width:10em;
-                text-align: left;
-            }
-            input[type=submit] { /* Defines submit button */
-                padding:5px 15px; 
-                background:-moz-linear-gradient(top, #1280a8 5%, #21444a 100%);
-                border:0 none;
-                cursor:pointer;
-                -webkit-border-radius: 15px;
-                border-radius: 15px; 
-                text-align: center;
-                color:#ffffff;
-                font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
-                font-size:0.8em;
-                font-weight:bold;
-                padding:0.5em 1.5em;
-            }
+            .error { color: #FF0000; font: italic bold 0.9em Times New Roman;  }  
         </style> 
     </head>
     <body>
