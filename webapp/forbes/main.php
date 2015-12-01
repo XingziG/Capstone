@@ -81,11 +81,6 @@
             require ('login.php');
             redirect_user();
         }        
-        // Set the page title and include the HTML header:
-        $page_title = 'Welcome!';
-        // Print a customized message:
-        echo "<h1>Welcome!</h1><p>You are now logged in, {$_COOKIE['name']}!</p>
-        <p><a href=\"logout.php\">Logout</a></p>";
         ?>
         <!-- Displays the main Page -->
         <div class="container-fluid">

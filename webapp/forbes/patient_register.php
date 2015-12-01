@@ -102,7 +102,7 @@
                 <!-- Sidebar -->
                 <div class="col-sm-2 sidenav">
                     <!-- Home button -->
-                    <a href="#" class="btn btn-info btn-lg">
+                    <a href="main.php" class="btn btn-info btn-lg">
                       <span class="glyphicon glyphicon-home"></span> Home
                     </a><br/><br/>
                     <!-- User -->
