@@ -1,5 +1,103 @@
-<!-- To do: 1. change style to bootstrap
--->
+<?php
+// redirect user to another webpage based on login result
+function redirect_user ($page) {
+    // Start defining the URL...
+    $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+    $url = rtrim($url, '/\\');
+    $url .= '/' . $page;
+    // Redirect the user: 
+    header("Location: $url"); exit(); // Quit the script.
+}
+// check login info from database
+function check_login($dbc, $username = '', $userpass = '') {
+    $errors = array();
+    if (empty($username)) { // username
+        $errors[] = 'You forgot to enter your email address.';
+    } else{
+        $e = mysqli_real_escape_string($dbc, trim($username));
+    }
+    if (empty($userpass)) { // password
+        $errors[] = 'You forgot to enter your password.';
+    }else{
+        $p = mysqli_real_escape_string($dbc, trim($userpass));
+    }
+    if (empty($errors)) { // If everything's OK.
+        // Retrieve for the email/password combination:
+        $q = "SELECT email, name FROM users WHERE email='$e' AND pass='$p'";
+        $r = @mysqli_query ($dbc, $q); // run query       
+        // Check the result:
+        if (mysqli_num_rows($r) == 1) { // Fetch the record            
+            $row = mysqli_fetch_array ($r, MYSQLI_ASSOC);
+            return array(true, $row);
+        } else { // Not a match!
+            $errors[] = 'The email address and password entered do not match.';
+        }
+    }
+    return array(false, $errors);
+}
+// when a button is clicked
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    require ('../mysqli_connect.php'); // Connect to the db.
+    if (isset($_POST['register'])) { // register button clicked
+        $errors = array();
+        if (empty($_POST["email"])) {
+            $errors['emailErr'] = 'Email is required';
+        } else {
+            $email = mysqli_real_escape_string($dbc, trim($_POST['email']));
+        }
+
+        if (empty($_POST["fname"])) {
+            $errors['fnameErr'] = 'Name is required';
+        } else {
+            $fname = mysqli_real_escape_string($dbc, trim($_POST['fname']));
+        }
+
+        if (!empty($_POST["password"])) {
+            if ($_POST['password2'] != $_POST["password"]) {
+                $errors['password2Err'] = "Please retype password";
+            } else {
+                $password = mysqli_real_escape_string($dbc, trim($_POST['password']));
+            }
+        } else {
+            $errors['passwordErr'] = "Password is required";
+        }
+
+        if (empty($errors)) { //everything is OK, register the user into the db
+            //make a query:
+            $q = "INSERT INTO users (email, name, pass) VALUES ('$email', '$fname', '$password')";
+            $r = @mysqli_query($dbc, $q); // Run the query.
+            if ($r) { // If it ran OK.
+                $successRegister = true;
+            } else {
+                // Public message:
+                echo '<h1>System Error</h1>
+                <p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>';
+                // Debugging message:
+                echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
+            }
+        } else {
+            $successRegister = false;
+        }
+    } else { // login button clicked
+        list ($check, $data) = check_login($dbc, $_POST['username'], $_POST['userpass']);
+        if ($check) { // OK!
+            // Set the cookies:
+            setcookie ('email', $data['email']);
+            setcookie ('name', $data['name']);
+            // Redirect:
+            redirect_user('main.php');
+        } else { // Unsuccessful!
+            $errors = $data; // Assign $data to $errors
+            echo '<h1>Error!</h1><p class="error">The following error(s) occurred:<br />';
+            foreach ($errors as $msg) {
+                echo " - $msg<br />\n";
+            }
+        }               
+    }
+    mysqli_close($dbc); // Close the database connection.
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -67,106 +165,6 @@
         </style>                
     </head>
     <body>
-        <!-- php -->
-        <?php
-        // redirect user to another webpage based on login result
-        function redirect_user ($page) {
-            // Start defining the URL...
-            $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
-            $url = rtrim($url, '/\\');
-            $url .= '/' . $page;
-            // Redirect the user: 
-            header("Location: $url"); exit(); // Quit the script.
-        }
-        // check login info from database
-        function check_login($dbc, $username = '', $userpass = '') {
-            $errors = array();
-            if (empty($username)) { // username
-                $errors[] = 'You forgot to enter your email address.';
-            } else{
-                $e = mysqli_real_escape_string($dbc, trim($username));
-            }
-            if (empty($userpass)) { // password
-                $errors[] = 'You forgot to enter your password.';
-            }else{
-                $p = mysqli_real_escape_string($dbc, trim($userpass));
-            }
-            if (empty($errors)) { // If everything's OK.
-                // Retrieve for the email/password combination:
-                $q = "SELECT email, name FROM users WHERE email='$e' AND pass='$p'";
-                $r = @mysqli_query ($dbc, $q); // run query       
-                // Check the result:
-                if (mysqli_num_rows($r) == 1) { // Fetch the record            
-                    $row = mysqli_fetch_array ($r, MYSQLI_ASSOC);
-                    return array(true, $row);
-                } else { // Not a match!
-                    $errors[] = 'The email address and password entered do not match.';
-                }
-            }
-            return array(false, $errors);
-        }
-        // when a button is clicked
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            require ('../mysqli_connect.php'); // Connect to the db.
-            if (isset($_POST['register'])) { // register button clicked
-                $errors = array();
-                if (empty($_POST["email"])) {
-                    $errors['emailErr'] = 'Email is required';
-                } else {
-                    $email = mysqli_real_escape_string($dbc, trim($_POST['email']));
-                }
-                
-                if (empty($_POST["fname"])) {
-                    $errors['fnameErr'] = 'Name is required';
-                } else {
-                    $fname = mysqli_real_escape_string($dbc, trim($_POST['fname']));
-                }
-                
-                if (!empty($_POST["password"])) {
-                    if ($_POST['password2'] != $_POST["password"]) {
-                        $errors['password2Err'] = "Please retype password";
-                    } else {
-                        $password = mysqli_real_escape_string($dbc, trim($_POST['password']));
-                    }
-                } else {
-                    $errors['passwordErr'] = "Password is required";
-                }
-
-                if (empty($errors)) { //everything is OK, register the user into the db
-                    //make a query:
-                    $q = "INSERT INTO users (email, name, pass) VALUES ('$email', '$fname', '$password')";
-                    $r = @mysqli_query($dbc, $q); // Run the query.
-                    if ($r) { // If it ran OK.
-                        $successRegister = true;
-                    } else {
-                        // Public message:
-                        echo '<h1>System Error</h1>
-                        <p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>';
-                        // Debugging message:
-                        echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
-                    }
-                } else {
-                    $successRegister = false;
-                }
-            } else { // login button clicked
-                list ($check, $data) = check_login($dbc, $_POST['username'], $_POST['userpass']);
-                if ($check) { // OK!
-                    // Set the cookies:
-                    setcookie ('email', $data['email']);
-                    setcookie ('name', $data['name']);
-                    // Redirect:
-                    redirect_user('main.php');
-                } else { // Unsuccessful!
-                    $errors = $data; // Assign $data to $errors
-                    echo '<h1>Error!</h1><p class="error">The following error(s) occurred:<br />';
-                    foreach ($errors as $msg) {
-                        echo " - $msg<br />\n";
-                    }
-                }               
-            }
-            mysqli_close($dbc); // Close the database connection.
-        }
-        ?>
         <!-- Displays the Login Page -->
         <div class="main"> 
             <img src="head.jpg" alt="Allegheny Health Network">
@@ -235,3 +233,6 @@
         </script>    
     </body>
 </html>
+
+<!-- To do: 1. change style to bootstrap
+-->

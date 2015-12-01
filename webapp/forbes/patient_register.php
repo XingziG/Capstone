@@ -1,5 +1,56 @@
-<!-- To do: 1. Test: after success, redirect to main page
--->
+<?php
+function redirect_user ($page) {
+    // Start defining the URL...
+    $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+    $url = rtrim($url, '/\\');
+    $url .= '/' . $page;
+    // Redirect the user: 
+    header("Location: $url"); exit(); // Quit the script.
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    require ('../mysqli_connect.php'); // Connect to the db.
+
+    $id = mysqli_real_escape_string($dbc, trim($_POST['id']));
+
+    $fn = mysqli_real_escape_string($dbc, trim($_POST['fname']));
+
+    $ln = mysqli_real_escape_string($dbc, trim($_POST['lname']));
+
+    $bd = mysqli_real_escape_string($dbc, trim($_POST['bday']));
+
+    $cd = mysqli_real_escape_string($dbc, trim($_POST['cday']));
+
+    $sex = mysqli_real_escape_string($dbc, trim($_POST['sex']));
+
+    $diab = mysqli_real_escape_string($dbc, trim($_POST['diabetes']));
+
+    $insur = mysqli_real_escape_string($dbc, trim($_POST['insurance']));
+
+    //make a query:
+    $q = "INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES ('$id', '$fn', '$ln', STR_TO_DATE('$bd', '%Y-%m-%d'), STR_TO_DATE('$cd','%Y-%m-%d'), '$sex', '$diab', '$insur')";
+
+    $r = @mysqli_query($dbc, $q); // Run the query.
+
+    if ($r) { // If it ran OK.
+        $success = true;
+        $message = "Patient Successfully Added!";
+        echo "<script type='text/javascript'>
+            alert('$message'); window.location.replace(\"main.php\");</script>";
+        redirect_user('main.php');
+
+    } else {
+        // Public message:
+        echo '<h1>System Error</h1>
+        <p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>';
+        // Debugging message:
+        echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
+    }
+    mysqli_close($dbc); // Close the database connection.
+}
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,58 +62,6 @@
         <title> Patient Registration </title>
     </head>
     <body>
-        <!-- php code here -->
-        <?php
-        function redirect_user ($page) {
-            // Start defining the URL...
-            $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
-            $url = rtrim($url, '/\\');
-            $url .= '/' . $page;
-            // Redirect the user: 
-            header("Location: $url"); exit(); // Quit the script.
-        }
-        
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-            require ('../mysqli_connect.php'); // Connect to the db.
-
-            $id = mysqli_real_escape_string($dbc, trim($_POST['id']));
-
-            $fn = mysqli_real_escape_string($dbc, trim($_POST['fname']));
-
-            $ln = mysqli_real_escape_string($dbc, trim($_POST['lname']));
-
-            $bd = mysqli_real_escape_string($dbc, trim($_POST['bday']));
-
-            $cd = mysqli_real_escape_string($dbc, trim($_POST['cday']));
-
-            $sex = mysqli_real_escape_string($dbc, trim($_POST['sex']));
-
-            $diab = mysqli_real_escape_string($dbc, trim($_POST['diabetes']));
-
-            $insur = mysqli_real_escape_string($dbc, trim($_POST['insurance']));
-
-            //make a query:
-            $q = "INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES ('$id', '$fn', '$ln', STR_TO_DATE('$bd', '%Y-%m-%d'), STR_TO_DATE('$cd','%Y-%m-%d'), '$sex', '$diab', '$insur')";
-
-            $r = @mysqli_query($dbc, $q); // Run the query.
-
-            if ($r) { // If it ran OK.
-                $success = true;
-                $message = "Patient Successfully Added!";
-                echo "<script type='text/javascript'>alert('$message');</script>";
-                redirect_user('main.php');
-                
-            } else {
-                // Public message:
-                echo '<h1>System Error</h1>
-                <p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>';
-                // Debugging message:
-                echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
-            }
-            mysqli_close($dbc); // Close the database connection.
-        }
-        ?>
         <!-- Displays the Registration Page -->
         <div class="container-fluid">
             <div class="row content">
@@ -174,3 +173,5 @@
         </script>    
     </body>
 </html>
+<!-- To do: 1. Test: after success, redirect to main page
+-->

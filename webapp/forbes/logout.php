@@ -1,3 +1,20 @@
+<?php
+// redirect user to another page
+function redirect_user ($page) {
+	// Start defining the URL...
+	$url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+	$url = rtrim($url, '/\\');
+	$url .= '/' . $page;
+	// Redirect the user: 
+	header("Location: $url"); exit(); // Quit the script.
+}
+// If cookie is present, delete the parameters:
+if (isset($_COOKIE['email'])) {
+	setcookie ('email', '');
+	setcookie ('name', '');
+}
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,23 +25,6 @@
         <title> Log Out </title>
     </head>
 	<body>
-		<!-- php code here -->
-		<?php
-		// redirect user to another page
-		function redirect_user ($page) {
-			// Start defining the URL...
-			$url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
-			$url = rtrim($url, '/\\');
-			$url .= '/' . $page;
-			// Redirect the user: 
-			header("Location: $url"); exit(); // Quit the script.
-		}
-		// If cookie is present, delete the parameters:
-		if (isset($_COOKIE['email'])) {
-			setcookie ('email', '');
-			setcookie ('name', '');
-		}
-		?>
 		<!-- Displays the main Page -->
 		<div class="container-fluid">
 			<div class="row content">

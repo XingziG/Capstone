@@ -1,5 +1,39 @@
-<!-- To do: 1. link to add patient & search patient
--->
+<?php // The user is redirected here from login.php.
+function redirect_user ($page) {
+    // Start defining the URL...
+    $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+    $url = rtrim($url, '/\\');
+    $url .= '/' . $page;
+    // Redirect the user: 
+    header("Location: $url"); exit(); // Quit the script.
+}
+if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
+    redirect_user('login.php');
+}      
+// when SEARCH button is clicked
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    require ('../mysqli_connect.php'); // Connect to the db.
+
+    $firstname = $_GET["firstname"];
+    $lastname = $_GET["lastname"];
+    $query = "SELECT * FROM patients WHERE patient_fname='$firstname' OR patient_lname='$lastname'";
+    $ouput = "";
+    if($result = mysqli_query($dbc, $query)){
+        while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
+            $ouput = $ouput."ID: ".$row[0]."<br>";
+            $ouput = $ouput."FirstName: ".$row[1]."<br>";
+            $ouput = $ouput."LastName: ".$row[2]."<br>";
+            $ouput = $ouput."DOB: ".$row[3]."<br>";
+            $ouput = $ouput."Gender: ".$row[5]."<br><br>";
+            $ouput = $ouput."<a href=\"\" style=\"text-decoration:none;\">Edit</a>"."<br><br>";
+        }
+        mysqli_free_result($result);
+    }
+    mysqli_close($dbc);
+    echo $ouput;
+} 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,42 +44,6 @@
         <title> Main </title>
     </head>
     <body>
-        <!-- php -->
-        <?php // The user is redirected here from login.php.
-        function redirect_user ($page) {
-            // Start defining the URL...
-            $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
-            $url = rtrim($url, '/\\');
-            $url .= '/' . $page;
-            // Redirect the user: 
-            header("Location: $url"); exit(); // Quit the script.
-        }
-        if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
-            redirect_user('login.php');
-        }      
-        // when SEARCH button is clicked
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            require ('../mysqli_connect.php'); // Connect to the db.
-                   
-            $firstname = $_GET["firstname"];
-            $lastname = $_GET["lastname"];
-            $query = "SELECT * FROM patients WHERE patient_fname='$firstname' OR patient_lname='$lastname'";
-            $ouput = "";
-            if($result = mysqli_query($dbc, $query)){
-                while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
-                    $ouput = $ouput."ID: ".$row[0]."<br>";
-                    $ouput = $ouput."FirstName: ".$row[1]."<br>";
-                    $ouput = $ouput."LastName: ".$row[2]."<br>";
-                    $ouput = $ouput."DOB: ".$row[3]."<br>";
-                    $ouput = $ouput."Gender: ".$row[5]."<br><br>";
-                    $ouput = $ouput."<a href=\"\" style=\"text-decoration:none;\">Edit</a>"."<br><br>";
-                }
-                mysqli_free_result($result);
-            }
-            mysqli_close($dbc);
-            echo $ouput;
-        } 
-        ?>
         <!-- Displays the main Page -->
         <div class="container-fluid">
             <div class="row content">
@@ -111,5 +109,7 @@
         </div>
     </body>
 </html>
-        
+
+<!-- To do: 1. link to add patient & search patient
+-->
     
