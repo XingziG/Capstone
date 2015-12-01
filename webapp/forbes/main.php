@@ -98,7 +98,7 @@
                     </a><br/><br/>
                     <!-- User -->
                     <div class="well well">
-                        <h5>Welcome, <br/> <?php echo '{$_COOKIE['name']}' ?>!</h5>
+                        <h5>Welcome, <br/> <?php echo "{$_COOKIE['name']}" ?>!</h5>
                     </div>
                     <!-- Logout -->
                     <a href="#" class="btn btn-info btn-lg">

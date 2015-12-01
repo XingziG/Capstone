@@ -134,7 +134,7 @@
 
                 if (empty($errors)) { //everything is OK, register the user into the db
                     //make a query:
-                    $q = "INSERT INTO users (email, name, pass) VALUES ('$email', $fname, '$password')";
+                    $q = "INSERT INTO users (email, name, pass) VALUES ('$email', '$fname', '$password')";
                     $r = @mysqli_query($dbc, $q); // Run the query.
                     if ($r) { // If it ran OK.
                         $successRegister = true;
