@@ -5,44 +5,10 @@
     <head>
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="mystyle.css">
         <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
         <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <title> Patient Registration </title>
-        <style> 
-            .container-fluid { /* Set background color and height */
-                background: 
-                    url("bg01.jpg") no-repeat center center fixed; 
-                -webkit-background-size: cover;
-                -moz-background-size: cover;
-                -o-background-size: cover;
-                background-size: cover;
-            } 
-            img { /* This defines the header image */
-                float: left;
-                width: 250px;
-                height: 90px;
-                padding-top: 15px;
-                /*display: block; margin-left: auto; margin-right: auto*/
-            }         
-            h1 { /* This defines the header text */
-                text-align: center;
-                font-family: Times New Roman, Times, serif;
-                font-weight: bold;
-            }
-            .sidenav { /* This defines the sidebar */
-                padding-top: 110px; margin: 50px auto; 
-            }
-            hr { /* This defines the hr line style */
-                height: 2px; background-color: #599BB3; width: 80%; border: none;
-            }
-            .main { /* This defines the div displaying the page */
-                width: 70%; 
-                margin: 50px auto;
-                padding: 40px;
-                background-color: #FFFFFF;
-            }  
-            .error { color: #FF0000; font: italic bold 0.9em Times New Roman;  }         
-        </style> 
     </head>
     <body>
         <!-- php code here -->
@@ -101,7 +67,7 @@
                         <h5>Welcome, <br/> <?php echo "{$_COOKIE['name']}" ?>!</h5>
                     </div>
                     <!-- Logout -->
-                    <a href="#" class="btn btn-info btn-lg">
+                    <a href="logout.php" class="btn btn-info btn-lg">
                       <span class="glyphicon glyphicon-log-out"></span> Log out
                     </a>
                 </div>

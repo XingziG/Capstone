@@ -6,40 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="mystyle.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
-        <style>          
-            .container-fluid { /* Set background color and height */
-                background: 
-                    url("bg01.jpg") no-repeat center center fixed; 
-                -webkit-background-size: cover;
-                -moz-background-size: cover;
-                -o-background-size: cover;
-                background-size: cover;
-            } 
-            img { /* This defines the header image */
-                float: left;
-                width: 250px;
-                height: 95px;
-                padding-top: 20px;
-            }
-            h1 { /* This defines the header text */
-                text-align: center;
-                font-family: Times New Roman, Times, serif;
-                font-weight: bold;
-            }
-
-            .sidenav { /* This defines the sidebar */
-                padding-top: 110px; margin: 50px auto; 
-            }
-            .main { background-color: #ffffff; height:auto; padding:20px; margin: 50px auto; }
-            hr { /* This defines the hr line style */
-                height: 2px; background-color: #599BB3; width: 80%; border: none;
-            }
-            input {
-                text-align:right;
-            }
-        </style>
     </head>
     <body>
         <div class="container-fluid">
@@ -47,7 +16,7 @@
                 <!-- Sidebar -->
                 <div class="col-sm-2 sidenav">
                     <!-- Home button -->
-                    <a href="http://localhost/main.php" class="btn btn-info btn-lg">
+                    <a href="main.php" class="btn btn-info btn-lg">
                       <span class="glyphicon glyphicon-home"></span> Home
                     </a><br/><br/>
                     <!-- User -->
@@ -64,7 +33,7 @@
                         </ul>
                     </div>
                     <!-- Logout -->
-                    <a href="#" class="btn btn-info btn-lg">
+                    <a href="logout.php" class="btn btn-info btn-lg">
                       <span class="glyphicon glyphicon-log-out"></span> Log out
                     </a>
                 </div>

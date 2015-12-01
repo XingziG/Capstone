@@ -1,0 +1,36 @@
+.container-fluid { /* Set background color and height */
+    background: 
+        url("bg01.jpg") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 800px;
+} 
+img { /* This defines the header image */
+    float: left;
+    width: 250px;
+    height: 95px;
+    padding-top: 20px;
+    /*display: block; margin-left: auto; margin-right: auto*/
+}         
+h1 { /* This defines the header text */
+    text-align: center;
+    font-family: Times New Roman, Times, serif;
+    font-weight: bold;
+}
+.sidenav { /* This defines the sidebar */
+    padding-top: 110px; margin: 50px auto; 
+}
+hr { /* This defines the hr line style */
+    height: 2px; background-color: #599BB3; width: 80%; border: none;
+}
+.main { /* This defines the div displaying the page */
+    width: 80%; 
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #FFFFFF;
+}  
+.error { /* This defines the error message */
+    color: #FF0000; font: italic bold 0.9em Times New Roman;  
+}  
