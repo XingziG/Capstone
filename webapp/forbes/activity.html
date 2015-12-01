@@ -29,9 +29,9 @@
                 font-weight: bold;
             }
             .sidenav { /* This defines the sidebar */
-                padding-top: 120px; margin: 50px auto; 
+                padding-top: 110px; margin: 50px auto; 
             }
-            .main { background-color: #ffffff; height:auto; padding:10px; margin: 50px auto; }
+            .main { background-color: #ffffff; height:auto; padding:20px; margin: 50px auto; }
             hr { /* This defines the hr line style */
                 height: 2px; background-color: #599BB3; width: 80%; border: none;
             }
@@ -70,8 +70,8 @@
                     <h1 class="head">Forbes Regional Hospital <br/> CABG Expense Analyzer </h1><hr>
                     <!-- Header with surgery & postop care selection -->
                     <ul class="nav nav-pills nav-justified">
-                        <li class="active"><a data-toggle="pill" href="#surgery"> CABG Surgery </a></li>
-                        <li><a data-toggle="pill" href="#postop"> Postoperative Care </a></li>
+                        <li class="active"><a data-toggle="pill" href="#surgery"> <h5>CABG Surgery</h5> </a></li>
+                        <li><a data-toggle="pill" href="#postop"> <h5>Postoperative Care</h5> </a></li>
                     </ul>
                     <!-- Activity Content -->
                     <div class="tab-content">
@@ -123,9 +123,10 @@
                         </div>
                         <!-- Post-Op Care Content -->
                         <div id="postop" class="tab-pane fade in">
-                            <h3> Post-Operative Activities </h3>
-                            <p>Please click on the <strong>day</strong> of the care and the 
-                                <strong>actor</strong> to fill in the activity time, frequency and actor's name.</p>
+                            <div class="panel panel-default">
+                                <div class="panel-heading"> Please click on the <strong>day</strong> of the care and the 
+                                <strong>actor</strong> to fill in the activity time, frequency and actor's name. </div>
+                            </div>
                             <!-- Post-Op Day Selection -->
                             <ul class="nav nav-tabs nav-justified">
                                 <li class="active"><a data-toggle="tab" href="#day0"> Day 0 </a></li>
@@ -147,7 +148,7 @@
                                             <!--RN table-->
                                             <div id="postday0-rn" class="panel-collapse collapse in">
                                                 <div class="panel-body">
-                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <table id="rn" class="table table-striped" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Activity</th>
@@ -186,7 +187,7 @@
                                             </div>
                                             <div id="postday0-pa" class="panel-collapse collapse">
                                                 <div class="panel-body">
-                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <table id="pa" class="table table-striped" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Activity</th>
@@ -218,7 +219,7 @@
                                             </div>
                                             <div id="postday0-rt" class="panel-collapse collapse">
                                                 <div class="panel-body">
-                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <table id="rt" class="table table-striped" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Activity</th>
@@ -255,7 +256,7 @@
                                             <!--RN table-->
                                             <div id="postday1-rn" class="panel-collapse collapse in">
                                                 <div class="panel-body">
-                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <table id="rn" class="table table-striped" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Activity</th>
@@ -343,7 +344,7 @@
                                             </div>
                                             <div id="postday1-pa" class="panel-collapse collapse">
                                                 <div class="panel-body">
-                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <table id="pa" class="table table-striped" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Activity</th>
@@ -389,7 +390,7 @@
                                             </div>
                                             <div id="postday1-rt" class="panel-collapse collapse">
                                                 <div class="panel-body">
-                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <table id="rt" class="table table-striped" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Activity</th>
@@ -421,7 +422,7 @@
                                             </div>
                                             <div id="postday1-ic" class="panel-collapse collapse">
                                                 <div class="panel-body">
-                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <table id="ic" class="table table-striped" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Activity</th>
@@ -453,7 +454,7 @@
                                             </div>
                                             <div id="postday1-cm" class="panel-collapse collapse">
                                                 <div class="panel-body">
-                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <table id="cm" class="table table-striped" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Activity</th>
@@ -490,7 +491,7 @@
                                             <!--RN table-->
                                             <div id="postday2-rn" class="panel-collapse collapse in">
                                                 <div class="panel-body">
-                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <table id="rn" class="table table-striped" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Activity</th>
@@ -578,7 +579,7 @@
                                             </div>
                                             <div id="postday2-pa" class="panel-collapse collapse">
                                                 <div class="panel-body">
-                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <table id="pa" class="table table-striped" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Activity</th>
@@ -624,7 +625,7 @@
                                             </div>
                                             <div id="postday2-cm" class="panel-collapse collapse">
                                                 <div class="panel-body">
-                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <table id="cm" class="table table-striped" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Activity</th>
@@ -661,7 +662,7 @@
                                             <!--RN table-->
                                             <div id="postdday-rn" class="panel-collapse collapse in">
                                                 <div class="panel-body">
-                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <table id="rn" class="table table-striped" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Activity</th>
@@ -742,7 +743,7 @@
                                             </div>
                                             <div id="postdday-pa" class="panel-collapse collapse">
                                                 <div class="panel-body">
-                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <table id="pa" class="table table-striped" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Activity</th>
@@ -774,7 +775,7 @@
                                             </div>
                                             <div id="postdday-cm" class="panel-collapse collapse">
                                                 <div class="panel-body">
-                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <table id="cm" class="table table-striped" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
                                                                 <th>Activity</th>
@@ -803,7 +804,7 @@
                         </div>                
                     </div>
                     <center>
-                        <button type="button" class="btn btn-info btn-lg">Submit</button>
+                        <button type="submit" class="btn btn-info btn-lg">Submit</button>
                     </center>                    
                 </div>
             </div>
