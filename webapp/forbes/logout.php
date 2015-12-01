@@ -42,7 +42,7 @@
 					<!-- Logout -->
 					<center>					                   
 						<a href="login.php" class="btn btn-info btn-lg">
-						  <span class="glyphicon glyphicon-log-in"></span> Login Again
+							<span class="glyphicon glyphicon-log-in"></span> Login Again
 						</a>
 					</center>
 				</div>

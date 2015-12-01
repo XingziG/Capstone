@@ -1,4 +1,4 @@
-<!-- To do: link to add patient & search patient
+<!-- To do: 1. link to add patient & search patient
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -21,9 +21,30 @@
             header("Location: $url"); exit(); // Quit the script.
         }
         if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
-            require ('login.php');
             redirect_user('login.php');
-        }        
+        }      
+        // when SEARCH button is clicked
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            require ('../mysqli_connect.php'); // Connect to the db.
+                   
+            $firstname = $_GET["firstname"];
+            $lastname = $_GET["lastname"];
+            $query = "SELECT * FROM patients WHERE patient_fname='$firstname' OR patient_lname='$lastname'";
+            $ouput = "";
+            if($result = mysqli_query($dbc, $query)){
+                while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
+                    $ouput = $ouput."ID: ".$row[0]."<br>";
+                    $ouput = $ouput."FirstName: ".$row[1]."<br>";
+                    $ouput = $ouput."LastName: ".$row[2]."<br>";
+                    $ouput = $ouput."DOB: ".$row[3]."<br>";
+                    $ouput = $ouput."Gender: ".$row[5]."<br><br>";
+                    $ouput = $ouput."<a href=\"\" style=\"text-decoration:none;\">Edit</a>"."<br><br>";
+                }
+                mysqli_free_result($result);
+            }
+            mysqli_close($dbc);
+            echo $ouput;
+        } 
         ?>
         <!-- Displays the main Page -->
         <div class="container-fluid">
@@ -32,7 +53,7 @@
                 <div class="col-sm-2 sidenav">
                     <!-- Home button -->
                     <a href="#" class="btn btn-info btn-lg">
-                      <span class="glyphicon glyphicon-home"></span> Home
+                        <span class="glyphicon glyphicon-home"></span> Home
                     </a><br/><br/>
                     <!-- User -->
                     <div class="well well">
@@ -40,7 +61,7 @@
                     </div>
                     <!-- Logout -->
                     <a href="logout.php" class="btn btn-info btn-lg">
-                      <span class="glyphicon glyphicon-log-out"></span> Log out
+                        <span class="glyphicon glyphicon-log-out"></span> Log out
                     </a>
                 </div>
                 <!-- Main Content -->
@@ -53,6 +74,37 @@
                         <div class="panel-heading"> 
                             Please <strong>search</strong> a patient or 
                             <strong>add</strong> a new patient. </div>
+                    </div>
+                    <!-- Search Patient Button -->
+                    <div class="col-sm-6">
+                        <center>
+                            <button type="button" class="btn btn-primary btn-lg" data-toggle="collapse" data-target="#search">
+                                  <span class="glyphicon glyphicon-search"></span> Search For <br/>A Patient
+                            </button>
+                        </center><br/>
+                        <center>
+                            <div id="search" class="collapse">
+                                <form class="form-inline" role="form">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="firstname">First Name:</label>
+                                        <input type="text" class="form-control" id="firstname" placeholder="Enter First Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="lastname">Last Name:</label>
+                                        <input type="text" class="form-control" id="lastname" placeholder="Enter Last Name">
+                                    </div><br/><br/>
+                                        <button method="POST" type="submit" id="searchButton" class="btn btn-default">Search</button>
+                                </form>
+                            </div>
+                        </center>    
+                    </div>
+                    <!-- Add Patient Button -->
+                    <div class="col-sm-4">
+                        <center>
+                            <a href="patient_register.php" class="btn btn-primary btn-lg">
+                                <span class="glyphicon glyphicon-plus"></span> Add <br/>A Patient
+                            </a>
+                        </center>
                     </div>
                 </div>
             </div>

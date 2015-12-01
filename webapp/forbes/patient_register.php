@@ -1,4 +1,4 @@
-<!-- To do: 1. after success, redirect to main page
+<!-- To do: 1. Test: after success, redirect to main page
 -->
 <!DOCTYPE html>
 <html>
@@ -13,6 +13,15 @@
     <body>
         <!-- php code here -->
         <?php
+        function redirect_user ($page) {
+            // Start defining the URL...
+            $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+            $url = rtrim($url, '/\\');
+            $url .= '/' . $page;
+            // Redirect the user: 
+            header("Location: $url"); exit(); // Quit the script.
+        }
+        
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             require ('../mysqli_connect.php'); // Connect to the db.
@@ -40,14 +49,15 @@
 
             if ($r) { // If it ran OK.
                 $success = true;
-
-                echo '<h1>Successful!</h1>';
+                $message = "Patient Successfully Added!";
+                echo "<script type='text/javascript'>alert('$message');</script>";
+                redirect_user('main.php');
                 
             } else {
                 // Public message:
                 echo '<h1>System Error</h1>
-               <p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>';
-                    // Debugging message:
+                <p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>';
+                // Debugging message:
                 echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
             }
             mysqli_close($dbc); // Close the database connection.
@@ -60,7 +70,7 @@
                 <div class="col-sm-2 sidenav">
                     <!-- Home button -->
                     <a href="main.php" class="btn btn-info btn-lg">
-                      <span class="glyphicon glyphicon-home"></span> Home
+                        <span class="glyphicon glyphicon-home"></span> Home
                     </a><br/><br/>
                     <!-- User -->
                     <div class="well well">
@@ -68,7 +78,7 @@
                     </div>
                     <!-- Logout -->
                     <a href="logout.php" class="btn btn-info btn-lg">
-                      <span class="glyphicon glyphicon-log-out"></span> Log out
+                        <span class="glyphicon glyphicon-log-out"></span> Log out
                     </a>
                 </div>
                 <!-- Main Content -->
@@ -143,7 +153,7 @@
                         </div>
                         <!--<input type="submit" value="Register Paient">-->
                         <center>
-                            <button type="submit" class="btn btn-info btn-lg">Submit</button>
+                            <button method="POST" type="submit" class="btn btn-info btn-lg">Submit</button>
                         </center>      
                     </form><br/>  
                 </div> 

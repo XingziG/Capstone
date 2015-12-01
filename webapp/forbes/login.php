@@ -1,4 +1,4 @@
-<!-- To do: 
+<!-- To do: 1. change style to bootstrap
 -->
 <!DOCTYPE html>
 <html lang="en">

@@ -1,3 +1,8 @@
+<!-- To do: 1. Future work: add actors & corresponding activities
+            2. Get patient info to display in the sidebar
+            3. connect to db - display entered info
+            4. Visualization / Report
+-->
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,13 +16,18 @@
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
     </head>
     <body>
+        <!-- php part here -->
+        <?php
+        
+        ?>
+        <!-- Displays the main Page -->
         <div class="container-fluid">
             <div class="row content">
                 <!-- Sidebar -->
                 <div class="col-sm-2 sidenav">
                     <!-- Home button -->
                     <a href="main.php" class="btn btn-info btn-lg">
-                      <span class="glyphicon glyphicon-home"></span> Home
+                        <span class="glyphicon glyphicon-home"></span> Home
                     </a><br/><br/>
                     <!-- User -->
                     <div class="well well">
@@ -34,7 +44,7 @@
                     </div>
                     <!-- Logout -->
                     <a href="logout.php" class="btn btn-info btn-lg">
-                      <span class="glyphicon glyphicon-log-out"></span> Log out
+                        <span class="glyphicon glyphicon-log-out"></span> Log out
                     </a>
                 </div>
                 <!-- Main Content -->
