@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a7e0cec-5dab-41f7-8434-5117dfe06fed" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forbes/activity.html" afterPath="$PROJECT_DIR$/forbes/activity.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forbes/login.php" afterPath="$PROJECT_DIR$/forbes/login.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forbes/main.php" afterPath="$PROJECT_DIR$/forbes/main.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_schema" afterPath="$PROJECT_DIR$/user_schema" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="webapp.iws" />
@@ -31,11 +28,23 @@
       <file leaf-file-name="login.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/forbes/login.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.555555">
-              <caret line="100" column="45" selection-start-line="100" selection-start-column="45" selection-end-line="100" selection-end-column="45" />
+            <state vertical-scroll-proportion="-7.0555553">
+              <caret line="234" column="7" selection-start-line="234" selection-start-column="7" selection-end-line="234" selection-end-column="7" />
               <folding>
-                <marker date="1448946196000" expanded="true" signature="3932:3946" placeholder="SELECT email..users..." />
+                <element signature="n#style#0;n#p#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <marker date="1449014106000" expanded="true" signature="950:1010" placeholder="SELECT email..users..." />
+                <marker date="1449014106000" expanded="true" signature="2561:2639" placeholder="INSERT INTO ..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mysqli_connect.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mysqli_connect.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.3333335">
+              <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -43,8 +52,8 @@
       <file leaf-file-name="activity.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/forbes/activity.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="225" column="124" selection-start-line="225" selection-start-column="124" selection-end-line="225" selection-end-column="124" />
+            <state vertical-scroll-proportion="-136.66667">
+              <caret line="205" column="79" selection-start-line="205" selection-start-column="79" selection-end-line="205" selection-end-column="79" />
               <folding />
             </state>
           </provider>
@@ -52,22 +61,50 @@
       </file>
       <file leaf-file-name="user_schema" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/user_schema">
-          <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-            <state />
-          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-42.206898">
+            <state vertical-scroll-proportion="0.0">
               <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
               <folding />
             </state>
+          </provider>
+          <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="patient_register.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/forbes/patient_register.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-71.888885">
-              <caret line="193" column="14" selection-start-line="193" selection-start-column="14" selection-end-line="193" selection-end-column="14" />
+            <state vertical-scroll-proportion="50.88889">
+              <caret line="44" column="35" selection-start-line="44" selection-start-column="35" selection-end-line="44" selection-end-column="35" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#select#0;n#div#7;n#form#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <marker date="1449014106000" expanded="true" signature="973:1204" placeholder="INSERT INTO ..." />
+                <marker date="1449014106000" expanded="true" signature="1411:1490" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="logout.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/forbes/logout.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1449014106000" expanded="true" signature="71:306" placeholder="..." />
+                <marker date="1449014106000" expanded="true" signature="387:439" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mystyle.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/forbes/mystyle.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -76,9 +113,12 @@
       <file leaf-file-name="main.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/forbes/main.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.50592035">
-              <caret line="101" column="26" selection-start-line="101" selection-start-column="26" selection-end-line="101" selection-end-column="26" />
-              <folding />
+            <state vertical-scroll-proportion="0.23841059">
+              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <marker date="1449016979000" expanded="true" signature="750:981" placeholder="SELECT patie..patients..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -94,9 +134,10 @@
         <option value="$PROJECT_DIR$/user_schema" />
         <option value="$PROJECT_DIR$/forbes/02 patient_register.html" />
         <option value="$PROJECT_DIR$/forbes/02 patient_register.php" />
-        <option value="$PROJECT_DIR$/forbes/patient_register.php" />
         <option value="$PROJECT_DIR$/forbes/activity.html" />
         <option value="$PROJECT_DIR$/forbes/login.php" />
+        <option value="$PROJECT_DIR$/forbes/patient_register.php" />
+        <option value="$PROJECT_DIR$/forbes/login_handler.php" />
         <option value="$PROJECT_DIR$/forbes/main.php" />
       </list>
     </option>
@@ -108,12 +149,15 @@
   <component name="NamedScopeManager">
     <order />
   </component>
+  <component name="PhpServers">
+    <servers />
+  </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="PHP 5.5" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1920" />
-    <option name="y" value="-186" />
-    <option name="width" value="1920" />
-    <option name="height" value="1080" />
+    <option name="x" value="35" />
+    <option name="y" value="23" />
+    <option name="width" value="1276" />
+    <option name="height" value="777" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -138,8 +182,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -174,14 +216,16 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../study/CMU-15-Fall/entrp-web-dev/Lab_week5/project" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Google Drive/study/CMU-15-Fall/entrp-web-dev/Lab_week5/project" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="FullScreen" value="true" />
+    <property name="FullScreen" value="false" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -212,6 +256,9 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="6a7e0cec-5dab-41f7-8434-5117dfe06fed" name="Default" comment="" />
@@ -222,8 +269,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="-186" width="1920" height="1080" extended-state="6" />
-    <editor active="true" />
+    <frame x="35" y="23" width="1276" height="777" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -231,7 +278,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="PHP-CGI Server" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.11288605" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14019449" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -246,6 +293,14 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
@@ -257,9 +312,121 @@
     <entry file="file://$PROJECT_DIR$/forbes/login.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#p#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449014106000" expanded="true" signature="950:1010" placeholder="SELECT email..users..." />
+            <marker date="1449014106000" expanded="true" signature="2561:2639" placeholder="INSERT INTO ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forbes/activity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="231" column="79" selection-start-line="231" selection-start-column="79" selection-end-line="231" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user_schema">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forbes/patient_register.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="184" column="14" selection-start-line="184" selection-start-column="14" selection-end-line="184" selection-end-column="14" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#div#7;n#form#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449014106000" expanded="true" signature="973:1204" placeholder="INSERT INTO ..." />
+            <marker date="1449014106000" expanded="true" signature="1411:1490" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forbes/main.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="28" selection-start-line="58" selection-start-column="28" selection-end-line="58" selection-end-column="28" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449016979000" expanded="true" signature="750:981" placeholder="SELECT patie..patients..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forbes/login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="100" column="45" selection-start-line="100" selection-start-column="45" selection-end-line="100" selection-end-column="45" />
+          <folding>
+            <element signature="n#style#0;n#p#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449014106000" expanded="true" signature="950:1010" placeholder="SELECT email..users..." />
+            <marker date="1449014106000" expanded="true" signature="2561:2639" placeholder="INSERT INTO ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forbes/activity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="231" column="79" selection-start-line="231" selection-start-column="79" selection-end-line="231" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user_schema">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forbes/patient_register.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="184" column="14" selection-start-line="184" selection-start-column="14" selection-end-line="184" selection-end-column="14" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#div#7;n#form#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449014106000" expanded="true" signature="973:1204" placeholder="INSERT INTO ..." />
+            <marker date="1449014106000" expanded="true" signature="1411:1490" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forbes/main.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="28" selection-start-line="58" selection-start-column="28" selection-end-line="58" selection-end-column="28" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449016979000" expanded="true" signature="750:981" placeholder="SELECT patie..patients..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forbes/login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
           <caret line="91" column="13" selection-start-line="91" selection-start-column="13" selection-end-line="91" selection-end-column="13" />
           <folding>
-            <marker date="1448946196000" expanded="true" signature="3932:3946" placeholder="SELECT email..users..." />
+            <element signature="n#style#0;n#p#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449014106000" expanded="true" signature="950:1010" placeholder="SELECT email..users..." />
+            <marker date="1449014106000" expanded="true" signature="2561:2639" placeholder="INSERT INTO ..." />
           </folding>
         </state>
       </provider>
@@ -276,7 +443,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#div#7;n#form#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449014106000" expanded="true" signature="973:1204" placeholder="INSERT INTO ..." />
+            <marker date="1449014106000" expanded="true" signature="1411:1490" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -285,7 +457,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1448946196000" expanded="true" signature="3932:3946" placeholder="SELECT email..users..." />
+            <element signature="n#style#0;n#p#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449014106000" expanded="true" signature="950:1010" placeholder="SELECT email..users..." />
+            <marker date="1449014106000" expanded="true" signature="2561:2639" placeholder="INSERT INTO ..." />
           </folding>
         </state>
       </provider>
@@ -301,7 +475,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#div#7;n#form#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449014106000" expanded="true" signature="973:1204" placeholder="INSERT INTO ..." />
+            <marker date="1449014106000" expanded="true" signature="1411:1490" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -310,7 +489,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="88" column="40" selection-start-line="88" selection-start-column="40" selection-end-line="88" selection-end-column="40" />
           <folding>
-            <marker date="1448946196000" expanded="true" signature="3932:3946" placeholder="SELECT email..users..." />
+            <element signature="n#style#0;n#p#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449014106000" expanded="true" signature="950:1010" placeholder="SELECT email..users..." />
+            <marker date="1449014106000" expanded="true" signature="2561:2639" placeholder="INSERT INTO ..." />
           </folding>
         </state>
       </provider>
@@ -327,7 +508,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1448946196000" expanded="true" signature="3932:3946" placeholder="SELECT email..users..." />
+            <element signature="n#style#0;n#p#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449014106000" expanded="true" signature="950:1010" placeholder="SELECT email..users..." />
+            <marker date="1449014106000" expanded="true" signature="2561:2639" placeholder="INSERT INTO ..." />
           </folding>
         </state>
       </provider>
@@ -344,60 +527,92 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1448946196000" expanded="true" signature="3932:3946" placeholder="SELECT email..users..." />
+            <element signature="n#style#0;n#p#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449014106000" expanded="true" signature="950:1010" placeholder="SELECT email..users..." />
+            <marker date="1449014106000" expanded="true" signature="2561:2639" placeholder="INSERT INTO ..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysqli_connect.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23841059">
-          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/user_schema">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-42.206898">
+        <state vertical-scroll-proportion="0.0">
           <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/forbes/activity.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="225" column="124" selection-start-line="225" selection-start-column="124" selection-end-line="225" selection-end-column="124" />
+        <state vertical-scroll-proportion="-136.66667">
+          <caret line="205" column="79" selection-start-line="205" selection-start-column="79" selection-end-line="205" selection-end-column="79" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/forbes/login.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.555555">
-          <caret line="100" column="45" selection-start-line="100" selection-start-column="45" selection-end-line="100" selection-end-column="45" />
-          <folding>
-            <marker date="1448946196000" expanded="true" signature="3932:3946" placeholder="SELECT email..users..." />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/forbes/patient_register.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-71.888885">
-          <caret line="193" column="14" selection-start-line="193" selection-start-column="14" selection-end-line="193" selection-end-column="14" />
+        <state vertical-scroll-proportion="50.88889">
+          <caret line="44" column="35" selection-start-line="44" selection-start-column="35" selection-end-line="44" selection-end-column="35" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#div#7;n#form#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449014106000" expanded="true" signature="973:1204" placeholder="INSERT INTO ..." />
+            <marker date="1449014106000" expanded="true" signature="1411:1490" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forbes/mystyle.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forbes/logout.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1449014106000" expanded="true" signature="71:306" placeholder="..." />
+            <marker date="1449014106000" expanded="true" signature="387:439" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forbes/login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.0555553">
+          <caret line="234" column="7" selection-start-line="234" selection-start-column="7" selection-end-line="234" selection-end-column="7" />
+          <folding>
+            <element signature="n#style#0;n#p#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449014106000" expanded="true" signature="950:1010" placeholder="SELECT email..users..." />
+            <marker date="1449014106000" expanded="true" signature="2561:2639" placeholder="INSERT INTO ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysqli_connect.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.3333335">
+          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/forbes/main.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50592035">
-          <caret line="101" column="26" selection-start-line="101" selection-start-column="26" selection-end-line="101" selection-end-column="26" />
-          <folding />
+        <state vertical-scroll-proportion="0.23841059">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1449016979000" expanded="true" signature="750:981" placeholder="SELECT patie..patients..." />
+          </folding>
         </state>
       </provider>
     </entry>

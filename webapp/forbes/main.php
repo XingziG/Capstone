@@ -1,113 +1,133 @@
 <?php // The user is redirected here from login.php.
-function redirect_user ($page) {
+function redirect_user($page)
+{
     // Start defining the URL...
     $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
     $url = rtrim($url, '/\\');
     $url .= '/' . $page;
-    // Redirect the user: 
-    header("Location: $url"); exit(); // Quit the script.
+    // Redirect the user:
+    header("Location: $url");
+    exit(); // Quit the script.
 }
+
 if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
     redirect_user('login.php');
-}      
+}
 // when SEARCH button is clicked
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    require ('../mysqli_connect.php'); // Connect to the db.
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    require('../mysqli_connect.php'); // Connect to the db.
 
-    $firstname = $_GET["firstname"];
-    $lastname = $_GET["lastname"];
-    $query = "SELECT * FROM patients WHERE patient_fname='$firstname' OR patient_lname='$lastname'";
-    $ouput = "";
-    if($result = mysqli_query($dbc, $query)){
-        while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
-            $ouput = $ouput."ID: ".$row[0]."<br>";
-            $ouput = $ouput."FirstName: ".$row[1]."<br>";
-            $ouput = $ouput."LastName: ".$row[2]."<br>";
-            $ouput = $ouput."DOB: ".$row[3]."<br>";
-            $ouput = $ouput."Gender: ".$row[5]."<br><br>";
-            $ouput = $ouput."<a href=\"\" style=\"text-decoration:none;\">Edit</a>"."<br><br>";
+    if (isset($_GET["firstname"]) || isset($_GET["lastname"])) {
+
+
+        $firstname = $_GET["firstname"];
+        $lastname = $_GET["lastname"];
+        $query = "SELECT patient_id, patient_fname, patient_lname, DATE_FORMAT(birthdate, '%M %d, %Y'),
+              DATE_FORMAT(checkin, '%M %d, %Y'), gender
+              FROM patients WHERE patient_fname='$firstname' OR patient_lname='$lastname'";
+
+        $result = @mysqli_query($dbc, $query);
+        $rnum = mysqli_num_rows($result);
+
+        if ($rnum > 0) {
+            while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
+                $ouput = "ID: " . $row[0] . "<br>";
+                $ouput = $ouput . "FirstName: " . $row[1] . "<br>";
+                $ouput = $ouput . "LastName: " . $row[2] . "<br>";
+                $ouput = $ouput . "DOB: " . $row[3] . "<br>";
+                $ouput = $ouput . "Check-in day: " . $row[4] . "<br>";
+                $ouput = $ouput . "Gender: " . $row[5] . "<br><br>";
+                $ouput = $ouput . "<a href=\"\" style=\"text-decoration:none;\">Edit</a>" . "<br><br>";
+                echo "$ouput";
+            }
+            mysqli_free_result($result);
+        } else {
+            echo "noresult";
         }
-        mysqli_free_result($result);
     }
     mysqli_close($dbc);
-    echo $ouput;
-} 
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="mystyle.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <title> Main </title>
-    </head>
-    <body>
-        <!-- Displays the main Page -->
-        <div class="container-fluid">
-            <div class="row content">
-                <!-- Sidebar -->
-                <div class="col-sm-2 sidenav">
-                    <!-- Home button -->
-                    <a href="#" class="btn btn-info btn-lg">
-                        <span class="glyphicon glyphicon-home"></span> Home
-                    </a><br/><br/>
-                    <!-- User -->
-                    <div class="well well">
-                        <h5>Welcome, <br/> <?php echo "{$_COOKIE['name']}" ?>!</h5>
-                    </div>
-                    <!-- Logout -->
-                    <a href="logout.php" class="btn btn-info btn-lg">
-                        <span class="glyphicon glyphicon-log-out"></span> Log out
-                    </a>
-                </div>
-                <!-- Main Content -->
-                <div class="col-sm-10 main">
-                    <!-- Header -->
-                    <img src="head.jpg" alt="Allegheny Health Network">
-                    <h1 class="head">Forbes Regional Hospital <br/> CABG Expense Analyzer </h1><hr>
-                    <!-- Page Information -->
-                    <div class="panel panel-default" style="margin-left: 4em; margin-right: 4em">
-                        <div class="panel-heading"> 
-                            Please <strong>search</strong> a patient or 
-                            <strong>add</strong> a new patient. </div>
-                    </div>
-                    <!-- Search Patient Button -->
-                    <div class="col-sm-6">
-                        <center>
-                            <button type="button" class="btn btn-primary btn-lg" data-toggle="collapse" data-target="#search">
-                                  <span class="glyphicon glyphicon-search"></span> Search For <br/>A Patient
-                            </button>
-                        </center><br/>
-                        <center>
-                            <div id="search" class="collapse">
-                                <form class="form-inline" role="form">
-                                    <div class="form-group">
-                                        <label class="sr-only" for="firstname">First Name:</label>
-                                        <input type="text" class="form-control" id="firstname" placeholder="Enter First Name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="lastname">Last Name:</label>
-                                        <input type="text" class="form-control" id="lastname" placeholder="Enter Last Name">
-                                    </div><br/><br/>
-                                        <button method="POST" type="submit" id="searchButton" class="btn btn-default">Search</button>
-                                </form>
-                            </div>
-                        </center>    
-                    </div>
-                    <!-- Add Patient Button -->
-                    <div class="col-sm-4">
-                        <center>
-                            <a href="patient_register.php" class="btn btn-primary btn-lg">
-                                <span class="glyphicon glyphicon-plus"></span> Add <br/>A Patient
-                            </a>
-                        </center>
-                    </div>
+<head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <title> Main </title>
+</head>
+<body>
+<!-- Displays the main Page -->
+<div class="container-fluid">
+    <div class="row content">
+        <!-- Sidebar -->
+        <div class="col-sm-2 sidenav">
+            <!-- Home button -->
+            <a href="#" class="btn btn-info btn-lg">
+                <span class="glyphicon glyphicon-home"></span> Home
+            </a><br/><br/>
+            <!-- User -->
+            <div class="well well">
+                <h5>Welcome, <br/> <?php echo "{$_COOKIE['name']}" ?>!</h5>
+            </div>
+            <!-- Logout -->
+            <a href="logout.php" class="btn btn-info btn-lg">
+                <span class="glyphicon glyphicon-log-out"></span> Log out
+            </a>
+        </div>
+        <!-- Main Content -->
+        <div class="col-sm-10 main">
+            <!-- Header -->
+            <img src="head.jpg" alt="Allegheny Health Network">
+
+            <h1 class="head">Forbes Regional Hospital <br/> CABG Expense Analyzer </h1>
+            <hr>
+            <!-- Page Information -->
+            <div class="panel panel-default" style="margin-left: 4em; margin-right: 4em">
+                <div class="panel-heading">
+                    Please <strong>search</strong> a patient or
+                    <strong>add</strong> a new patient.
                 </div>
             </div>
+            <!-- Search Patient Button -->
+            <div class="col-sm-6">
+                <center>
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="collapse" data-target="#search">
+                        <span class="glyphicon glyphicon-search"></span> Search For <br/>A Patient
+                    </button>
+                </center>
+                <br/>
+                <center>
+                    <div id="search">
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <label class="sr-only" for="firstname">First Name:</label>
+                                <input type="text" class="form-control" name="firstname" placeholder="Enter First Name">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="lastname">Last Name:</label>
+                                <input type="text" class="form-control" name="lastname" placeholder="Enter Last Name">
+                            </div>
+                            <br/><br/>
+                            <button method="GET" type="submit" id="searchButton" class="btn btn-default">Search</button>
+                        </form>
+                    </div>
+                </center>
+            </div>
+            <!-- Add Patient Button -->
+            <div class="col-sm-4">
+                <center>
+                    <a href="patient_register.php" class="btn btn-primary btn-lg">
+                        <span class="glyphicon glyphicon-plus"></span> Add <br/>A Patient
+                    </a>
+                </center>
+            </div>
         </div>
-    </body>
+    </div>
+</div>
+</body>
 </html>
 
 <!-- To do: 1. link to add patient & search patient
