@@ -39,3 +39,4 @@ hr { /* This defines the hr line style */
 .error { /* This defines the error message */
     color: #FF0000; font: italic bold 0.9em Times New Roman;  
 }  
+#ui-datepicker-div { font-size:13px; }

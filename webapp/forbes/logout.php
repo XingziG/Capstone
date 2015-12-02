@@ -35,8 +35,8 @@ if (isset($_COOKIE['email'])) {
 					<!-- Page Information -->
 					<div class="panel panel-default">
 						<div class="panel-heading"> 
-							<center><h5>Thank you for using the CABG Expense Analyzer. <br/><br/>
-								You are now logged out!</h5></center>
+							<h5>Thank you for using the CABG Expense Analyzer. <br/><br/>
+								You are now logged out!</h5>
 						</div>	
 					</div>
 					<!-- Logout -->

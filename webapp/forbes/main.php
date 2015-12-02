@@ -37,7 +37,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             </a><br/>
             <!-- User -->
             <div class="well well">
-                <h5>Welcome, <br/> <?php echo "{$_COOKIE['name']}" ?>!</h5>
+                <h4>Welcome, <br/> <?php echo "{$_COOKIE['name']}" ?>!</h4>
             </div>
             <!-- Logout -->
             <a href="logout.php" class="btn btn-info btn-lg btn-block">
@@ -59,12 +59,10 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                 </div>
             </div>
             <!-- Search Patient Button -->
-            <div class="col-sm-6">
-                <center>
-                    <button type="button" class="btn btn-primary btn-lg" data-toggle="collapse" data-target="#search">
+            <div class="col-sm-7">
+                    <button type="button" class="btn btn-primary btn-lg  center-block" data-toggle="collapse" data-target="#search">
                         <span class="glyphicon glyphicon-search"></span> Search For <br/>A Patient
                     </button>
-                </center>
                 <br/>
                 <center>
                     <div id="search" class="collapse">
@@ -84,12 +82,10 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                 </center>
             </div>
             <!-- Add Patient Button -->
-            <div class="col-sm-4">
-                <center>
+            <div class="col-sm-4 center-block">
                     <a href="patient_register.php" class="btn btn-primary btn-lg">
                         <span class="glyphicon glyphicon-plus"></span> Add <br/>A Patient
                     </a>
-                </center>
             </div>
             <!-- Display search result -->
             <?php

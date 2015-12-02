@@ -139,9 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <input class="form-control" type="password" name="userpass" required>
                         </div>
                     </div>
-                    <center>
-                        <button type="submit" name="login" class="btn btn-info btn-lg">Login</button>
-                    </center> 
+                    <button type="submit" name="login" class="btn btn-info btn-lg center-block">Login</button> 
                 </form>
                 <!-- Registration -->
                 <hr>
@@ -182,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                     </div>
                     <center>
-                        <button type="submit" name="register" class="btn btn-info btn-lg">Register</button>
+                        <button type="submit" name="register" class="btn btn-info btn-lg center-block">Register</button>
                     </center>
                 </form> 
             </div>

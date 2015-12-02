@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </a><br/>
                     <!-- User -->
                     <div class="well well">
-                        <h5>Welcome, <br/> <?php echo "{$_COOKIE['name']}" ?>!</h5>
+                        <h4>Welcome, <br/> <?php echo "{$_COOKIE['name']}" ?>!</h4>
                     </div>
                     <!-- Logout -->
                     <a href="logout.php" class="btn btn-info btn-lg btn-block">
@@ -192,5 +192,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </script>    
     </body>
 </html>
-<!-- To do: 1. Test: after success, redirect to main page
--->
