@@ -13,46 +13,13 @@ function redirect_user($page)
 if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
     redirect_user('login.php');
 }
-// when SEARCH button is clicked
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    require('../mysqli_connect.php'); // Connect to the db.
-
-    if (isset($_GET["firstname"]) || isset($_GET["lastname"])) {
-
-
-        $firstname = $_GET["firstname"];
-        $lastname = $_GET["lastname"];
-        $query = "SELECT patient_id, patient_fname, patient_lname, DATE_FORMAT(birthdate, '%M %d, %Y'),
-              DATE_FORMAT(checkin, '%M %d, %Y'), gender
-              FROM patients WHERE patient_fname='$firstname' OR patient_lname='$lastname'";
-
-        $result = @mysqli_query($dbc, $query);
-        $rnum = mysqli_num_rows($result);
-
-        if ($rnum > 0) {
-            while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
-                $ouput = "ID: " . $row[0] . "<br>";
-                $ouput = $ouput . "FirstName: " . $row[1] . "<br>";
-                $ouput = $ouput . "LastName: " . $row[2] . "<br>";
-                $ouput = $ouput . "DOB: " . $row[3] . "<br>";
-                $ouput = $ouput . "Check-in day: " . $row[4] . "<br>";
-                $ouput = $ouput . "Gender: " . $row[5] . "<br><br>";
-                $ouput = $ouput . "<a href=\"\" style=\"text-decoration:none;\">Edit</a>" . "<br><br>";
-                echo "$ouput";
-            }
-            mysqli_free_result($result);
-        } else {
-            echo "noresult";
-        }
-    }
-    mysqli_close($dbc);
-}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="mystyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -100,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 </center>
                 <br/>
                 <center>
-                    <div id="search">
+                    <div id="search" class="collapse">
                         <form class="form-inline" role="form">
                             <div class="form-group">
                                 <label class="sr-only" for="firstname">First Name:</label>
@@ -124,12 +91,66 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     </a>
                 </center>
             </div>
+            <!-- Display search result -->
+            <?php
+            // when SEARCH button is clicked
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                require('../mysqli_connect.php'); // Connect to the db.
+
+                if (isset($_GET["firstname"]) || isset($_GET["lastname"])) {
+                    $firstname = $_GET["firstname"];
+                    $lastname = $_GET["lastname"];
+                    $query = "SELECT patient_id, patient_fname, patient_lname, DATE_FORMAT(birthdate, '%M %d, %Y'),
+                          DATE_FORMAT(checkin, '%M %d, %Y'), gender
+                          FROM patients WHERE patient_fname='$firstname' OR patient_lname='$lastname'";
+
+                    $result = @mysqli_query($dbc, $query);
+                    $rnum = mysqli_num_rows($result);
+
+                    if ($rnum > 0) {
+                        $ouput = "<div class=\"col-sm-12 result\">
+                                    <h5>You might be interested in these people.</h5>
+                                    <div class=\"panel-body\" style=\"font:1em\">
+                                    <table id=\"result\" class=\"table table-striped\" cellspacing=\"0\" width=\"100%\">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>DOB</th>
+                                            <th>Check-In Day</th>
+                                            <th>Gender</th>
+                                            <th>Edit Patient</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>";
+                        while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
+                            $ouput = $ouput . "<tr>" . "<td>" . $row[0] . "</td>";
+                            $ouput = $ouput . "<td>" . $row[1] . "</td>";
+                            $ouput = $ouput . "<td>" . $row[2] . "</td>";
+                            $ouput = $ouput . "<td>" . $row[3] . "</td>";
+                            $ouput = $ouput . "<td>" . $row[4] . "</td>";
+                            $ouput = $ouput . "<td>" . $row[5] . "</td>";
+                            $ouput = $ouput . "<td>" . "<a href=\"#\" class=\"btn btn-default\" role=\"button\">Edit Activities</a>" . "</td></tr>";
+                        }
+                        $ouput = $ouput . "</tbody></table></div></div>";
+                        mysqli_free_result($result);
+
+                    } else {
+                        $ouput = "<div class=\"col-sm-12 result\">
+                                <h5>No patients found. Please check the patient name or add a new patient.</h5></div>";
+                    }  
+                    echo "$ouput";
+                }
+                mysqli_close($dbc);
+            }
+            ?>   
         </div>
     </div>
 </div>
 </body>
 </html>
 
-<!-- To do: 1. link to add patient & search patient
+<!-- To do: 1. Add "Edit patient" link to activities page
 -->
     

@@ -150,7 +150,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <option value="other"> Others </option>
                                 </select>
                         </div>
-                        <!--<input type="submit" value="Register Paient">-->
                         <center>
                             <button method="POST" type="submit" class="btn btn-info btn-lg">Submit</button>
                         </center>      
@@ -166,8 +165,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         dateFormat: "yy-mm-dd",
                         yearRange: "-100:+0",
                         changeMonth: true,
-                        changeYear: true
+                        changeYear: true,
+                        maxDate: 0
                     });
+                });
+                // validate form input
+                $('form#patientForm :input').blur(function() {
+                    if (!($(this).attr('id') == 'datepicker' || $(this).attr('id') == 'datepicker2')) {
+                        if( $(this).val().length == 0 ) { // input is empty
+                            $(this).after($("<span class='error'> Please fill this in </span>"));
+                        }   
+                    }
+                });
+                // remove warning message when on focus
+                $('form#patientForm :input').focus(function() {
+                    $(this).next("span").empty();
                 });
             });
         </script>    
