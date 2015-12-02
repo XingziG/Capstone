@@ -1,5 +1,18 @@
 <?php
+function redirect_user($page)
+{
+    // Start defining the URL...
+    $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+    $url = rtrim($url, '/\\');
+    $url .= '/' . $page;
+    // Redirect the user:
+    header("Location: $url");
+    exit(); // Quit the script.
+}
 
+if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
+    redirect_user('login.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,9 +33,9 @@
                 <!-- Sidebar -->
                 <div class="col-sm-2 sidenav">
                     <!-- Home button -->
-                    <a href="main.php" class="btn btn-info btn-lg">
+                    <a href="main.php" class="btn btn-info btn-lg btn-block">
                         <span class="glyphicon glyphicon-home"></span> Home
-                    </a><br/><br/>
+                    </a><br/>
                     <!-- User -->
                     <div class="well well">
                         <h5>Welcome, <br/><?php echo "{$_COOKIE['name']}" ?>!</h5>
@@ -36,8 +49,12 @@
                             <li>Gender:</li>
                         </ul>
                     </div>
+                    <!-- Generate Patient Report -->
+                    <a href="logout.php" class="btn btn-info btn-lg btn-block">
+                        <span class="glyphicon glyphicon-paste"></span> Create Report
+                    </a><br/>                
                     <!-- Logout -->
-                    <a href="logout.php" class="btn btn-info btn-lg">
+                    <a href="logout.php" class="btn btn-info btn-lg btn-block">
                         <span class="glyphicon glyphicon-log-out"></span> Log out
                     </a>
                 </div>

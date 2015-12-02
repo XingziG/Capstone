@@ -32,15 +32,15 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         <!-- Sidebar -->
         <div class="col-sm-2 sidenav">
             <!-- Home button -->
-            <a href="#" class="btn btn-info btn-lg">
+            <a href="#" class="btn btn-info btn-lg btn-block">
                 <span class="glyphicon glyphicon-home"></span> Home
-            </a><br/><br/>
+            </a><br/>
             <!-- User -->
             <div class="well well">
                 <h5>Welcome, <br/> <?php echo "{$_COOKIE['name']}" ?>!</h5>
             </div>
             <!-- Logout -->
-            <a href="logout.php" class="btn btn-info btn-lg">
+            <a href="logout.php" class="btn btn-info btn-lg btn-block">
                 <span class="glyphicon glyphicon-log-out"></span> Log out
             </a>
         </div>
@@ -78,7 +78,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                 <input type="text" class="form-control" name="lastname" placeholder="Enter Last Name">
                             </div>
                             <br/><br/>
-                            <button method="GET" type="submit" id="searchButton" class="btn btn-default">Search</button>
+                            <button method="GET" type="submit" id="searchButton" name="search" class="btn btn-default">Search</button>
                         </form>
                     </div>
                 </center>
@@ -95,54 +95,56 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             <?php
             // when SEARCH button is clicked
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                require('../mysqli_connect.php'); // Connect to the db.
+                if (isset($_GET['search'])) { // search button clicked
+                    require('../mysqli_connect.php'); // Connect to the db.
 
-                if (isset($_GET["firstname"]) || isset($_GET["lastname"])) {
-                    $firstname = $_GET["firstname"];
-                    $lastname = $_GET["lastname"];
-                    $query = "SELECT patient_id, patient_fname, patient_lname, DATE_FORMAT(birthdate, '%M %d, %Y'),
-                          DATE_FORMAT(checkin, '%M %d, %Y'), gender
-                          FROM patients WHERE patient_fname='$firstname' OR patient_lname='$lastname'";
+                    if (isset($_GET["firstname"]) || isset($_GET["lastname"])) {
+                        $firstname = $_GET["firstname"];
+                        $lastname = $_GET["lastname"];
+                        $query = "SELECT patient_id, patient_fname, patient_lname, DATE_FORMAT(birthdate, '%M %d, %Y'),
+                              DATE_FORMAT(checkin, '%M %d, %Y'), gender
+                              FROM patients WHERE patient_fname='$firstname' OR patient_lname='$lastname'";
 
-                    $result = @mysqli_query($dbc, $query);
-                    $rnum = mysqli_num_rows($result);
+                        $result = @mysqli_query($dbc, $query);
+                        $rnum = mysqli_num_rows($result);
 
-                    if ($rnum > 0) {
-                        $ouput = "<div class=\"col-sm-12 result\">
-                                    <h5>You might be interested in these people.</h5>
-                                    <div class=\"panel-body\" style=\"font:1em\">
-                                    <table id=\"result\" class=\"table table-striped\" cellspacing=\"0\" width=\"100%\">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>DOB</th>
-                                            <th>Check-In Day</th>
-                                            <th>Gender</th>
-                                            <th>Edit Patient</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>";
-                        while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
-                            $ouput = $ouput . "<tr>" . "<td>" . $row[0] . "</td>";
-                            $ouput = $ouput . "<td>" . $row[1] . "</td>";
-                            $ouput = $ouput . "<td>" . $row[2] . "</td>";
-                            $ouput = $ouput . "<td>" . $row[3] . "</td>";
-                            $ouput = $ouput . "<td>" . $row[4] . "</td>";
-                            $ouput = $ouput . "<td>" . $row[5] . "</td>";
-                            $ouput = $ouput . "<td>" . "<a href=\"#\" class=\"btn btn-default\" role=\"button\">Edit Activities</a>" . "</td></tr>";
-                        }
-                        $ouput = $ouput . "</tbody></table></div></div>";
-                        mysqli_free_result($result);
+                        if ($rnum > 0) {
+                            $ouput = "<div class=\"col-sm-12 result\">
+                                        <h5>You might be interested in these people.</h5>
+                                        <div class=\"panel-body\" style=\"font:1em\">
+                                        <table id=\"result\" class=\"table table-striped\" cellspacing=\"0\" width=\"100%\">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>DOB</th>
+                                                <th>Check-In Day</th>
+                                                <th>Gender</th>
+                                                <th>Edit Patient</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>";
+                            while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
+                                $ouput = $ouput . "<tr>" . "<td>" . $row[0] . "</td>";
+                                $ouput = $ouput . "<td>" . $row[1] . "</td>";
+                                $ouput = $ouput . "<td>" . $row[2] . "</td>";
+                                $ouput = $ouput . "<td>" . $row[3] . "</td>";
+                                $ouput = $ouput . "<td>" . $row[4] . "</td>";
+                                $ouput = $ouput . "<td>" . $row[5] . "</td>";
+                                $ouput = $ouput . "<td>" . "<a href=\"#\" class=\"btn btn-default\" role=\"button\">Edit Activities</a>" . "</td></tr>";
+                            }
+                            $ouput = $ouput . "</tbody></table></div></div>";
+                            mysqli_free_result($result);
 
-                    } else {
-                        $ouput = "<div class=\"col-sm-12 result\">
-                                <h5>No patients found. Please check the patient name or add a new patient.</h5></div>";
-                    }  
-                    echo "$ouput";
+                        } else {
+                            $ouput = "<div class=\"col-sm-12 result\">
+                                    <h5>No patients found. Please check the patient name or add a new patient.</h5></div>";
+                        }  
+                        echo "$ouput";
+                    }
+                    mysqli_close($dbc);
                 }
-                mysqli_close($dbc);
             }
             ?>   
         </div>

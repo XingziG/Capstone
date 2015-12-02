@@ -8,6 +8,10 @@ function redirect_user ($page) {
     header("Location: $url"); exit(); // Quit the script.
 }
 
+if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
+    redirect_user('login.php');
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     require ('../mysqli_connect.php'); // Connect to the db.
@@ -68,15 +72,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <!-- Sidebar -->
                 <div class="col-sm-2 sidenav">
                     <!-- Home button -->
-                    <a href="main.php" class="btn btn-info btn-lg">
+                    <a href="main.php" class="btn btn-info btn-lg btn-block">
                         <span class="glyphicon glyphicon-home"></span> Home
-                    </a><br/><br/>
+                    </a><br/>
                     <!-- User -->
                     <div class="well well">
                         <h5>Welcome, <br/> <?php echo "{$_COOKIE['name']}" ?>!</h5>
                     </div>
                     <!-- Logout -->
-                    <a href="logout.php" class="btn btn-info btn-lg">
+                    <a href="logout.php" class="btn btn-info btn-lg btn-block">
                         <span class="glyphicon glyphicon-log-out"></span> Log out
                     </a>
                 </div>
