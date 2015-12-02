@@ -45,11 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         redirect_user('main.php');
 
     } else {
+        $success = false;
         // Public message:
-        echo '<h1>System Error</h1>
+        $message = '<h1>System Error</h1>
         <p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>';
         // Debugging message:
-        echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
+        $message = $message . '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
     }
     mysqli_close($dbc); // Close the database connection.
 }
@@ -90,7 +91,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <img src="head.jpg" alt="Allegheny Health Network">
                     <h1 class="head">Forbes Regional Hospital <br/> CABG Expense Analyzer </h1><hr>
                     <!-- Page Information -->
-                    <div class="panel panel-default" style="margin-left: 4em; margin-right: 4em">
+                    <p class="error" style="margin-left: 6em">
+                        <?php if(isset($success) && !$success) echo "$message" ?></p>
+                    <div class="panel panel-default">
                         <div class="panel-heading"> Please fill in the patient information below. </div>
                     </div>
                     <!-- Patient Registration fields -->

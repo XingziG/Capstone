@@ -31,6 +31,11 @@ hr { /* This defines the hr line style */
     padding: 30px;
     background-color: #FFFFFF;
 }  
+.panel-default {
+    margin-left: auto; margin-right: auto;
+    text-align: center;
+    width: 60%;
+}
 .error { /* This defines the error message */
     color: #FF0000; font: italic bold 0.9em Times New Roman;  
 }  

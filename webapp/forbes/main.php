@@ -52,7 +52,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             <h1 class="head">Forbes Regional Hospital <br/> CABG Expense Analyzer </h1>
             <hr>
             <!-- Page Information -->
-            <div class="panel panel-default" style="margin-left: 4em; margin-right: 4em">
+            <div class="panel panel-default">
                 <div class="panel-heading">
                     Please <strong>search</strong> a patient or
                     <strong>add</strong> a new patient.
@@ -110,7 +110,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
 
                         if ($rnum > 0) {
                             $ouput = "<div class=\"col-sm-12 result\">
-                                        <h5>You might be interested in these people.</h5>
+                                        <h5>You might be interested in these patients.</h5>
                                         <div class=\"panel-body\" style=\"font:1em\">
                                         <table id=\"result\" class=\"table table-striped\" cellspacing=\"0\" width=\"100%\">
                                         <thead>

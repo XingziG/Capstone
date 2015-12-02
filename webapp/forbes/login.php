@@ -68,15 +68,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $r = @mysqli_query($dbc, $q); // Run the query.
             if ($r) { // If it ran OK.
                 $successRegister = true;
+                $message = 'Successfully Registered!';
             } else {
                 // Public message:
-                echo '<h1>System Error</h1>
+                $message = '<h1>System Error</h1>
                 <p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>';
                 // Debugging message:
-                echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
+                $message = $message . '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
             }
         } else {
             $successRegister = false;
+            $message = 'The following error(s) occurred:<br />';
+            foreach ($errors as $msg) {
+                $message = $message . " - $msg<br />\n";
+            }
         }
     } else { // login button clicked
         list ($check, $data) = check_login($dbc, $_POST['username'], $_POST['userpass']);
@@ -88,9 +93,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             redirect_user('main.php');
         } else { // Unsuccessful!
             $errors = $data; // Assign $data to $errors
-            echo '<h1>Error!</h1><p class="error">The following error(s) occurred:<br />';
+            $message = 'The following error(s) occurred:<br />';
             foreach ($errors as $msg) {
-                echo " - $msg<br />\n";
+                $message = $message . " - $msg<br />\n";
             }
         }               
     }
@@ -114,7 +119,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <img src="head.jpg" alt="Allegheny Health Network">
                 <h1 class="head">Forbes Regional Hospital <br/> CABG Expense Analyzer </h1><hr>
                 <!-- Page Information -->
-                <div class="panel panel-default" style="margin-left: 4em; margin-right: 4em">
+                <p class="error" style="margin-left: 6em">
+                    <?php if(isset($check) && !$check) echo "$message" ?></p>
+                <div class="panel panel-default">
                     <div class="panel-heading"> Please enter your email and passowrd to login. </div>
                 </div>
                 <!-- Login -->
@@ -139,8 +146,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <!-- Registration -->
                 <hr>
                 <p class="error" style="margin-left: 6em;">
-                    <?php if(isset($successRegister) && $successRegister) echo 'Successfully Registered!' ?></p>
-                <div class="panel panel-default" style="margin-left: 4em; margin-right: 4em">
+                    <?php if(isset($successRegister)) echo "$message" ?></p>
+                <div class="panel panel-default">
                     <div class="panel-heading"> 
                         <label class="checkbox-inline">
                             <input type="checkbox" id="register"/>New user? Please click the checkbox. 

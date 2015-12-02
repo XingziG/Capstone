@@ -33,7 +33,7 @@ if (isset($_COOKIE['email'])) {
 					<img src="head.jpg" alt="Allegheny Health Network">
 					<h1 class="head">Forbes Regional Hospital <br/> CABG Expense Analyzer </h1><hr>
 					<!-- Page Information -->
-					<div class="panel panel-default" style="margin: 5em">
+					<div class="panel panel-default">
 						<div class="panel-heading"> 
 							<center><h5>Thank you for using the CABG Expense Analyzer. <br/><br/>
 								You are now logged out!</h5></center>
