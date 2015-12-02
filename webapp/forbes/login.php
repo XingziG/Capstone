@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <h1 class="head">Forbes Regional Hospital <br/> CABG Expense Analyzer </h1><hr>
                 <!-- Page Information -->
                 <div class="panel panel-default" style="margin-left: 4em; margin-right: 4em">
-                    <div class="panel-heading"> Please type in your user name and passowrd to login. </div>
+                    <div class="panel-heading"> Please enter your email and passowrd to login. </div>
                 </div>
                 <!-- Login -->
                 <form class="form-horizontal" method="POST" action="login.php">
@@ -138,7 +138,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </form>
                 <!-- Registration -->
                 <hr>
-                <p class="error" style="margin-left: 6em;"><?php if(isset($successRegister) && $successRegister) echo 'Successfully Registered!' ?></p>
+                <p class="error" style="margin-left: 6em;">
+                    <?php if(isset($successRegister) && $successRegister) echo 'Successfully Registered!' ?></p>
                 <div class="panel panel-default" style="margin-left: 4em; margin-right: 4em">
                     <div class="panel-heading"> 
                         <label class="checkbox-inline">
@@ -188,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // validate form input
             $('form.form-horizontal :input').blur(function() {
                 if( $(this).val().length == 0 ) { // input is empty
-                    $(this).after($("<span class='error'> Please fill this in </span>"));
+                    $(this).parent().after($("<label class='control-label col-sm-6'><span class='error'> Please fill this in </span></label>"));
                 } else if ($(this).is("#pw1") | $(this).is("#pw2")) { // when user input password
                     if ($("#pw1").val() != 0 & $("#pw2").val() != 0) { 
                         if ($("#pw2").val() != $("#pw1").val()) { // passwords do not match
@@ -202,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             });
             // remove warning message when on focus
             $('form.form-horizontal :input').focus(function() {
-                $(this).next("span").empty();
+                $(this).parent().next("label").empty();
             });
         });
         </script>    
