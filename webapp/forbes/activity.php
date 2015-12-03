@@ -52,7 +52,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         </ul>
                     </div>
                     <!-- Generate Patient Report -->
-                    <a href="logout.php" class="btn btn-info btn-lg btn-block">
+                    <a href="#" class="btn btn-info btn-lg btn-block">
                         <span class="glyphicon glyphicon-paste"></span> Patient Report
                     </a><br/>                
                     <!-- Logout -->
@@ -76,19 +76,163 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             <h3> Surgery Activities </h3>
                             <p>Please type in the activities.</p>
                             <div class="panel-group" id="surgery2">
-                                <!--Direct labor-->
+                                <!-- Anesthesiologist -->
                                 <div class="panel panel-info">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#surgery2" href="#labor"> Direct Labor </a>
+                                            <a data-toggle="collapse" data-parent="#surgery2" href="#anesthesiologist"> Anesthesiologist </a>
                                         </h4>
                                     </div>
-                                    <div id="labor" class="panel-collapse collapse in">
+                                    <!-- Anesthesiologist Table -->
+                                    <div id="anesthesiologist" class="panel-collapse collapse in">
                                         <div class="panel-body">
-                                            Direct labor
+                                            <table id="sg-an" class="table table-striped" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Activity</th>
+                                                        <th>Time (Minutes)</th>
+                                                        <th>Performer</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                    <td>Transesophaegal Echocardiogram</td>
+                                                        <td><input type="text" id="sg-an-r1-time" name="time" value=""></td>
+                                                        <td><input type="text" id="sg-an-r1-perf" name="perf" autocomplete="on"></td>                                                        
+                                                    </tr>
+                                                    <tr>
+                                                    <td>Surgery Completion OR Departure</td>
+                                                        <td><input type="text" id="sg-an-r2-time" name="time" value=""></td>
+                                                        <td><input type="text" id="sg-an-r2-perf" name="perf" autocomplete="on"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- Physician Assistant -->
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#surgery2" href="#physician"> Physician Assistant </a>
+                                        </h4>
+                                    </div>
+                                    <!-- PA Table -->
+                                    <div id="physician" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <table id="sg-pa" class="table table-striped" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Activity</th>
+                                                        <th>Time (Minutes)</th>
+                                                        <th>Performer</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                    <td>Transesophaegal Echocardiogram</td>
+                                                        <td><input type="text" id="sg-pa-r1-time" name="time" value=""></td>
+                                                        <td><input type="text" id="sg-pa-r1-perf" name="perf" autocomplete="on"></td>                                                        
+                                                    </tr>
+                                                    <tr>
+                                                    <td>Pre-Surgical Procedures</td>
+                                                        <td><input type="text" id="sg-pa-r2-time" name="time" value=""></td>
+                                                        <td><input type="text" id="sg-pa-r2-perf" name="perf" autocomplete="on"></td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td>Scavenging of the Saphenous Vein</td>
+                                                        <td><input type="text" id="sg-pa-r3-time" name="time" value=""></td>
+                                                        <td><input type="text" id="sg-pa-r3-perf" name="perf" autocomplete="on"></td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td>Grafting</td>
+                                                        <td><input type="text" id="sg-pa-r4-time" name="time" value=""></td>
+                                                        <td><input type="text" id="sg-pa-r4-perf" name="perf" autocomplete="on"></td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td>Surgery Completion to OR Departure</td>
+                                                        <td><input type="text" id="sg-pa-r5-time" name="time" value=""></td>
+                                                        <td><input type="text" id="sg-pa-r5-perf" name="perf" autocomplete="on"></td>
+                                                    </tr>                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Registered Nurse -->
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#surgery2" href="#nurse"> Physician Assistant </a>
+                                        </h4>
+                                    </div>
+                                    <!-- RN Table -->
+                                    <div id="nurse" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <table id="sg-rn" class="table table-striped" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Activity</th>
+                                                        <th>Time (Minutes)</th>
+                                                        <th>Performer</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                    <td>Pre-Surgical Procedures</td>
+                                                        <td><input type="text" id="sg-rn-r1-time" name="time" value=""></td>
+                                                        <td><input type="text" id="sg-rn-r1-perf" name="perf" autocomplete="on"></td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td>Surgery Completion to OR Departure</td>
+                                                        <td><input type="text" id="sg-rn-r2-time" name="time" value=""></td>
+                                                        <td><input type="text" id="sg-rn-r2-perf" name="perf" autocomplete="on"></td>
+                                                    </tr>                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Scub Tech -->
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#surgery2" href="#scrub"> Scrub Tech </a>
+                                        </h4>
+                                    </div>
+                                    <!-- ST Table -->
+                                    <div id="scrub" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <table id="sg-st" class="table table-striped" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Activity</th>
+                                                        <th>Time (Minutes)</th>
+                                                        <th>Performer</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                    <td>Pre-Surgical Procedures</td>
+                                                        <td><input type="text" id="sg-st-r1-time" name="time" value=""></td>
+                                                        <td><input type="text" id="sg-st-r1-perf" name="perf" autocomplete="on"></td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td>Median Sternotomy</td>
+                                                        <td><input type="text" id="sg-st-r2-time" name="time" value=""></td>
+                                                        <td><input type="text" id="sg-st-r2-perf" name="perf" autocomplete="on"></td>
+                                                    </tr>                                                    
+                                                    <tr>
+                                                    <td>Grafting</td>
+                                                        <td><input type="text" id="sg-st-r3-time" name="time" value=""></td>
+                                                        <td><input type="text" id="sg-st-r3-perf" name="perf" autocomplete="on"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                 <!--Direct material-->
                                 <div class="panel panel-info">
                                     <div class="panel-heading">
@@ -844,5 +988,5 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
 
 <!-- To do: 1. Future work: add actors & corresponding activities
             2. connect to db - display entered info
-            4. Visualization / Report
+            3. Visualization / Report
 -->

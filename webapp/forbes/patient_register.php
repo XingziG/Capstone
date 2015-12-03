@@ -157,9 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <option value="other"> Others </option>
                                 </select>
                         </div>
-                        <center>
-                            <button method="POST" type="submit" class="btn btn-info btn-lg">Submit</button>
-                        </center>      
+                        <button method="POST" type="submit" class="btn btn-info btn-lg center-block">Submit</button>
                     </form><br/>  
                 </div> 
             </div>

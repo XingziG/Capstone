@@ -59,7 +59,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                 </div>
             </div>
             <!-- Search Patient Button -->
-            <div class="col-sm-7">
+            <div class="col-sm-5 center-block">
                     <button type="button" class="btn btn-primary btn-lg  center-block" data-toggle="collapse" data-target="#search">
                         <span class="glyphicon glyphicon-search"></span> Search For <br/>A Patient
                     </button>
@@ -82,9 +82,15 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                 </center>
             </div>
             <!-- Add Patient Button -->
-            <div class="col-sm-4 center-block">
+            <div class="col-sm-3 center-block">
                     <a href="patient_register.php" class="btn btn-primary btn-lg">
                         <span class="glyphicon glyphicon-plus"></span> Add <br/>A Patient
+                    </a>
+            </div>
+            <!-- Report Button -->
+            <div class="col-sm-4 center-block">
+                    <a href="#" class="btn btn-primary btn-lg">
+                        <span class="glyphicon glyphicon-paste"></span> Hospital <br/>Report
                     </a>
             </div>
             <!-- Display search result -->
@@ -122,12 +128,13 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         </thead>
                                         <tbody>";
                             while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
-                                $ouput = $ouput . "<tr>" . "<td>" . $row[0] . "</td>";
-                                $ouput = $ouput . "<td>" . $row[1] . "</td>";
-                                $ouput = $ouput . "<td>" . $row[2] . "</td>";
-                                $ouput = $ouput . "<td>" . $row[3] . "</td>";
+                                $ouput = $ouput . "<tr>" . "<td>" . $row[0] . "</td>"; // id
+                                $ouput = $ouput . "<td>" . $row[1] . "</td>"; // first name
+                                $ouput = $ouput . "<td>" . $row[2] . "</td>"; // last name
+                                $ouput = $ouput . "<td>" . $row[3] . "</td>"; 
                                 $ouput = $ouput . "<td>" . $row[4] . "</td>";
-                                $ouput = $ouput . "<td>" . $row[5] . "</td>";
+                                $ouput = $ouput . "<td>" . $row[5] . "</td>"; // gender
+                                $pname = $row[1] . " " . $row[2];
                                 $link = "activity.php?id=" . $row[0] . "&fname=" . $row[1] . "&lname=" . $row[2] . "&sex=" . $row[5];
                                 $ouput = $ouput . "<td>" . "<a href=\"$link\" class=\"btn btn-default\" role=\"button\">Edit Activities</a>" . "</td></tr>";
                             }
@@ -150,6 +157,6 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
 </body>
 </html>
 
-<!-- To do: 1. Add "Edit patient" link to activities page
+<!-- To do: 1. Show 5 patients without checkout date
 -->
     
