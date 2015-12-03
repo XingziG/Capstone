@@ -128,7 +128,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                 $ouput = $ouput . "<td>" . $row[3] . "</td>";
                                 $ouput = $ouput . "<td>" . $row[4] . "</td>";
                                 $ouput = $ouput . "<td>" . $row[5] . "</td>";
-                                $ouput = $ouput . "<td>" . "<a href=\"main_handler.php?id=" . $row[0] ."class=\"btn btn-default\" role=\"button\">Edit Activities</a>" . "</td></tr>";
+                                $link = "activity.php?id=" . $row[0] . "&fname=" . $row[1] . "&lname=" . $row[2] . "&sex=" . $row[5];
+                                $ouput = $ouput . "<td>" . "<a href=\"$link\" class=\"btn btn-default\" role=\"button\">Edit Activities</a>" . "</td></tr>";
                             }
                             $ouput = $ouput . "</tbody></table></div></div>";
                             mysqli_free_result($result);
