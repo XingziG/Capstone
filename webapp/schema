@@ -19,7 +19,7 @@ insurance VARCHAR(25) NOT NULL,
 PRIMARY KEY (patient_id)
 );
 
-CREATE TABLE acticities (
+CREATE TABLE activities (
 activity_id SMALLINT UNSIGNED NOT NULL,
 acticity_name VARCHAR(100) NOT NULL,
 /*'surgery' or 'post-op'*/
@@ -41,7 +41,7 @@ activity_default_time MEDIUMINT UNSIGNED NOT NULL,
 /*the activity day is '0', '1', 'n' or 'd'*/
 activity_day CHAR(1),
 PRIMARY KEY (activity_id, role_id),
-FOREIGN KEY (activity_id) REFERENCES acticities (activity_id) 
+FOREIGN KEY (activity_id) REFERENCES activities (activity_id) 
 ON DELETE NO ACTION ON UPDATE NO ACTION,
 FOREIGN KEY (role_id) REFERENCES roles (role_id) 
 ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -58,11 +58,8 @@ role_id SMALLINT UNSIGNED NOT NULL,
 PRIMARY KEY (report_id),
 FOREIGN KEY (patient_id) REFERENCES patients (patient_id) 
 ON DELETE NO ACTION ON UPDATE NO ACTION,
-FOREIGN KEY (activity_id) REFERENCES acticities (activity_id) 
+FOREIGN KEY (activity_id) REFERENCES activities (activity_id) 
 ON DELETE NO ACTION ON UPDATE NO ACTION,
 FOREIGN KEY (role_id) REFERENCES roles (role_id) 
 ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-
-
-
