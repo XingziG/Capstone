@@ -1,3 +1,6 @@
+/* This trigger automatically generates new records
+into reports table for each newly generated patient */
+
 delimiter //
 
 CREATE TRIGGER add_new_patients_report
