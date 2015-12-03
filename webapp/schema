@@ -19,7 +19,7 @@ insurance VARCHAR(25) NOT NULL,
 PRIMARY KEY (patient_id)
 );
 
-CREATE TABLE activities (
+CREATE TABLE acticities (
 activity_id SMALLINT UNSIGNED NOT NULL,
 acticity_name VARCHAR(100) NOT NULL,
 /*'surgery' or 'post-op'*/
