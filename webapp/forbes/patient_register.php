@@ -140,19 +140,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group">
                     <label class="control-label col-sm-4"> Gender </label>
                     <label class="radio-inline">
-                        <input type="radio" name="sex" value="male" checked="checked"> Male
+                        <input type="radio" name="sex" value="M" checked="checked"> Male
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="sex" value="female"> Female
+                        <input type="radio" name="sex" value="F"> Female
                     </label>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-4"> Have diabetes? </label>
                     <label class="radio-inline">
-                        <input type="radio" name="diabetes" value="no" checked="checked"> No
+                        <input type="radio" name="diabetes" value="N" checked="checked"> No
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="diabetes" value="yes"> Yes
+                        <input type="radio" name="diabetes" value="Y"> Yes
                     </label>
                 </div>
                 <div class="form-group">
