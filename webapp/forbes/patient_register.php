@@ -38,20 +38,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $r = @mysqli_query($dbc, $q); // Run the query.
 
     if ($r) { // If it ran OK.
-        $success = true;
+        // create new records of this patient in the report table
+        // first select all records from activ_role table
+        $activ_role_q = "SELECT activity_id, role_id, activity_default_time FROM activ_role";
+        $activ_role_r = @mysqli_query($dbc, $q); // Run the query.
+        $activ_role_num = mysqli_num_rows($result);
+        if ($activ_role_num > 0) {
+            // generate new records into report table
+            // for each activity under this patient, time duration is default duration, freq is 0
+            while ($activ_role_row = mysqli_fetch_array($result, MYSQLI_NUM)) {
+                $report_q = "INSERT INTO reports (patient_id, activity_id, role_id, time_duration, freq, performer) VALUES ('$id', '$activ_role_row[0]','$activ_role_row[1]', '$activ_role_row[2]', 0, '')";
+            }
+            $success = true;
+        } else {
+            $success = false;
+        }
+    } else {
+        $success = false;
+    }
+
+    if ($success) { // two processes are success!
         $message = "Patient Successfully Added!";
         echo "<script type='text/javascript'>
             alert('$message'); window.location.replace(\"main.php\");</script>";
         redirect_user('main.php');
 
     } else {
-        $success = false;
         // Public message:
         $message = '<h1>System Error</h1>
         <p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>';
         // Debugging message:
         $message = $message . '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
     }
+
     mysqli_close($dbc); // Close the database connection.
 }
 ?>

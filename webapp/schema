@@ -1,3 +1,11 @@
+drop trigger add_new_patients_report;
+drop table reports;
+drop table activ_role;
+drop table roles;
+drop table activities;
+drop table patients;
+drop table users;
+
 CREATE TABLE users (
 user_id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 name VARCHAR(100) NOT NULL,
@@ -22,7 +30,7 @@ PRIMARY KEY (patient_id)
 CREATE TABLE activities (
 activity_id SMALLINT UNSIGNED NOT NULL,
 acticity_name VARCHAR(100) NOT NULL,
-/*'surgery' or 'post-op'*/
+/*'s' or 'po'*/
 activity_category CHAR(7) NOT NULL,
 PRIMARY KEY (activity_id)
 );
@@ -39,7 +47,7 @@ activity_id SMALLINT UNSIGNED NOT NULL,
 role_id SMALLINT UNSIGNED NOT NULL,
 activity_default_time MEDIUMINT UNSIGNED NOT NULL,
 /*the activity day is '0', '1', 'n' or 'd'*/
-activity_day CHAR(1),
+activity_day CHAR(1) NOT NULL,
 PRIMARY KEY (activity_id, role_id),
 FOREIGN KEY (activity_id) REFERENCES activities (activity_id) 
 ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -54,6 +62,7 @@ time_duration MEDIUMINT UNSIGNED NOT NULL,
 performer VARCHAR(100) NOT NULL,
 patient_id VARCHAR(100) NOT NULL,
 activity_id SMALLINT UNSIGNED NOT NULL,
+activity_day CHAR(1) NOT NULL,
 role_id SMALLINT UNSIGNED NOT NULL,
 PRIMARY KEY (report_id),
 FOREIGN KEY (patient_id) REFERENCES patients (patient_id) 
