@@ -64,17 +64,20 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                 <div class="col-sm-9 main">
                     <img src="head.jpg" alt="Allegheny Health Network">
                     <h1 class="head">Forbes Regional Hospital <br/> CABG Expense Analyzer </h1><hr>
+                    <div class="panel panel-default" style="width:100%">
+                        <div class="panel-heading"> Please click on the <strong>CABG Surgery</strong> or 
+                            <strong>Postoperative Surgery</strong> and then the <strong>actor</strong> 
+                            to fill in the activity time, frequency and actor's name. </div>
+                    </div>
                     <!-- Header with surgery & postop care selection -->
                     <ul class="nav nav-pills nav-justified">
                         <li class="active"><a data-toggle="pill" href="#surgery"> <h5>CABG Surgery</h5> </a></li>
                         <li><a data-toggle="pill" href="#postop"> <h5>Postoperative Care</h5> </a></li>
-                    </ul>
+                    </ul><br/>
                     <!-- Activity Content -->
                     <div class="tab-content">
                         <!-- Surgery Activity Content -->
                         <div id="surgery" class="tab-pane fade in active">
-                            <h3> Surgery Activities </h3>
-                            <p>Please type in the activities.</p>
                             <div class="panel-group" id="surgery2">
                                 <!-- Anesthesiologist -->
                                 <div class="panel panel-info">
@@ -264,10 +267,6 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         </div>
                         <!-- Post-Op Care Content -->
                         <div id="postop" class="tab-pane fade in">
-                            <div class="panel panel-default" style="width:100%">
-                                <div class="panel-heading"> Please click on the <strong>day</strong> of the care and the 
-                                <strong>actor</strong> to fill in the activity time, frequency and actor's name. </div>
-                            </div>
                             <!-- Post-Op Day Selection -->
                             <ul class="nav nav-tabs nav-justified">
                                 <li class="active"><a data-toggle="tab" href="#day0"> Day 0 </a></li>
