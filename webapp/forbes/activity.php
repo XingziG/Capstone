@@ -392,7 +392,9 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             </div>
                                 <button type="submit" class="btn btn-info btn-lg center-block" name="surgery">Submit</button>
                             </form>    
+
                         </div>
+
                         <!-- Post-Op Care Content -->
                         <div id="postop" class="tab-pane fade in">
                             <!-- Post-Op Day Selection -->
@@ -978,6 +980,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <button type="submit" class="btn btn-info btn-lg center-block" name="day2">Submit</button>
                                     </form>    
                                 </div>
+
                                 <div id="dday" class="tab-pane fade">
                                     <form method="POST" action="active_handler.php">
                                         <div class="panel-group" id="postdday">
@@ -1169,8 +1172,18 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </div>
                                         </div>
                                     </div>
+<<<<<<< Updated upstream
                                         <button type="submit" class="btn btn-info btn-lg center-block" name="dday">Submit</button>
                                     </form>    
+=======
+<<<<<<< HEAD
+                                    <button type="submit" class="btn btn-info btn-lg center-block" name="dday">Submit</button>
+
+=======
+                                        <button type="submit" class="btn btn-info btn-lg center-block" name="dday">Submit</button>
+                                    </form>    
+>>>>>>> origin/login_page
+>>>>>>> Stashed changes
                                 </div>
                             </div>
                         </div>                
