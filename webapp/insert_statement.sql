@@ -1,4 +1,3 @@
-
 /* roles table */
 INSERT INTO roles (role_id, role_name, salary) VALUES (1,'Anesthesiologist',180000);
 INSERT INTO roles (role_id, role_name, salary) VALUES (2,'Cardiologist',50000);
