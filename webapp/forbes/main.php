@@ -123,7 +123,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                 <th>DOB</th>
                                                 <th>Check-In Day</th>
                                                 <th>Gender</th>
-                                                <th>Edit Patient</th>
+                                                <th>Activities & Report</th>
                                             </tr>
                                         </thead>
                                         <tbody>";
@@ -136,7 +136,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                 $ouput = $ouput . "<td>" . $row[5] . "</td>"; // gender
                                 $pname = $row[1] . " " . $row[2];
                                 $link = "activity.php?id=" . $row[0] . "&fname=" . $row[1] . "&lname=" . $row[2] . "&sex=" . $row[5];
-                                $ouput = $ouput . "<td>" . "<a href=\"$link\" class=\"btn btn-default\" role=\"button\">Edit Activities</a>" . "</td></tr>";
+                                $ouput = $ouput . "<td>" . "<a href=\"$link\" class=\"btn btn-default\" role=\"button\">Go To Patient</a>" . "</td></tr>";
                             }
                             $ouput = $ouput . "</tbody></table></div></div>";
                             mysqli_free_result($result);
@@ -157,8 +157,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
 </body>
 </html>
 
-<!-- To do: 1. Show 5 patients without checkout date
+<!-- To do: 1. Show 5 patients without checkout date?
             2. Add correct activities in activities table
             3. Add correct activities-role relations in activ_role table
 -->
-    
