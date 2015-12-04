@@ -9,7 +9,7 @@ function redirect_user($page)
     header("Location: $url");
     exit(); // Quit the script.
 }
-/*
+
 function get_result($field, $aid, $ad, $rid) {
     require ('../mysqli_connect.php'); // Connect to the db.
     $pid = $_GET["id"];
@@ -19,12 +19,12 @@ function get_result($field, $aid, $ad, $rid) {
         $row = mysqli_fetch_assoc($r);
         return $row[$field];
     } 
-}*/
-
+}
+/*
 function get_result($field, $aid, $ad, $rid) {
     $value = $result[$aid][$ad][$rid];
     return $value[$field];
-}
+}*/
 
 if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
     redirect_user('login.php');
