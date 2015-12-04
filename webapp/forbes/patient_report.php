@@ -20,13 +20,14 @@ function get_cost($type, $rid)
     } else {
         $q = "SELECT SUM(freq * time_duration) as 'Total' FROM reports WHERE (patient_id=$pid AND role_id=$rid)";
     }  
-    $q2 = "SELECT salary FROM roles WHERE role_id=$rid";
-    $r = @mysqli_query($dbc, $q);  // run query 
+    $r = @mysqli_query($dbc, $q);  // run query
+    $q2 = "SELECT salary FROM roles WHERE role_id=$rid";   
     $r2 = @mysqli_query($dbc, $q2);  // run query 
     if (mysqli_num_rows($r) == 1 & mysqli_num_rows($r2) == 1) { // ok
         $row = mysqli_fetch_assoc($r);
-        $row2 = mysqli_fetch_assoc($r);
-        return $row['Total'] * $row2['salary'];
+        $row2 = mysqli_fetch_assoc($r2);
+        $result = $row['Total'] * $row2['salary'] / 60;
+        return number_format($result,0);
     }
     mysqli_close($dbc);
 }
@@ -356,7 +357,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         function calculateSum() {
             var sum = 0;
             $(".sg").each(function() { // iterate through each td based on class
-                var value = $(this).text();
+                var value = $(this).text().replace(',', '');
                 if(!isNaN(value) && value.length != 0) { // add only if the value is number
                     sum += parseFloat(value);
                 }
@@ -366,7 +367,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var sum = 0;
             // iterate through each td based on class and add the values
             $(".po").each(function() {
-                var value = $(this).text();  
+                var value = $(this).text().replace(',', '');  
                 if(!isNaN(value) && value.length != 0) { // add only if the value is number
                     sum += parseFloat(value);
                 }
@@ -375,7 +376,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
 
             var sum = 0;
             $(".to").each(function() {
-                var value = $(this).text();
+                var value = $(this).text().replace(',', '');
                 if(!isNaN(value) && value.length != 0) { // add only if the value is number
                     sum += parseFloat(value);
                 }
