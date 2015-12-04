@@ -11,17 +11,17 @@ function redirect_user($page)
 }
 
 function get_result($field, $aid, $ad, $rid) {
-    require "../mysqli_connect.php"; // Connect to the db.
+    require ('../mysqli_connect.php'); // Connect to the db.
     $pid = $_GET["id"];
-    $q = "SELECT * FROM reports WHERE (patient_id=$pid AND activity_id=$aid) AND (activity_day=$ad AND role_id=$rid);";
+    $q = "SELECT * FROM reports WHERE (patient_id='$pid' AND activity_id='$aid') AND (activity_day='$ad' AND role_id='$rid');";
     $r = @mysqli_query($dbc, $q);  // run query       
     if (mysqli_num_rows($r) == 1) { // error    
         $row = mysqli_fetch_assoc($r);
         return $row[$field];
     } 
 }
-
-/*function get_result($field, $aid, $ad, $rid) {
+/*
+function get_result($field, $aid, $ad, $rid) {
     $value = $result[$aid][$ad][$rid];
     return $value[$field];
 }*/
@@ -418,12 +418,22 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-                                                            <td>Stay With Patient</td>
+                                                            <td>Stay With Patient (Shift 1)</td>
                                                                 <td><input type="text" id="d0-rn-r1-freq" name="7-0-8-freq"
                                                                            value="<?php echo get_result('freq',7,0,8) ?>"></td>
                                                                 <td><input type="text" id="d0-rn-r1-time" name="7-0-8-time"
                                                                            value="<?php echo get_result('time_duration',7,0,8) ?>"></td>
                                                                 <td><input type="text" id="d0-rn-r1-perf" name="7-0-8-perf" autocomplete="on"
+                                                                           value="<?php echo get_result('performer',7,0,8) ?>"></td>
+                                                                <td><span class="total"></span></td>                                                        
+                                                            </tr>
+                                                            <tr>
+                                                            <td>Stay With Patient (Shift 2)</td>
+                                                                <td><input type="text" id="d0-rn-r2-freq" name="7-0-8-freq"
+                                                                           value="<?php echo get_result('freq',7,0,8) ?>"></td>
+                                                                <td><input type="text" id="d0-rn-r2-time" name="7-0-8-time"
+                                                                           value="<?php echo get_result('time_duration',7,0,8) ?>"></td>
+                                                                <td><input type="text" id="d0-rn-r2-perf" name="7-0-8-perf" autocomplete="on"
                                                                            value="<?php echo get_result('performer',7,0,8) ?>"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
@@ -610,11 +620,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                             </tr>     
                                                             <tr>
                                                             <td>Clean Patient</td>
-                                                                <td><input type="text" id="d1-rn-r9-freq" name="15-1-8-freq"
+                                                                <td><input type="text" id="d1-rn-r9-freq" name="freq"
                                                                            value="<?php echo get_result('freq',15,1,8) ?>"></td>
-                                                                <td><input type="text" id="d1-rn-r9-time" name="15-1-8-time"
+                                                                <td><input type="text" id="d1-rn-r9-time" name="time"
                                                                            value="<?php echo get_result('time_duration',15,1,8) ?>"></td>
-                                                                <td><input type="text" id="d1-rn-r9-perf" name="15-1-8-perf" autocomplete="on"
+                                                                <td><input type="text" id="d1-rn-r9-perf" name="perf" autocomplete="on"
                                                                            value="<?php echo get_result('performer',15,1,8) ?>"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>                                                             
@@ -705,7 +715,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                                 <td><input type="text" id="d1-rt-r1-time" name="20-1-12-time"
                                                                            value="<?php echo get_result('time_duration',20,1,12) ?>"></td>
                                                                 <td><input type="text" id="d1-rt-r1-perf" name="20-1-12-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',20,1,12) ?>"></td>
+                                                                           value="<?php echo get_result('perf',20,1,12) ?>"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                         </tbody>
@@ -777,11 +787,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                             <tr>
                                                             <td>Check Vitals</td>
                                                                 <td><input type="text" id="d2-rn-r1-freq" name="8-n-8-freq"
-                                                                           value="<?php echo get_result('freq',8,'n',8) ?>"></td>
+                                                                           value="<?php echo get_result('freq',8,n,8) ?>"></td>
                                                                 <td><input type="text" id="d2-rn-r1-time" name="8-n-8-time"
-                                                                           value="<?php echo get_result('time_duration',8,'n',8) ?>"></td>
+                                                                           value="<?php echo get_result('time_duration',8,n,8) ?>"></td>
                                                                 <td><input type="text" id="d2-rn-r1-perf" name="8-n-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',8,'n',8) ?>"></td>
+                                                                           value="<?php echo get_result('time_duration',8,n,8) ?>"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                             <tr>
@@ -791,7 +801,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                                 <td><input type="text" id="d2-rn-r2-time" name="9-n-8-time"
                                                                            value="<?php echo get_result('time_duration',9,'n',8) ?>"></td>
                                                                 <td><input type="text" id="d2-rn-r2-perf" name="9-n-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',9,n,8) ?>"></td>
+                                                                           value="<?php echo get_result('perf',9,n,8) ?>"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                             <tr>
@@ -801,67 +811,50 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                                 <td><input type="text" id="d2-rn-r3-time" name="10-n-8-time"
                                                                            value="<?php echo get_result('time_duration',10,'n',8) ?>"></td>
                                                                 <td><input type="text" id="d2-rn-r3-perf" name="10-n-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',10,'n',8) ?>"></td>
+                                                                           value="<?php echo get_result('perf',10,'n',8) ?>"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>  
                                                             <tr>
                                                             <td>Provide Meals</td>
-                                                                <td><input type="text" id="d2-rn-r4-freq" name="11-n-8-freq"
-                                                                           value="<?php echo get_result('freq',11,'n',8) ?>"></td>
-                                                                <td><input type="text" id="d2-rn-r4-time" name="11-n-8-time"
+                                                                <td><input type="text" id="d2-rn-r4-freq" name="freq"></td>
+                                                                <td><input type="text" id="d2-rn-r4-time" name="time"
                                                                            value="<?php echo get_result('time_duration',11,'n',8) ?>"></td>
-                                                                <td><input type="text" id="d2-rn-r4-perf" name="11-n-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',11,'n',8) ?>"></td>
+                                                                <td><input type="text" id="d2-rn-r4-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                             <tr>
                                                             <td>Monitor Intake Output</td>
-                                                                <td><input type="text" id="d2-rn-r5-freq" name="12-n-8-freq"
-                                                                           value="<?php echo get_result('freq',12,'n',8) ?>"></td>
-                                                                <td><input type="text" id="d2-rn-r5-time" name="12-n-8-time"
-                                                                           value="<?php echo get_result('time_duration',12,'n',8) ?>"></td>
-                                                                <td><input type="text" id="d2-rn-r5-perf" name="12-n-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',12,'n',8) ?>"></td>
+                                                                <td><input type="text" id="d2-rn-r5-freq" name="freq"></td>
+                                                                <td><input type="text" id="d2-rn-r5-time" name="time" value="10"></td>
+                                                                <td><input type="text" id="d2-rn-r5-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>  
                                                             <tr>
                                                             <td>Stand Patient</td>
-                                                                <td><input type="text" id="d2-rn-r6-freq" name="23-n-8-freq"
-                                                                           value="<?php echo get_result('freq',23,'n',8) ?>"></td>
-                                                                <td><input type="text" id="d2-rn-r6-time" name="23-n-8-time"
-                                                                           value="<?php echo get_result('time_duration',23,'n',8) ?>"></td>
-                                                                <td><input type="text" id="d2-rn-r6-perf" name="23-n-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',23,'n',8) ?>"></td>
+                                                                <td><input type="text" id="d2-rn-r6-freq" name="freq"></td>
+                                                                <td><input type="text" id="d2-rn-r6-time" name="time" value="15"></td>
+                                                                <td><input type="text" id="d2-rn-r6-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr> 
                                                             <tr>
                                                             <td>Walk Patient</td>
-                                                                <td><input type="text" id="d2-rn-r7-freq" name="13-n-8-freq"
-                                                                           value="<?php echo get_result('freq',13,'n',8) ?>"></td>
-                                                                <td><input type="text" id="d2-rn-r7-time" name="13-n-8-time"
-                                                                           value="<?php echo get_result('time_duration',13,'n',8) ?>"></td>
-                                                                <td><input type="text" id="d2-rn-r7-perf" name="13-n-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',13,'n',8) ?>"></td>
+                                                                <td><input type="text" id="d2-rn-r7-freq" name="freq"></td>
+                                                                <td><input type="text" id="d2-rn-r7-time" name="time" value="10"></td>
+                                                                <td><input type="text" id="d2-rn-r7-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                             <tr>
                                                             <td>Family Education</td>
-                                                                <td><input type="text" id="d2-rn-r8-freq" name="14-n-8-freq"
-                                                                           value="<?php echo get_result('freq',14,'n',8) ?>"></td>
-                                                                <td><input type="text" id="d2-rn-r8-time" name="14-n-8-time"
-                                                                           value="<?php echo get_result('time_duration',14,'n',8) ?>"></td>
-                                                                <td><input type="text" id="d2-rn-r8-perf" name="14-n-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',14,'n',8) ?>"></td>
+                                                                <td><input type="text" id="d2-rn-r8-freq" name="freq"></td>
+                                                                <td><input type="text" id="d2-rn-r8-time" name="time" value="90"></td>
+                                                                <td><input type="text" id="d2-rn-r8-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>     
                                                             <tr>
                                                             <td>Clean Patient</td>
-                                                                <td><input type="text" id="d2-rn-r9-freq" name="15-n-8-freq"
-                                                                           value="<?php echo get_result('freq',15,'n',8) ?>"></td>
-                                                                <td><input type="text" id="d2-rn-r9-time" name="15-n-8-time"
-                                                                           value="<?php echo get_result('time_duration',15,'n',8) ?>"></td>
-                                                                <td><input type="text" id="d2-rn-r9-perf" name="15-n-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',15,'n',8) ?>"></td>
+                                                                <td><input type="text" id="d2-rn-r9-freq" name="freq"></td>
+                                                                <td><input type="text" id="d2-rn-r9-time" name="time" value="60"></td>
+                                                                <td><input type="text" id="d2-rn-r9-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>                                                             
                                                         </tbody>
@@ -891,32 +884,24 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                         <tbody>
                                                             <tr>
                                                             <td>Check Lab Results</td>
-                                                                <td><input type="text" id="d2-pa-r1-freq" name="17-n-10-freq"
-                                                                           value="<?php echo get_result('freq',17,'n',10) ?>"></td>
-                                                                <td><input type="text" id="d2-pa-r1-time" name="17-n-10-time"
-                                                                           value="<?php echo get_result('time_duration',17,'n',10) ?>"></td>
-                                                                <td><input type="text" id="d2-pa-r1-perf" name="17-n-10-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',17,'n',10) ?>"></td>
+                                                                <td><input type="text" id="d2-pa-r1-freq" name="freq"
+                                                                           value="<?php echo get_result('time_duration',21,1,4) ?>"></td>
+                                                                <td><input type="text" id="d2-pa-r1-time" name="time" value="5"></td>
+                                                                <td><input type="text" id="d2-pa-r1-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                             <tr>
                                                             <td>Talk to Patient, Nurse</td>
-                                                                <td><input type="text" id="d2-pa-r2-freq" name="24-n-10-freq"
-                                                                           value="<?php echo get_result('freq',24,'n',10) ?>"></td>
-                                                                <td><input type="text" id="d2-pa-r2-time" name="24-n-10-time"
-                                                                           value="<?php echo get_result('time_duration',24,'n',10) ?>"></td>
-                                                                <td><input type="text" id="d2-pa-r2-perf" name="24-n-10-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',24,'n',10) ?>"></td>
+                                                                <td><input type="text" id="d2-pa-r2-freq" name="freq"></td>
+                                                                <td><input type="text" id="d2-pa-r2-time" name="time" value="15"></td>
+                                                                <td><input type="text" id="d2-pa-r2-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                             <tr>
                                                             <td>Place Orders, Write Notes</td>
-                                                                <td><input type="text" id="d2-pa-r3-freq" name="16-n-10-freq"
-                                                                           value="<?php echo get_result('freq',16,'n',10) ?>"></td>
-                                                                <td><input type="text" id="d2-pa-r3-time" name="16-n-10-time"
-                                                                           value="<?php echo get_result('time_duration',16,'n',10) ?>"></td>
-                                                                <td><input type="text" id="d2-pa-r3-perf" name="16-n-10-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',16,'n',10) ?>"></td>
+                                                                <td><input type="text" id="d2-pa-r3-freq" name="freq"></td>
+                                                                <td><input type="text" id="d2-pa-r3-time" name="time" value="10"></td>
+                                                                <td><input type="text" id="d2-pa-r3-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>                                                            
                                                         </tbody>
@@ -946,12 +931,9 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                         <tbody>
                                                             <tr>
                                                             <td>Plan, Review Case</td>
-                                                                <td><input type="text" id="d2-cm-r1-freq" name="21-n-4-freq"
-                                                                           value="<?php echo get_result('freq',21,'n',4) ?>"></td>
-                                                                <td><input type="text" id="d2-cm-r1-time" name="21-n-4-time"
-                                                                           value="<?php echo get_result('time_duration',21,'n',4) ?>"></td>
-                                                                <td><input type="text" id="d2-cm-r1-perf" name="21-n-4-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',21,'n',4) ?>"></td>
+                                                                <td><input type="text" id="d2-cm-r1-freq" name="freq"></td>
+                                                                <td><input type="text" id="d2-cm-r1-time" name="time" value="20"></td>
+                                                                <td><input type="text" id="d2-cm-r1-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                         </tbody>
@@ -987,83 +969,59 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                         <tbody>
                                                             <tr>
                                                             <td>Check Vitals</td>
-                                                                <td><input type="text" id="dd-rn-r1-freq" name="8-d-8-freq"
-                                                                           value="<?php echo get_result('freq',8,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r1-time" name="8-d-8-time"
-                                                                           value="<?php echo get_result('time_duration',8,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r1-perf" name="8-d-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',8,'d',8) ?>"></td>
+                                                                <td><input type="text" id="dd-rn-r1-freq" name="freq"></td>
+                                                                <td><input type="text" id="dd-rn-r1-time" name="time" value="5"></td>
+                                                                <td><input type="text" id="dd-rn-r1-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                             <tr>
                                                             <td>Give Medicine</td>
-                                                                <td><input type="text" id="dd-rn-r2-freq" name="9-d-8-freq"
-                                                                           value="<?php echo get_result('freq',9,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r2-time" name="9-d-8-time"
-                                                                           value="<?php echo get_result('time_duration',9,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r2-perf" name="9-d-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',9,'d',8) ?>"></td>
+                                                                <td><input type="text" id="dd-rn-r2-freq" name="freq"></td>
+                                                                <td><input type="text" id="dd-rn-r2-time" name="time" value="5"></td>
+                                                                <td><input type="text" id="dd-rn-r2-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                             <tr>
                                                             <td>Check X-Ray, EKG</td>
-                                                                <td><input type="text" id="dd-rn-r3-freq" name="10-d-8-freq"
-                                                                           value="<?php echo get_result('freq',10,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r3-time" name="10-d-8-time"
-                                                                           value="<?php echo get_result('time_duration',10,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r3-perf" name="10-d-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',10,'d',8) ?>"></td>
+                                                                <td><input type="text" id="dd-rn-r3-freq" name="freq"></td>
+                                                                <td><input type="text" id="dd-rn-r3-time" name="time" value="10"></td>
+                                                                <td><input type="text" id="dd-rn-r3-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>  
                                                             <tr>
                                                             <td>Provide Meals</td>
-                                                                <td><input type="text" id="dd-rn-r4-freq" name="11-d-8-freq" 
-                                                                           value="<?php echo get_result('freq',11,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r4-time" name="11-d-8-time"
-                                                                           value="<?php echo get_result('time_duration',11,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r4-perf" name="11-d-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',11,'d',8) ?>"></td>
+                                                                <td><input type="text" id="dd-rn-r4-freq" name="freq"></td>
+                                                                <td><input type="text" id="dd-rn-r4-time" name="time" value="15"></td>
+                                                                <td><input type="text" id="dd-rn-r4-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                             <tr>
                                                             <td>Monitor Intake Output</td>
-                                                                <td><input type="text" id="dd-rn-r5-freq" name="12-d-8-freq"
-                                                                           value="<?php echo get_result('freq',12,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r5-time" name="12-d-8-time"
-                                                                           value="<?php echo get_result('time_duration',12,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r5-perf" name="12-d-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',12,'d',8) ?>"></td>
+                                                                <td><input type="text" id="dd-rn-r5-freq" name="freq"></td>
+                                                                <td><input type="text" id="dd-rn-r5-time" name="time" value="10"></td>
+                                                                <td><input type="text" id="dd-rn-r5-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>  
                                                             <tr>
                                                             <td>Stand Patient</td>
-                                                                <td><input type="text" id="dd-rn-r6-freq" name="23-d-8-freq"
-                                                                           value="<?php echo get_result('freq',23,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r6-time" name="23-d-8-time"
-                                                                           value="<?php echo get_result('time_duration',23,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r6-perf" name="23-d-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',23,'d',8) ?>"></td>
+                                                                <td><input type="text" id="dd-rn-r6-freq" name="freq"></td>
+                                                                <td><input type="text" id="dd-rn-r6-time" name="time" value="15"></td>
+                                                                <td><input type="text" id="dd-rn-r6-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr> 
                                                             <tr>
                                                             <td>Walk Patient</td>
-                                                                <td><input type="text" id="dd-rn-r7-freq" name="13-d-8-freq"
-                                                                           value="<?php echo get_result('freq',13,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r7-time" name="13-d-8-time"
-                                                                           value="<?php echo get_result('time_duration',13,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r7-perf" name="13-d-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',13,'d',8) ?>"></td>
+                                                                <td><input type="text" id="dd-rn-r7-freq" name="freq"></td>
+                                                                <td><input type="text" id="dd-rn-r7-time" name="time" value="10"></td>
+                                                                <td><input type="text" id="dd-rn-r7-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                             <tr>
                                                             <td>Family Education</td>
-                                                                <td><input type="text" id="dd-rn-r8-freq" name="14-d-8-freq"
-                                                                           value="<?php echo get_result('freq',14,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r8-time" name="14-d-8-time"
-                                                                           value="<?php echo get_result('time_duration',14,'d',8) ?>"></td>
-                                                                <td><input type="text" id="dd-rn-r8-perf" name="14-d-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',14,'d',8) ?>"></td>
-                                                                <td><span class="total"></span></td>                                                  
+                                                                <td><input type="text" id="dd-rn-r8-freq" name="freq"></td>
+                                                                <td><input type="text" id="dd-rn-r8-time" name="time" value="90"></td>
+                                                                <td><input type="text" id="dd-rn-r8-perf" name="perf" autocomplete="on"></td>
+                                                                <td><span class="total"></span></td>                                                        
                                                             </tr>                                                    
                                                         </tbody>
                                                     </table>
@@ -1092,12 +1050,9 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                         <tbody>
                                                             <tr>
                                                             <td>Write Discharge Summary</td>
-                                                                <td><input type="text" id="dd-pa-r1-freq" name="18-d-10-freq"
-                                                                           value="<?php echo get_result('freq',18,'d',10) ?>"></td>
-                                                                <td><input type="text" id="dd-pa-r1-time" name="18-d-10-time"
-                                                                           value="<?php echo get_result('time_duration',18,'d',10) ?>"></td>
-                                                                <td><input type="text" id="dd-pa-r1-perf" name="18-d-10-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',18,'d',10) ?>"></td>
+                                                                <td><input type="text" id="dd-pa-r1-freq" name="freq"></td>
+                                                                <td><input type="text" id="dd-pa-r1-time" name="time" value="75"></td>
+                                                                <td><input type="text" id="dd-pa-r1-perf" name="perf" autocomplete="on"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                         </tbody>
@@ -1126,14 +1081,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-                                                            <td>Talk to Family / Social Worker</td>
-                                                                <td><input type="text" id="dd-cm-r1-freq" name="22-d-4-freq"
-                                                                           value="<?php echo get_result('freq',22,'d',4) ?>"></td>
-                                                                <td><input type="text" id="dd-cm-r1-time" name="22-d-4-time"
-                                                                           value="<?php echo get_result('time_duration',22,'d',4) ?>"></td>
-                                                                <td><input type="text" id="dd-cm-r1-perf" name="22-d-4-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',22,'d',4) ?>"></td>
-                                                                <td><span class="total"></span></td>                                                   
+                                                            <td>Talk to Patient, Family, etc</td>
+                                                                <td><input type="text" id="dd-cm-r1-freq" name="freq"></td>
+                                                                <td><input type="text" id="dd-cm-r1-time" name="time" value="120"></td>
+                                                                <td><input type="text" id="dd-cm-r1-perf" name="perf" autocomplete="on"></td>
+                                                                <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                         </tbody>
                                                     </table>

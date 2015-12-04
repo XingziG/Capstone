@@ -96,23 +96,6 @@ INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_da
 INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (21,4,20,'1');
 INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (21,4,20,'n');
 INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (22,4,120,'d');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (11,8,15,'1');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (11,8,15,'n');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (11,8,15,'d');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (23,8,30,'1');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (23,8,30,'n');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (23,8,30,'d');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (13,8,20,'1');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (13,8,20,'n');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (13,8,20,'d');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (14,8,15,'1');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (14,8,15,'n');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (14,8,90,'d');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (15,8,60,'1');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (15,8,60,'n');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (16,10,10,'1');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (16,10,10,'n');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (19,12,15,'0');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (24,10,15,'1');
-INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (24,10,15,'n');
+
+
 
