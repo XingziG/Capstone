@@ -117,7 +117,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                     <div class="tab-content">
                         <!-- Surgery Activity Content -->
                         <div id="surgery" class="tab-pane fade in active">
-                            <div class="panel-group" id="surgery2">
+                            <form method="POST" action="active_handler.php">
+                                <div class="panel-group" id="surgery2">
                                 <!-- Anesthesiologist -->
                                 <div class="panel panel-info">
                                     <div class="panel-heading">
@@ -389,7 +390,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                     </div>                             
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-info btn-lg center-block" name="surgery">Submit</button>
+                                <button type="submit" class="btn btn-info btn-lg center-block" name="surgery">Submit</button>
+                            </form>    
                         </div>
                         <!-- Post-Op Care Content -->
                         <div id="postop" class="tab-pane fade in">
@@ -403,7 +405,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             <!-- Content for each Post-Op Day -->
                             <div class="tab-content">
                                 <div id="day0" class="tab-pane fade in active">
-                                    <div class="panel-group" id="postday0">
+                                    <form method="POST" action="active_handler.php">
+                                        <div class="panel-group" id="postday0">
                                         <!--RN-->
                                         <div class="panel panel-info">
                                             <div class="panel-heading">
@@ -511,10 +514,12 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-info btn-lg center-block" name="day0">Submit</button>
-                                </div>
-                                <div id="day1" class="tab-pane fade">                           
-                                    <div class="panel-group" id="postday1">
+                                        <button type="submit" class="btn btn-info btn-lg center-block" name="day0">Submit</button>
+                                    </form>
+                                </div>  
+                                <div id="day1" class="tab-pane fade">  
+                                    <form method="POST" action="active_handler.php">
+                                        <div class="panel-group" id="postday1">
                                         <!--RN-->
                                         <div class="panel panel-info">
                                             <div class="panel-heading">
@@ -757,10 +762,12 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-info btn-lg center-block" name="day1">Submit</button>
+                                        <button type="submit" class="btn btn-info btn-lg center-block" name="day1">Submit</button>
+                                    </form>
                                 </div>
                                 <div id="day2" class="tab-pane fade">
-                                    <div class="panel-group" id="postday2">
+                                    <form method="POST" action="active_handler.php">
+                                        <div class="panel-group" id="postday2">
                                         <!--RN-->
                                         <div class="panel panel-info">
                                             <div class="panel-heading">
@@ -968,10 +975,12 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-info btn-lg center-block" name="day2">Submit</button>
+                                        <button type="submit" class="btn btn-info btn-lg center-block" name="day2">Submit</button>
+                                    </form>    
                                 </div>
                                 <div id="dday" class="tab-pane fade">
-                                    <div class="panel-group" id="postdday">
+                                    <form method="POST" action="active_handler.php">
+                                        <div class="panel-group" id="postdday">
                                         <!--RN-->
                                         <div class="panel panel-info">
                                             <div class="panel-heading">
@@ -1160,7 +1169,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-info btn-lg center-block" name="dday">Submit</button>
+                                        <button type="submit" class="btn btn-info btn-lg center-block" name="dday">Submit</button>
+                                    </form>    
                                 </div>
                             </div>
                         </div>                
@@ -1193,6 +1203,6 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
 </html>
 
 <!-- To do: 1. Future work: add actors & corresponding activities
-            2. connect to db - display entered info
+            2. Save input to db
             3. Visualization / Report
 -->
