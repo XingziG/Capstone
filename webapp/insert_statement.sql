@@ -37,6 +37,8 @@ INSERT INTO activities (activity_id, acticity_name, activity_category) VALUES (1
 INSERT INTO activities (activity_id, acticity_name, activity_category) VALUES (20,'Extubation process','PO');
 INSERT INTO activities (activity_id, acticity_name, activity_category) VALUES (21,'Plan and review patient\'s case','PO');
 INSERT INTO activities (activity_id, acticity_name, activity_category) VALUES (22,'Talk to Family/Social Workers','PO');
+INSERT INTO activities (activity_id, acticity_name, activity_category) VALUES (23,'Stand patient','PO');
+INSERT INTO activities (activity_id, acticity_name, activity_category) VALUES (24,'Talk to patient and nurse','PO');
 
 /* activ_role table */
 INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (1,1,90,'0');

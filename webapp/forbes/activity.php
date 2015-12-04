@@ -1,7 +1,7 @@
 <?php
 
-DEFINE ('DB_USER', 'cindy');
-DEFINE ('DB_PASSWORD', 'guo');
+DEFINE ('DB_USER', 'apple');
+DEFINE ('DB_PASSWORD', 'monkey');
 DEFINE ('DB_HOST', 'localhost');
 DEFINE ('DB_NAME', 'forbes');
 
