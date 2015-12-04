@@ -26,7 +26,7 @@ function get_cost($type, $rid)
     if (mysqli_num_rows($r) == 1 & mysqli_num_rows($r2) == 1) { // ok
         $row = mysqli_fetch_assoc($r);
         $row2 = mysqli_fetch_assoc($r2);
-        $result = $row['Total'] * $row2['salary'] / 60;
+        $result = $row['Total'] * $row2['salary'] / 124800; // 52 week * 40 hours * 60 minuts
         return number_format($result,0);
     }
     mysqli_close($dbc);
@@ -93,7 +93,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                 <div class="panel panel-default" style="width:100%">
                     <div class="panel-heading"> Please click on the <strong>CABG Surgery</strong>, 
                         <strong>Postoperative Surgery</strong> or <strong>CABG Total</strong>  
-                        for the patient report. </div>
+                        for the patient expense report. </div>
                 </div>
                 <!-- Header with surgery & postop care selection -->
                 <ul class="nav nav-pills nav-justified">
@@ -354,34 +354,42 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         </div>
     </div>
     <script>
+        function commaSeparateNumber(val){ 
+            // referenced from: http://stackoverflow.com/questions/3883342/add-commas-to-a-number-in-jquery
+            while (/(\d+)(\d{3})/.test(val.toString())){
+              val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
+            }
+            return val;
+        }
         function calculateSum() {
             var sum = 0;
             $(".sg").each(function() { // iterate through each td based on class
-                var value = $(this).text().replace(',', '');
+                var value = $(this).text().replace(/\,/g, '');
                 if(!isNaN(value) && value.length != 0) { // add only if the value is number
+                    console.log(value);
                     sum += parseFloat(value);
                 }
             });
-            $(this).find('#sg-result').text(sum);
+            $(this).find('#sg-result').text(commaSeparateNumber(sum));
 
             var sum = 0;
             // iterate through each td based on class and add the values
             $(".po").each(function() {
-                var value = $(this).text().replace(',', '');  
+                var value = $(this).text().replace(/\,/g, '');  
                 if(!isNaN(value) && value.length != 0) { // add only if the value is number
                     sum += parseFloat(value);
                 }
             });
-            $(this).find('#po-result').text(sum);
+            $(this).find('#po-result').text(commaSeparateNumber(sum));
 
             var sum = 0;
             $(".to").each(function() {
-                var value = $(this).text().replace(',', '');
+                var value = $(this).text().replace(/\,/g, '');
                 if(!isNaN(value) && value.length != 0) { // add only if the value is number
                     sum += parseFloat(value);
                 }
             });
-            $(this).find('#to-result').text(sum);
+            $(this).find('#to-result').text(commaSeparateNumber(sum));
         }
         $(calculateSum);
     </script>
