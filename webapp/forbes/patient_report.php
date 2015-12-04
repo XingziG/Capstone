@@ -140,8 +140,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                     <table id="sg-dl" class="table table-striped" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Direct Labor</th>
-                                                <th>Total Cost</th>
+                                                <th class="col-md-8">Direct Labor</th>
+                                                <th class="col-md-4">Total Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -175,8 +175,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                     <table id="sg-dm" class="table table-striped" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Direct Material</th>
-                                                <th>Total Cost</th>
+                                                <th class="col-md-8">Direct Material</th>
+                                                <th class="col-md-4">Total Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -190,8 +190,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                     <table id="sg-oh" class="table table-striped" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Overhead</th>
-                                                <th>Total Cost</th>
+                                                <th class="col-md-8">Overhead</th>
+                                                <th class="col-md-4">Total Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -221,8 +221,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                     <table id="po-dl" class="table table-striped" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Direct Labor</th>
-                                                <th>Total Cost</th>
+                                                <th class="col-md-8">Direct Labor</th>
+                                                <th class="col-md-4">Total Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -252,8 +252,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                     <table id="po-dm" class="table table-striped" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Direct Material</th>
-                                                <th>Total Cost</th>
+                                                <th class="col-md-8">Direct Material</th>
+                                                <th class="col-md-4">Total Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -267,8 +267,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                     <table id="po-oh" class="table table-striped" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Overhead</th>
-                                                <th>Total Cost</th>
+                                                <th class="col-md-8">Overhead</th>
+                                                <th class="col-md-4">Total Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -298,8 +298,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                     <table id="to-dl" class="table table-striped" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Direct Labor</th>
-                                                <th>Total Cost</th>
+                                                <th class="col-md-8">Direct Labor</th>
+                                                <th class="col-md-4">Total Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -341,8 +341,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                     <table id="to-dm" class="table table-striped" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Direct Material</th>
-                                                <th>Total Cost</th>
+                                                <th class="col-md-8">Direct Material</th>
+                                                <th class="col-md-4">Total Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -356,8 +356,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                     <table id="to-oh" class="table table-striped" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Overhead</th>
-                                                <th>Total Cost</th>
+                                                <th class="col-md-8">Overhead</th>
+                                                <th class="col-md-4">Total Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody>

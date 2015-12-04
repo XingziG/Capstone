@@ -31,50 +31,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // update in the database:
                 $r = @mysqli_query($dbc, $q); // Run the query.
                 if ($r) { // If it ran OK.
-                    $success_update = "SUCCESS";
+                    $success_update = "Activities Successfully Added!";
+                    
                 } else {
                     $success_update = "FAIL";
                     echo "$q";
                 }
-                echo "$success_update";
             }
-            echo "Param: $param_name; Value: $param_val<br />\n";
+            //echo "Param: $param_name; Value: $param_val<br />\n";
         }
     }
 
+    if (isset($_POST['surgery'])) {
+        foreach ($_POST as $param_name => $param_val) {
 
+            if ($param_name == "pid") {
+                $patient_id = $param_val;
+            } elseif ($param_name == "surgery") {//ignore these parameter
+            } elseif ($param_name == "dmcost") {
+            } elseif ($param_name == "ohcost") {
+            } else {
+                // split the string by "-"
+                $attribute = explode("-", $param_name);
 
-        if (isset($_POST['surgery'])) {
-            foreach ($_POST as $param_name => $param_val) {
-
-                if ($param_name == "pid") {
-                    $patient_id = $param_val;
-                } elseif ($param_name == "surgery") {//ignore these parameter
-                } elseif ($param_name == "dmcost") {
-                } elseif ($param_name == "ohcost") {
-                } else {
-                    // split the string by "-"
-                    $attribute = explode("-", $param_name);
-
-                    $act_id = $attribute[0];
-                    $act_day = $attribute[1];
-                    $role_id = $attribute[2];
-                    if ($attribute[3] == "t") {
-                        $time_dur = $param_val;
-                        $q = "UPDATE reports SET freq=1, time_duration=$time_dur WHERE patient_id=$patient_id AND activity_id=$act_id AND activity_day='$act_day' AND role_id=$role_id";
-                    }
-                    if ($attribute[3] == "p") {
-                        $performer = $param_val;
-                        $q = "UPDATE reports SET freq=1, performer='$performer' WHERE patient_id=$patient_id AND activity_id=$act_id AND activity_day='$act_day' AND role_id=$role_id";
-                    }
+                $act_id = $attribute[0];
+                $act_day = $attribute[1];
+                $role_id = $attribute[2];
+                if ($attribute[3] == "t") {
+                    $time_dur = $param_val;
+                    $q = "UPDATE reports SET freq=1, time_duration=$time_dur WHERE patient_id=$patient_id AND activity_id=$act_id AND activity_day='$act_day' AND role_id=$role_id";
                 }
-                // update in the database:
-                $r = @mysqli_query($dbc, $q); // Run the query.
-                if ($r) { // If it ran OK.
-                    $success_update = true;
-                } else {
-                    $success_update = false;
+                if ($attribute[3] == "p") {
+                    $performer = $param_val;
+                    $q = "UPDATE reports SET freq=1, performer='$performer' WHERE patient_id=$patient_id AND activity_id=$act_id AND activity_day='$act_day' AND role_id=$role_id";
                 }
+            }
+            // update in the database:
+            $r = @mysqli_query($dbc, $q); // Run the query.
+            if ($r) { // If it ran OK.
+                $success_update = "Activities Successfully Added!";
+            } else {
+                $success_update = "FAIL";
             }
         }
     }
+    // redirect
+    $q = "SELECT patient_id, patient_fname, patient_lname, gender FROM patients WHERE patient_id=$patient_id";
+    $r = @mysqli_query($dbc, $q); // Run the query.
+    $row = mysqli_fetch_assoc($r);
+    $link = "activity.php?id=" . $row["patient_id"] . "&fname=" . $row["patient_fname"] . "&lname=" . $row["patient_lname"] . "&sex=" . $row["gender"];
+    echo "<script type='text/javascript'>alert('$success_update');window.location.replace('$link');</script>"; 
+}
