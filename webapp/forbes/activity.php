@@ -1,4 +1,10 @@
 <?php
+
+DEFINE ('DB_USER', 'cindy');
+DEFINE ('DB_PASSWORD', 'guo');
+DEFINE ('DB_HOST', 'localhost');
+DEFINE ('DB_NAME', 'forbes');
+
 function redirect_user($page)
 {
     // Start defining the URL...
@@ -11,20 +17,25 @@ function redirect_user($page)
 }
 
 function get_result($field, $aid, $ad, $rid) {
-    require "../mysqli_connect.php"; // Connect to the db.
+
     $pid = $_GET["id"];
     $q = "SELECT * FROM reports WHERE (patient_id=$pid AND activity_id=$aid) AND (activity_day='$ad' AND role_id=$rid)";
+
+    $dbc = @mysqli_connect (DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) OR die ('Could not connect to MySQL: ' . mysqli_connect_error());
+    // Set the encoding...
+    mysqli_set_charset($dbc, 'utf8');
+
+     // Connect to the db. // Connect to the db.
+    $pid = $_GET["id"];
+    $q = "SELECT * FROM reports WHERE (patient_id=$pid AND activity_id=$aid) AND (activity_day='$ad' AND role_id=$rid)";
+
     $r = @mysqli_query($dbc, $q);  // run query       
-    if (mysqli_num_rows($r) == 1) { // error    
+    if (mysqli_num_rows($r) > 0) { // ok
         $row = mysqli_fetch_assoc($r);
         return $row[$field];
-    } 
+    }
+    mysqli_close($dbc);
 }
-
-/*function get_result($field, $aid, $ad, $rid) {
-    $value = $result[$aid][$ad][$rid];
-    return $value[$field];
-}*/
 
 if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
     redirect_user('login.php');
@@ -141,7 +152,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                         <td><input type="text" id="sg-an-r2-time" name="6-0-1-t" 
                                                                    value="<?php echo get_result('time_duration',6,0,1) ?>"></td>
                                                         <td><input type="text" id="sg-an-r2-perf" name="6-0-1-p" autocomplete="on"
-                                                                   value="<?php echo get_result('perf',6,0,1) ?>"></td>
+                                                                   value="<?php echo get_result('performer',6,0,1) ?>"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -791,7 +802,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                                 <td><input type="text" id="d2-rn-r2-time" name="9-n-8-time"
                                                                            value="<?php echo get_result('time_duration',9,'n',8) ?>"></td>
                                                                 <td><input type="text" id="d2-rn-r2-perf" name="9-n-8-perf" autocomplete="on"
-                                                                           value="<?php echo get_result('performer',9,n,8) ?>"></td>
+                                                                           value="<?php echo get_result('performer',9,'n',8) ?>"></td>
                                                                 <td><span class="total"></span></td>                                                        
                                                             </tr>
                                                             <tr>

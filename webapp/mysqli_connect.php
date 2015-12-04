@@ -11,6 +11,7 @@
 // selects the database, and sets the encoding.
 
 // Set the database access information as constants:
+
 DEFINE ('DB_USER', 'cindy');
 DEFINE ('DB_PASSWORD', 'guo');
 DEFINE ('DB_HOST', 'localhost');
