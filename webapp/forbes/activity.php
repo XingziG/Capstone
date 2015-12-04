@@ -22,7 +22,6 @@ function get_result($field, $aid, $ad, $rid) {
     // Set the encoding...
     mysqli_set_charset($dbc, 'utf8');
 
-     // Connect to the db. // Connect to the db.
     $pid = $_GET["id"];
     $q = "SELECT * FROM reports WHERE (patient_id=$pid AND activity_id=$aid) AND (activity_day='$ad' AND role_id=$rid)";
 
