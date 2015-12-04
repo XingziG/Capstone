@@ -13,7 +13,7 @@ function redirect_user($page)
 function get_result($field, $aid, $ad, $rid) {
     require ('../mysqli_connect.php'); // Connect to the db.
     $pid = $_GET["id"];
-    $q = "SELECT * FROM reports WHERE (patient_id='$pid' AND activity_id='$aid') AND (activity_day='$ad' AND role_id='$rid');";
+    $q = "SELECT * FROM reports WHERE (patient_id=$pid AND activity_id=$aid) AND (activity_day='$ad' AND role_id=$rid)";
     $r = @mysqli_query($dbc, $q);  // run query       
     if (mysqli_num_rows($r) == 1) { // error    
         $row = mysqli_fetch_assoc($r);
