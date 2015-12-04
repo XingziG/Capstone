@@ -122,6 +122,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         <!-- Surgery Activity Content -->
                         <div id="surgery" class="tab-pane fade in active">
                             <form method="POST" action="active_handler.php">
+                                <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
                                 <div class="panel-group" id="surgery2">
                                 <!-- Anesthesiologist -->
                                 <div class="panel panel-info">
@@ -395,11 +396,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                 </div>
                             </div>
                                 <button type="submit" class="btn btn-info btn-lg center-block" name="surgery">Submit</button>
-                                <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
                             </form>    
-
                         </div>
-
                         <!-- Post-Op Care Content -->
                         <div id="postop" class="tab-pane fade in">
                             <!-- Post-Op Day Selection -->
@@ -413,6 +411,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             <div class="tab-content">
                                 <div id="day0" class="tab-pane fade in active">
                                     <form method="POST" action="active_handler.php">
+                                        <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
                                         <div class="panel-group" id="postday0">
                                         <!--RN-->
                                         <div class="panel panel-info">
@@ -522,11 +521,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         </div>
                                     </div>
                                         <button type="submit" class="btn btn-info btn-lg center-block" name="day0">Submit</button>
-                                        <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
                                     </form>
                                 </div>  
                                 <div id="day1" class="tab-pane fade">  
                                     <form method="POST" action="active_handler.php">
+                                        <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
                                         <div class="panel-group" id="postday1">
                                         <!--RN-->
                                         <div class="panel panel-info">
@@ -771,11 +770,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         </div>
                                     </div>
                                         <button type="submit" class="btn btn-info btn-lg center-block" name="day1">Submit</button>
-                                        <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
                                     </form>
                                 </div>
                                 <div id="day2" class="tab-pane fade">
                                     <form method="POST" action="active_handler.php">
+                                        <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
                                         <div class="panel-group" id="postday2">
                                         <!--RN-->
                                         <div class="panel panel-info">
@@ -985,12 +984,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         </div>
                                     </div>
                                         <button type="submit" class="btn btn-info btn-lg center-block" name="day2">Submit</button>
-                                        <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
                                     </form>    
                                 </div>
-
                                 <div id="dday" class="tab-pane fade">
                                     <form method="POST" action="active_handler.php">
+                                        <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
                                         <div class="panel-group" id="postdday">
                                         <!--RN-->
                                         <div class="panel panel-info">
@@ -1180,19 +1178,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </div>
                                         </div>
                                     </div>
-<<<<<<< Updated upstream
                                         <button type="submit" class="btn btn-info btn-lg center-block" name="dday">Submit</button>
                                     </form>    
-=======
-<<<<<<< HEAD
-                                    <button type="submit" class="btn btn-info btn-lg center-block" name="dday">Submit</button>
-
-=======
-                                        <button type="submit" class="btn btn-info btn-lg center-block" name="dday">Submit</button>
-                                        <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
-                                    </form>    
->>>>>>> origin/login_page
->>>>>>> Stashed changes
                                 </div>
                             </div>
                         </div>                
