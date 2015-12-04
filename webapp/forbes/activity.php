@@ -1127,7 +1127,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                 // calculate total cost
                 $("input[name*='freq'],input[name*='time']").keyup(function(e) {
                     var $row = $(this).parent().parent();
-                    var total = parseFloat($row.find('input[name=freq]').val() * $row.find('input[name=time]').val());
+                    var total = parseFloat($row.find('input[name*=freq]').val() * $row.find('input[name*=time]').val());
                     //update the row total
                     $row.find('.total').text(total);
                 }); 
