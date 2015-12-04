@@ -13,21 +13,44 @@ function get_cost($type, $rid)
 {
     require ('../mysqli_connect.php'); // Connect to the db.
     $pid = $_GET["id"];
-    if ($type=='sg') {
-        $q = "SELECT SUM(freq * time_duration) as 'Total' FROM reports WHERE (patient_id=$pid AND role_id=$rid AND activity_category='S')";
-    } else if ($type=='po') {
-        $q = "SELECT SUM(freq * time_duration) as 'Total' FROM reports WHERE (patient_id=$pid AND role_id=$rid AND activity_category='PO')";
+    // get days in day2-x
+    $qDay = "SELECT DATEDIFF(IFNULL(DATE_SUB(checkout, INTERVAL 1 DAY), CURDATE()), checkin) as 'day' FROM patients WHERE patient_id=$pid";
+    $rDay = @mysqli_query($dbc, $qDay);  // run query
+    if (mysqli_num_rows($rDay) == 1) { // ok
+        $rowDay = mysqli_fetch_assoc($rDay);
+        $day = $rowDay['day'];
+        if($day > 1) {
+            $day -= 1;
+        }
     } else {
-        $q = "SELECT SUM(freq * time_duration) as 'Total' FROM reports WHERE (patient_id=$pid AND role_id=$rid)";
+        return "error";
+    }
+
+    // get time spent 
+    if ($type=='sg') {
+        $qTime = "SELECT SUM(freq * time_duration) as 'total' FROM reports WHERE (patient_id=$pid AND role_id=$rid AND activity_id<=6)";
+    } else if ($type=='po') {
+        $qTime = "SELECT
+                    (SELECT SUM(freq * time_duration) as 't' FROM reports WHERE patient_id=$pid AND role_id=$rid AND activity_id>6 AND activity_day!='d') +
+                    (SELECT $day*SUM(freq * time_duration) as 't' FROM reports WHERE patient_id=$pid AND role_id=$rid AND activity_id>6 AND activity_day='d')
+                  AS 'total';";     
+    } else {
+        $qTime = "SELECT
+                    (SELECT SUM(freq * time_duration) as 't' FROM reports WHERE patient_id=$pid AND role_id=$rid AND activity_day!='d') +
+                    (SELECT IFNULL($day*SUM(freq * time_duration),0) as 't' FROM reports WHERE patient_id=$pid AND role_id=$rid AND activity_day='d')
+                  AS 'total';"; 
     }  
-    $r = @mysqli_query($dbc, $q);  // run query
-    $q2 = "SELECT salary FROM roles WHERE role_id=$rid";   
-    $r2 = @mysqli_query($dbc, $q2);  // run query 
-    if (mysqli_num_rows($r) == 1 & mysqli_num_rows($r2) == 1) { // ok
-        $row = mysqli_fetch_assoc($r);
-        $row2 = mysqli_fetch_assoc($r2);
-        $result = $row['Total'] * $row2['salary'] / 124800; // 52 week * 40 hours * 60 minuts
+    $rTime = @mysqli_query($dbc, $qTime);  // run query
+    // get salary
+    $qPay = "SELECT salary FROM roles WHERE role_id=$rid";   
+    $rPay = @mysqli_query($dbc, $qPay);  // run query 
+    if (mysqli_num_rows($rTime) == 1 & mysqli_num_rows($rPay) == 1) { // ok
+        $rowTime = mysqli_fetch_assoc($rTime);
+        $rowPay = mysqli_fetch_assoc($rPay);
+        $result = $rowTime['total'] * $rowPay['salary'] / 124800; // 52 week * 40 hours * 60 minuts
         return number_format($result,0);
+    } else {
+        return "error";
     }
     mysqli_close($dbc);
 }
@@ -124,23 +147,23 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <tbody>
                                             <tr>
                                                 <td>Anesthesiologist</td>
-                                                <td><span class="sg" name="sg-an"><?php echo get_cost('to',1) ?></span></td>                                                     
+                                                <td><span class="sg" name="sg-an"><?php echo get_cost('sg',1) ?></span></td>                                                     
                                             </tr>
                                             <tr>
                                                 <td>Cardiovascular Surgeon</td>
-                                                <td><span class="sg" name="sg-cs"><?php echo get_cost('to',3) ?></span></td>                                                     
+                                                <td><span class="sg" name="sg-cs"><?php echo get_cost('sg',3) ?></span></td>                                                     
                                             </tr> 
                                             <tr>
                                                 <td>Physician Assistant</td>
-                                                <td><span class="sg" name="sg-pa"><?php echo get_cost('to',10) ?></span></td>
+                                                <td><span class="sg" name="sg-pa"><?php echo get_cost('sg',10) ?></span></td>
                                             </tr>                                            
                                             <tr>
                                                 <td>Registered Nurse</td>
-                                                <td><span class="sg" name="sg-rn"><?php echo get_cost('to',8) ?></span></td>                                                     
+                                                <td><span class="sg" name="sg-rn"><?php echo get_cost('sg',8) ?></span></td>                                                     
                                             </tr>
                                             <tr>
                                                 <td>Scrub Tech</td>
-                                                <td><span class="sg" name="sg-st"><?php echo get_cost('to',13) ?></span></td>
+                                                <td><span class="sg" name="sg-st"><?php echo get_cost('sg',13) ?></span></td>
                                             </tr>  
                                             <tr>
                                                 <td><strong>Total:</strong></td>
@@ -205,19 +228,19 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <tbody>
                                             <tr>
                                             <td>Case Manager</td>
-                                            <td><span class="po" name="po-cm"><?php echo get_cost('to',4) ?></span></td>                                                
+                                            <td><span class="po" name="po-cm"><?php echo get_cost('po',4) ?></span></td>                                                
                                             </tr>    
                                             <tr>
                                             <td>Physician Assistant</td>
-                                            <td><span class="po" name="po-pa"><?php echo get_cost('to',10) ?></span></td>
+                                            <td><span class="po" name="po-pa"><?php echo get_cost('po',10) ?></span></td>
                                             </tr>                                             
                                             <tr>
                                             <td>Registered Nurse</td>
-                                            <td><span class="po" name="po-rn"><?php echo get_cost('to',8) ?></span></td>                                                     
+                                            <td><span class="po" name="po-rn"><?php echo get_cost('po',8) ?></span></td>                                                     
                                             </tr>
                                             <tr>
                                             <td>Respiratory Therapist</td>
-                                            <td><span class="po" name="po-rt"><?php echo get_cost('to',12) ?></span></td>                                                     
+                                            <td><span class="po" name="po-rt"><?php echo get_cost('po',12) ?></span></td>                                                     
                                             </tr>
                                             <tr>
                                                 <td><strong>Total:</strong></td>

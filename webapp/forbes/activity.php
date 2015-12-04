@@ -165,7 +165,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                 <div class="panel panel-info">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#surgery2" href="#cs"> Scrub Tech </a>
+                                            <a data-toggle="collapse" data-parent="#surgery2" href="#cs"> Cardiovascular Surgeon </a>
                                         </h4>
                                     </div>
                                     <!-- CS Table -->
