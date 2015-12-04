@@ -91,7 +91,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         </ul>
                     </div>
                     <!-- Generate Patient Report -->
-                    <a href="#" class="btn btn-info btn-lg btn-block">
+                    <a href="
+                        <?php 
+                            $link = "patient_report.php?id=" . $_GET["id"] . "&fname=" . $_GET["fname"] . "&lname=" . $_GET["lname"] . "&sex=" . $_GET["sex"];
+                            echo "$link";        
+                        ?>" class="btn btn-info btn-lg btn-block">
                         <span class="glyphicon glyphicon-paste"></span> Patient Report
                     </a><br/>                
                     <!-- Logout -->
@@ -391,6 +395,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                 </div>
                             </div>
                                 <button type="submit" class="btn btn-info btn-lg center-block" name="surgery">Submit</button>
+                                <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
                             </form>    
 
                         </div>
@@ -517,6 +522,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         </div>
                                     </div>
                                         <button type="submit" class="btn btn-info btn-lg center-block" name="day0">Submit</button>
+                                        <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
                                     </form>
                                 </div>  
                                 <div id="day1" class="tab-pane fade">  
@@ -765,6 +771,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         </div>
                                     </div>
                                         <button type="submit" class="btn btn-info btn-lg center-block" name="day1">Submit</button>
+                                        <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
                                     </form>
                                 </div>
                                 <div id="day2" class="tab-pane fade">
@@ -978,6 +985,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         </div>
                                     </div>
                                         <button type="submit" class="btn btn-info btn-lg center-block" name="day2">Submit</button>
+                                        <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
                                     </form>    
                                 </div>
 
@@ -1181,6 +1189,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
 
 =======
                                         <button type="submit" class="btn btn-info btn-lg center-block" name="dday">Submit</button>
+                                        <input type="hidden" name="pid" value="<?php echo $_GET["id"]; ?>">
                                     </form>    
 >>>>>>> origin/login_page
 >>>>>>> Stashed changes
@@ -1216,6 +1225,6 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
 </html>
 
 <!-- To do: 1. Future work: add actors & corresponding activities
-            2. Save input to db
+            2. connect to db - display entered info
             3. Visualization / Report
 -->
