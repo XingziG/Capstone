@@ -21,6 +21,8 @@ function get_cost($type, $rid)
         $day = $rowDay['day'];
         if($day > 1) {
             $day -= 1;
+        } else {
+            $day = 0;
         }
     } else {
         return "error";
