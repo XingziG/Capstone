@@ -154,7 +154,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
 
                         $query = "SELECT patient_id, patient_fname, patient_lname, DATE_FORMAT(birthdate, '%M %d, %Y'),
                               DATE_FORMAT(checkin, '%M %d, %Y'), gender
-                              FROM patients WHERE checkout IS NULL";
+                              FROM patients WHERE checkout IS NULL ORDER BY checkin DESC LIMIT 10";
 
                         $result = @mysqli_query($dbc, $query);
                         $rnum = mysqli_num_rows($result);

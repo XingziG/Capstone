@@ -411,13 +411,13 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#d3-graph" href="#graph">
-                                    Patient Vs. Hospital Average In Terms of Cost and Stay Duration</a>
+                                    Patient Vs. Hospital In Terms of Cost and Length of Stay</a>
                             </h4>
                         </div>
                         <div id="graph" class="panel-collapse collapse in">
                             <div class="panel-body">
-                                <div class='col-sm-12 col-md-0' id="costChart"></div>
-                                <div class='col-sm-12 col-md-0' id="timeChart"></div>
+                                <div class='col-sm-12' id="costChart"></div>
+                                <div class='col-sm-12' id="timeChart"></div>
                             </div>
                         </div>
                     </div>
@@ -466,6 +466,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         $(calculateSum);
 
         // D3
+        // height & width
         function costChartFunction() {
             // get patient total cost
             $p_cost = parseFloat($("#to-result").text().replace(/\,/g, '')) + parseFloat($("#to-result2").text()) + parseFloat($("#to-result3").text());
@@ -474,19 +475,19 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('costChart').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // 1. Cost Table
-            var cost = [$p_cost,9000,3000];
-            var costLabel = ["Total Patient Cost","Hospital Average Cost","Average Reimbursement"];
+            var data = [$p_cost,9000,3000];
+            var dataLabel = ["Patient Cost","Average Cost (Hospital)","Average Reimbursement"];
             // y-axis
-            var x = d3.scale.linear().domain([0, d3.max(cost)]).range([0, w]);
+            var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
             var xAxis = d3.svg.axis()
                           .scale(x)
                           .orient("top");            
             // tool tip
             var tip = d3.tip()
                         .attr("class", "d3-tip")
-                        .offset([1, 1])
+                        .offset([0, 0])
                         .html(function(d) {
-                            return "<strong>Cost:</strong> <span style='color:red'>" + d + "</span>"; });
+                            return "<strong>Cost: $</strong><span style='color:red'>" + d + "</span>"; });
 
             // create svg canvas            
             var svg = d3.select("#costChart")
@@ -501,17 +502,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var axis = svg.append("g")
                           .attr("class", "axis")
                           .attr("transform", "translate(0,0)")
-                          .call(xAxis)
-                          .append("text")
-                          .attr("y", -barWidth)
-                          .attr("x", w+15)
-                          .attr("dx", "0.5em")
-                          .style("text-anchor", "end")
-                          .text("Dollars");
+                          .call(xAxis);
 
             // add svg bars
             var bars = svg.selectAll("rect")
-                            .data(cost)
+                            .data(data)
                             .enter()
                             .append("rect")
                             .attr("class", "bar")
@@ -525,7 +520,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
 
             // add text labels            
             var lab1 = svg.selectAll("text.lab")
-                            .data(costLabel)
+                            .data(dataLabel)
                             .enter()
                             .append("text")
                             .attr("class", "title")
@@ -537,14 +532,14 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         
         function timeChartFunction() {
             // 1. Time Table
-            var time = [4,5,3.5];
-            var timeLabel = ["Patient Stay Duration","Hospital Average Duration","National Average Duration"];
+            var data = [4,5,3.5];
+            var dataLabel = ["Patient Stay","Average Stay (Hospital)","Average Stay (National)"];
             var barWidth = 30;
             var margin = {top: 60, right: 60, bottom: 20, left: 20};
             var w = document.getElementById('timeChart').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // x-axis
-            var x = d3.scale.linear().domain([0, d3.max(time)]).range([0, w]);
+            var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
             var xAxis = d3.svg.axis()
                           .scale(x)
                           .orient("top");            
@@ -553,7 +548,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Days:</strong> <span style='color:red'>" + d + "</span>"; });
+                            return "<strong>Stay:</strong> <span style='color:red'>" + d + "</span> days"; });
 
             // create svg canvas            
             var svg = d3.select("#timeChart")
@@ -568,17 +563,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var axis = svg.append("g")
                           .attr("class", "axis")
                           .attr("transform", "translate(0,0)")
-                          .call(xAxis)
-                          .append("text")
-                          .attr("y", -barWidth)
-                          .attr("x", w+15)
-                          .attr("dx", "0.5em")
-                          .style("text-anchor", "end")
-                          .text("Days");
+                          .call(xAxis);
 
             // add svg bars
             var bars = svg.selectAll("rect")
-                            .data(time)
+                            .data(data)
                             .enter()
                             .append("rect")
                             .attr("class", "bar")
@@ -592,7 +581,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
 
             // add text labels            
             var lab1 = svg.selectAll("text.lab")
-                            .data(timeLabel)
+                            .data(dataLabel)
                             .enter()
                             .append("text")
                             .attr("class", "title")
@@ -600,8 +589,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .attr("x", function(d, i){ return 150 + "px"; })
                             .attr("y", function(d, i){ return barWidth*i+22+ "px"; });
         }
-        $(timeChartFunction);    
-        
+        $(timeChartFunction);           
     </script>
     </body>
 </html>        
