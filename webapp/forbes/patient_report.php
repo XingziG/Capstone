@@ -58,13 +58,22 @@ function get_cost($type, $rid)
 }
 
 
-function get_bar($graph, $input) {
+function get_value($graph, $input) {
     require ('../mysqli_connect.php'); // Connect to the db.
     
     $pid = $_GET["id"];
     if ($graph == "cost") {
         if ($input == "hospital") { // get hospital wide cost
-            
+            $q = "SELECT AVG(d.total) AS 'result' FROM
+                    (SELECT a.patient_id, SUM(a.freq * a.time_duration * b.salary / 124800 *
+		                    (CASE
+			                     WHEN a.activity_day = 'd' THEN c.d
+			                     ELSE 1
+                             END)) AS 'total' 
+                     FROM   reports a
+		             INNER JOIN (SELECT role_id, salary FROM roles ) b ON a.role_id=b.role_id
+                     INNER JOIN (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as 'd' FROM patients WHERE checkout IS NOT NULL) c ON a.patient_id=c.patient_id
+                     GROUP BY patient_id) d";
         } else { // get reimbursement
             
         }
@@ -72,7 +81,7 @@ function get_bar($graph, $input) {
         if ($input == "patient") { // get patient stay
             $q = "SELECT DATEDIFF(IFNULL(checkout, CURDATE()), checkin) as 'result' FROM patients WHERE patient_id=$pid";
         } else if ($input == "hospital") { // get hospital wide stay
-            
+            $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL";
         } else { // get national
             
         }
@@ -80,11 +89,13 @@ function get_bar($graph, $input) {
     
     $r = @mysqli_query($dbc, $q);  // run query
     if (mysqli_num_rows($r) == 1) { // ok
-        $rowDay = mysqli_fetch_assoc($r);
+        $row = mysqli_fetch_array($r);
         $result = $row['result'];
         return $result;
+    } else {
+        return "error:";
     }
-    mysqli_close($dbc);    
+    mysqli_close($dbc);
 }
 
 if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
@@ -427,7 +438,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             </div>
         </div>
     </div>
-    <script>
+    <script type="text/javascript">
         //
         function commaSeparateNumber(val){ 
             // referenced from: http://stackoverflow.com/questions/3883342/add-commas-to-a-number-in-jquery
@@ -465,19 +476,21 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             });
             $(this).find('#to-result').text(commaSeparateNumber(sum));
         }
-        $(calculateSum);
-
+        $(calculateSum);        
+        
         // D3
         // height & width
         function costChartFunction() {
-            // get patient total cost
-            $p_cost = parseFloat($("#to-result").text().replace(/\,/g, '')) + parseFloat($("#to-result2").text()) + parseFloat($("#to-result3").text());
             var barWidth = 30;
             var margin = {top: 60, right: 60, bottom: 20, left: 20};
             var w = document.getElementById('costChart').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // 1. Cost Table
-            var data = [$p_cost,9000,3000];
+            // get patient total cost
+            var p_cost = (parseFloat($("#to-result").text().replace(/\,/g, '')) + parseFloat($("#to-result2").text()) + parseFloat($("#to-result3").text())).toFixed(0);
+            // get avg cost
+            var h_cost = parseFloat("<?php echo get_value('cost', 'hospital'); ?>").toFixed(0);
+            var data = [p_cost, h_cost, 6000];
             var dataLabel = ["Patient Cost","Average Cost (Hospital)","Average Reimbursement"];
             // y-axis
             var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
@@ -534,7 +547,9 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         
         function timeChartFunction() {
             // 1. Time Table
-            var data = [4,5,3.5];
+            var p_time = parseFloat("<?php echo get_value('time', 'patient'); ?>").toFixed(1);
+            var h_time = parseFloat("<?php echo get_value('time', 'hospital'); ?>").toFixed(1);
+            var data = [p_time, h_time, 4.2];
             var dataLabel = ["Patient Stay","Average Stay (Hospital)","Average Stay (National)"];
             var barWidth = 30;
             var margin = {top: 60, right: 60, bottom: 20, left: 20};
@@ -591,7 +606,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .attr("x", function(d, i){ return 150 + "px"; })
                             .attr("y", function(d, i){ return barWidth*i+22+ "px"; });
         }
-        $(timeChartFunction);           
+        $(timeChartFunction);          
     </script>
     </body>
 </html>        
