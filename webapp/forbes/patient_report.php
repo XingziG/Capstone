@@ -55,6 +55,36 @@ function get_cost($type, $rid)
     mysqli_close($dbc);
 }
 
+
+function get_bar($graph, $input) {
+    require ('../mysqli_connect.php'); // Connect to the db.
+    
+    $pid = $_GET["id"];
+    if ($graph == "cost") {
+        if ($input == "hospital") { // get hospital wide cost
+            
+        } else { // get reimbursement
+            
+        }
+    } else {
+        if ($input == "patient") { // get patient stay
+            $q = "SELECT DATEDIFF(IFNULL(checkout, CURDATE()), checkin) as 'result' FROM patients WHERE patient_id=$pid";
+        } else if ($input == "hospital") { // get hospital wide stay
+            
+        } else { // get national
+            
+        }
+    }
+    
+    $r = @mysqli_query($dbc, $q);  // run query
+    if (mysqli_num_rows($r) == 1) { // ok
+        $rowDay = mysqli_fetch_assoc($r);
+        $result = $row['result'];
+        return $result;
+    }
+    mysqli_close($dbc);    
+}
+
 if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
     redirect_user('login.php');
 }
@@ -69,6 +99,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         <link rel="stylesheet" type="text/css" href="mystyle.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script> 
+        <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
         <title> Patient Report </title>
     </head>
     <body>
@@ -348,7 +380,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <tbody>
                                             <tr>
                                             <td>Other</td>
-                                            <td><span name="to-dm">1000</span></td>                                                     
+                                            <td><span id="to-result2">1000</span></td>                                                     
                                             </tr>
                                         </tbody>
                                     </table>
@@ -363,7 +395,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <tbody>
                                             <tr>
                                             <td>Other</td>
-                                            <td><span name="to-oh">1000</span></td>                                                 
+                                            <td><span id="to-result3">1000</span></td>                                                 
                                             </tr>
                                         </tbody>
                                     </table>
@@ -372,11 +404,29 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         </div>
                         </div>                        
                     </div> 
+                </div> 
+                <!-- D3 bars -->
+                <div class="panel-group" id="d3-graph">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#d3-graph" href="#graph">
+                                    Patient Vs. Hospital Average In Terms of Cost and Stay Duration</a>
+                            </h4>
+                        </div>
+                        <div id="graph" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class='col-sm-12 col-md-0' id="costChart"></div>
+                                <div class='col-sm-12 col-md-0' id="timeChart"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <script>
+        //
         function commaSeparateNumber(val){ 
             // referenced from: http://stackoverflow.com/questions/3883342/add-commas-to-a-number-in-jquery
             while (/(\d+)(\d{3})/.test(val.toString())){
@@ -389,7 +439,6 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             $(".sg").each(function() { // iterate through each td based on class
                 var value = $(this).text().replace(/\,/g, '');
                 if(!isNaN(value) && value.length != 0) { // add only if the value is number
-                    console.log(value);
                     sum += parseFloat(value);
                 }
             });
@@ -415,6 +464,145 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             $(this).find('#to-result').text(commaSeparateNumber(sum));
         }
         $(calculateSum);
+
+        // D3
+        // height & width
+        function costChartFunction() {
+            // get patient total cost
+            $p_cost = parseFloat($("#to-result").text().replace(/\,/g, '')) + parseFloat($("#to-result2").text()) + parseFloat($("#to-result3").text());
+            var barWidth = 30;
+            var margin = {top: 60, right: 60, bottom: 20, left: 20};
+            var w = document.getElementById('costChart').offsetWidth - margin.left - margin.right;
+            var h = 3 * barWidth;
+            // 1. Cost Table
+            var cost = [$p_cost,9000,3000];
+            var costLabel = ["Total Patient Cost","Hospital Average Cost","Reimbursement"];
+            // y-axis
+            var x = d3.scale.linear().domain([0, d3.max(cost)]).range([0, w]);
+            var xAxis = d3.svg.axis()
+                          .scale(x)
+                          .orient("top");            
+            // tool tip
+            var tip = d3.tip()
+                        .attr("class", "d3-tip")
+                        .offset([1, 1])
+                        .html(function(d) {
+                            return "<strong>Cost:</strong> <span style='color:red'>" + d + "</span>"; });
+
+            // create svg canvas            
+            var svg = d3.select("#costChart")
+                        .append("svg")
+                        .attr("width", w + margin.left + margin.right)
+                        .attr("height", h + margin.top + margin.bottom)
+                        .append("g")
+                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            svg.call(tip);
+
+            // add axis
+            var axis = svg.append("g")
+                          .attr("class", "axis")
+                          .attr("transform", "translate(0,0)")
+                          .call(xAxis)
+                          .append("text")
+                          .attr("y", -barWidth)
+                          .attr("x", w+15)
+                          .attr("dx", "0.5em")
+                          .style("text-anchor", "end")
+                          .text("Dollars");
+
+            // add svg bars
+            var bars = svg.selectAll("rect")
+                            .data(cost)
+                            .enter()
+                            .append("rect")
+                            .attr("class", "bar")
+                            .attr("y", function(d, i){ return 1+(i*barWidth) + "px"; })
+                            .attr("x", function(d){ return 0 + "px"; })
+                            .attr("width", function(d){ return x(d) + "px"; })
+                            .attr("height", function(d){ return barWidth-1 + "px"; })
+                            .attr("fill", "#3D9970")
+                            .on("mouseover", tip.show)
+                            .on("mouseout", tip.hide);
+
+            // add text labels            
+            var lab1 = svg.selectAll("text.lab")
+                            .data(costLabel)
+                            .enter()
+                            .append("text")
+                            .attr("class", "title")
+                            .text(function(d, i) { return d; })
+                            .attr("x", function(d, i){ return 150 + "px"; })
+                            .attr("y", function(d, i){ return barWidth*i+22+ "px"; });
+        }
+        $(costChartFunction);
+        
+        function timeChartFunction() {
+            // 1. Time Table
+            var time = [4,5,3.5];
+            var timeLabel = ["Patient Stay Duration","Hospital Average Duration","National Average Duration"];
+            var barWidth = 30;
+            var margin = {top: 60, right: 60, bottom: 20, left: 20};
+            var w = document.getElementById('timeChart').offsetWidth - margin.left - margin.right;
+            var h = 3 * barWidth;
+            // x-axis
+            var x = d3.scale.linear().domain([0, d3.max(time)]).range([0, w]);
+            var xAxis = d3.svg.axis()
+                          .scale(x)
+                          .orient("top");            
+            // tool tip
+            var tip = d3.tip()
+                        .attr("class", "d3-tip")
+                        .offset([1, 1])
+                        .html(function(d) {
+                            return "<strong>Days:</strong> <span style='color:red'>" + d + "</span>"; });
+
+            // create svg canvas            
+            var svg = d3.select("#timeChart")
+                        .append("svg")
+                        .attr("width", w + margin.left + margin.right)
+                        .attr("height", h + margin.top + margin.bottom)
+                        .append("g")
+                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            svg.call(tip);
+
+            // add axis
+            var axis = svg.append("g")
+                          .attr("class", "axis")
+                          .attr("transform", "translate(0,0)")
+                          .call(xAxis)
+                          .append("text")
+                          .attr("y", -barWidth)
+                          .attr("x", w+15)
+                          .attr("dx", "0.5em")
+                          .style("text-anchor", "end")
+                          .text("Days");
+
+            // add svg bars
+            var bars = svg.selectAll("rect")
+                            .data(time)
+                            .enter()
+                            .append("rect")
+                            .attr("class", "bar")
+                            .attr("y", function(d, i){ return 1+(i*barWidth) + "px"; })
+                            .attr("x", function(d){ return 0 + "px"; })
+                            .attr("width", function(d){ return x(d) + "px"; })
+                            .attr("height", function(d){ return barWidth-1 + "px"; })
+                            .attr("fill", "#0074D9")
+                            .on("mouseover", tip.show)
+                            .on("mouseout", tip.hide);
+
+            // add text labels            
+            var lab1 = svg.selectAll("text.lab")
+                            .data(timeLabel)
+                            .enter()
+                            .append("text")
+                            .attr("class", "title")
+                            .text(function(d, i) { return d; })
+                            .attr("x", function(d, i){ return 150 + "px"; })
+                            .attr("y", function(d, i){ return barWidth*i+22+ "px"; });
+        }
+        $(timeChartFunction);    
+        
     </script>
     </body>
 </html>        

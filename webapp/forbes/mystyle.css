@@ -40,3 +40,29 @@ hr { /* This defines the hr line style */
     color: #FF0000; font: italic bold 0.9em Times New Roman;  
 }  
 #ui-datepicker-div { font-size:13px; }
+/* The following defines D3 values */
+.axis text {
+    font: 1em sans-serif;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #3B3738;
+  shape-rendering: crispEdges;
+}
+.bar:hover {
+  fill: #3B3738;
+}
+.d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border-radius: 2px;
+}
+.title {
+    text-anchor: middle;
+    font: 1.3em Helvetica, Times New Roman, Times, serif;
+    fill: #fff;
+}
