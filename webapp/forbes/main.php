@@ -148,8 +148,56 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         echo "$ouput";
                     }
                     mysqli_close($dbc);
+                }               
+                else {
+                require('../mysqli_connect.php'); // Connect to the db.
+
+                        $query = "SELECT patient_id, patient_fname, patient_lname, DATE_FORMAT(birthdate, '%M %d, %Y'),
+                              DATE_FORMAT(checkin, '%M %d, %Y'), gender
+                              FROM patients WHERE checkout IS NULL";
+
+                        $result = @mysqli_query($dbc, $query);
+                        $rnum = mysqli_num_rows($result);
+
+                        if ($rnum > 0) {
+                            $ouput = "<div class=\"col-sm-12 result\">
+                                        <h5>You might be interested in these patients.</h5>
+                                        <div class=\"panel-body\" style=\"font:1em\">
+                                        <table id=\"result\" class=\"table table-striped\" cellspacing=\"0\" width=\"100%\">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>DOB</th>
+                                                <th>Check-In Day</th>
+                                                <th>Gender</th>
+                                                <th>Activities & Report</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>";
+                            while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
+                                $ouput = $ouput . "<tr>" . "<td>" . $row[0] . "</td>"; // id
+                                $ouput = $ouput . "<td>" . $row[1] . "</td>"; // first name
+                                $ouput = $ouput . "<td>" . $row[2] . "</td>"; // last name
+                                $ouput = $ouput . "<td>" . $row[3] . "</td>"; 
+                                $ouput = $ouput . "<td>" . $row[4] . "</td>";
+                                $ouput = $ouput . "<td>" . $row[5] . "</td>"; // gender
+                                $pname = $row[1] . " " . $row[2];
+                                $link = "activity.php?id=" . $row[0] . "&fname=" . $row[1] . "&lname=" . $row[2] . "&sex=" . $row[5];
+                                $ouput = $ouput . "<td>" . "<a href=\"$link\" class=\"btn btn-default\" role=\"button\">Go To Patient</a>" . "</td></tr>";
+                            }
+                            $ouput = $ouput . "</tbody></table></div></div>";
+                            mysqli_free_result($result);
+
+                        } else {
+                            $ouput = "<div class=\"col-sm-12 result\">
+                                    <h5>All patients have checked out</h5></div>";
+                        }  
+                        echo "$ouput";
+                        mysqli_close($dbc); 
+                    }
                 }
-            }
             ?>   
         </div>
     </div>
