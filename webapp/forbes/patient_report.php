@@ -213,7 +213,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         </thead>
                                         <tbody>
                                             <tr>
-                                            <td>Other</td>
+                                            <td>All Direct Material</td>
                                             <td><span name="sg-dm">1</span></td>                                                     
                                             </tr>
                                         </tbody>
@@ -228,7 +228,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         </thead>
                                         <tbody>
                                             <tr>
-                                            <td>Other</td>
+                                            <td>All Overhead</td>
                                             <td><span name="sg-oh">1000</span></td>                                                     
                                             </tr>
                                         </tbody>
@@ -290,7 +290,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         </thead>
                                         <tbody>
                                             <tr>
-                                            <td>Other</td>
+                                            <td>All Direct Material</td>
                                             <td><span name="po-dm">1000</span></td>                                                     
                                             </tr>
                                         </tbody>
@@ -305,7 +305,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         </thead>
                                         <tbody>
                                             <tr>
-                                            <td>Other</td>
+                                            <td>All Overhead</td>
                                             <td><span name="po-oh">1000</span></td>                                                     
                                             </tr>
                                         </tbody>
@@ -379,7 +379,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         </thead>
                                         <tbody>
                                             <tr>
-                                            <td>Other</td>
+                                            <td>All Direct Material</td>
                                             <td><span id="to-result2">1000</span></td>                                                     
                                             </tr>
                                         </tbody>
@@ -394,7 +394,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         </thead>
                                         <tbody>
                                             <tr>
-                                            <td>Other</td>
+                                            <td>All Overhead</td>
                                             <td><span id="to-result3">1000</span></td>                                                 
                                             </tr>
                                         </tbody>
@@ -466,7 +466,6 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         $(calculateSum);
 
         // D3
-        // height & width
         function costChartFunction() {
             // get patient total cost
             $p_cost = parseFloat($("#to-result").text().replace(/\,/g, '')) + parseFloat($("#to-result2").text()) + parseFloat($("#to-result3").text());
@@ -476,7 +475,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var h = 3 * barWidth;
             // 1. Cost Table
             var cost = [$p_cost,9000,3000];
-            var costLabel = ["Total Patient Cost","Hospital Average Cost","Reimbursement"];
+            var costLabel = ["Total Patient Cost","Hospital Average Cost","Average Reimbursement"];
             // y-axis
             var x = d3.scale.linear().domain([0, d3.max(cost)]).range([0, w]);
             var xAxis = d3.svg.axis()
