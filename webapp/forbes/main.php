@@ -89,7 +89,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             </div>
             <!-- Report Button -->
             <div class="col-sm-4 center-block">
-                    <a href="#" class="btn btn-primary btn-lg">
+                    <a href="hospital_report.php" class="btn btn-primary btn-lg">
                         <span class="glyphicon glyphicon-paste"></span> Hospital <br/>Report
                     </a>
             </div>
