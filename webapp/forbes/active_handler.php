@@ -8,7 +8,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($param_name == "pid") {
                 $patient_id = $param_val;
             } elseif ($param_name == "day0" || $param_name == "day1"
-                || $param_name == "day2" || $param_name == "dday") { // ignore these parameter
+                || $param_name == "day2" || $param_name == "dday") { // ignore these parameters
+
+            } elseif ($param_name == "cday") {
+                //update discharge date:
+                $checkout_date = $param_val;
+                $q = "UPDATE patients SET checkout=STR_TO_DATE('$checkout_date', '%Y-%m-%d') WHERE patient_id=$patient_id";
+                $r = @mysqli_query($dbc, $q); // Run the query.
+                if ($r) { // If it ran OK.
+                    $success_update = "Activities Successfully Added!";
+                } else {
+                    $success_update = "FAIL";
+                    echo "$q";
+                }
+
             } else {
                 // split the string by "-"
                 $attribute = explode("-", $param_name);

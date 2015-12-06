@@ -1,4 +1,6 @@
 <?php
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 
 DEFINE ('DB_USER', 'apple');
 DEFINE ('DB_PASSWORD', 'monkey');
@@ -25,7 +27,7 @@ function get_result($field, $aid, $ad, $rid) {
     $pid = $_GET["id"];
     $q = "SELECT * FROM reports WHERE (patient_id=$pid AND activity_id=$aid) AND (activity_day='$ad' AND role_id=$rid)";
 
-    $r = @mysqli_query($dbc, $q);  // run query       
+    $r = @mysqli_query($dbc, $q);  // run query
     if (mysqli_num_rows($r) > 0) { // ok
         $row = mysqli_fetch_assoc($r);
         return $row[$field];
