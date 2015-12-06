@@ -1,17 +1,15 @@
-SELECT role_name, CONCAT(TRUNCATE(AVG(per_hour_salary * total_time),2),'$') as Average_Cost FROM ((SELECT total_time,role_id,activity_id From (Select (freq*time_duration) as total_time, role_id, activity_id, patient_id FROM reports) AS R INNER JOIN (SELECT patient_id FROM patients WHERE checkout IS NOT NULL) AS cPatients ON R.patient_id = cPatients.patient_id) AS Rep INNER JOIN (SELECT role_id, role_name, (salary/8760) AS per_hour_salary FROM `roles`) AS phSalary ON Rep.role_id = phSalary.role_id) GROUP BY role_name
-
-
-SELECT AVG(d.total) FROM
-(SELECT a.patient_id, SUM(a.freq * a.time_duration * b.salary / 124800 *
-		(CASE
-			WHEN a.activity_day = 'd' THEN c.d
-			ELSE 1
-        END)) AS 'total' 
-FROM 	reports a
-		INNER JOIN (SELECT role_id, salary FROM roles ) b ON a.role_id=b.role_id
-        INNER JOIN
-			(SELECT patient_id, DATEDIFF(checkout, checkin)-2 as 'd'
-			 FROM patients 
-			 WHERE checkout IS NOT NULL) c ON a.patient_id=c.patient_id
-GROUP BY patient_id) d; 
-
+SELECT role_name, CONCAT(TRUNCATE(AVG(per_hour_salary * total),2),'$') as Average_Cost 
+FROM 
+	  ((SELECT 
+          (CASE
+		   WHEN activity_day = 'd' THEN total_time * d
+		   ELSE total_time
+           END) AS total,role_id From 
+			  (Select (freq*time_duration) as total_time, role_id, patient_id, activity_day FROM reports) AS R 
+			   INNER JOIN 
+			  (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as d FROM patients WHERE checkout IS NOT NULL) AS cPatients 
+			   ON R.patient_id = cPatients.patient_id) AS Rep 
+		INNER JOIN 
+	   (SELECT role_id, role_name, (salary/124800) AS per_hour_salary FROM `roles`) AS phSalary 
+		ON Rep.role_id = phSalary.role_id) 
+GROUP BY role_name
