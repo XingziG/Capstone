@@ -1,7 +1,5 @@
 <?php
-
-require "../mysqli_connect.php"; // Connect to the db.
-
+include 'data_retriever.php';
 function redirect_user($page)
 {
     // Start defining the URL...
@@ -13,63 +11,11 @@ function redirect_user($page)
     exit(); // Quit the script.
 }
 
-function get_result($field, $aid, $ad, $rid) {
-    require "../mysqli_connect.php"; // Connect to the db.
-    $pid = $_GET["id"];
-    $q = "SELECT $field AS 'result' FROM reports WHERE (patient_id='$pid' AND activity_id=$aid) AND (activity_day='$ad' AND role_id=$rid)";
-    $r = @mysqli_query($dbc, $q);  // run query
-    if (mysqli_num_rows($r) > 0) { // ok
-        $row = mysqli_fetch_assoc($r);
-        return $row['result'];
-    }
-    mysqli_close($dbc);
-}
-
-function get_dm() {
-    require "../mysqli_connect.php"; // Connect to the db.
-    $pid = $_GET["id"];
-    $q = "SELECT direct_material AS 'result' FROM patients WHERE patient_id='$pid'";
-    $r = @mysqli_query($dbc, $q);  // run query
-    if (mysqli_num_rows($r) > 0) { // ok
-        $row = mysqli_fetch_assoc($r);
-        return $row['result'];
-    }
-    mysqli_close($dbc);
-}
-
-function get_oh() {
-    require "../mysqli_connect.php"; // Connect to the db.
-    $pid = $_GET["id"];
-    $q = "SELECT over_head AS 'result' FROM patients WHERE patient_id='$pid'";
-    $r = @mysqli_query($dbc, $q);  // run query
-    if (mysqli_num_rows($r) > 0) { // ok
-        $row = mysqli_fetch_assoc($r);
-        return $row['result'];
-    }
-    mysqli_close($dbc);
-}
-
 if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
     redirect_user('login.php');
-} /*else {
-    require ('../mysqli_connect.php'); // Connect to the db.
-    $pid = $_GET["id"];
-    $q = "SELECT * FROM reports WHERE patient_id='$pid';";
-    $r = @mysqli_query($dbc, $q);  // run query       
-    if (mysqli_num_rows($r) < 1) { // error       
-        return "error";
-    } 
-    $result = array();
-    while (($row = mysqli_fetch_assoc($r))){
-        $result["$row['activity_category']"]["$row['activity_day']"]["$row['role_id']"][] = $row;
-        //$result['ad'] = $rows['activity_day'];
-        //  array($row['activity_id'], $row['activity_day'], $row['role_id'])
-    }
-}*/
-
-get_result('time_duration',1,0,1);
-
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>

@@ -1,4 +1,5 @@
 <?php // The user is redirected here from login.php.
+include 'data_retriever.php';
 function redirect_user($page)
 {
     // Start defining the URL...
@@ -9,162 +10,9 @@ function redirect_user($page)
     header("Location: $url");
     exit(); // Quit the script.
 }
-function get_cost($type)
-{
-    require "../mysqli_connect.php"; // Connect to the db.
-
-    if ($type=='sg') {
-        $q = "SELECT role_name AS 'role', TRUNCATE(AVG(per_hour_salary * total),2) AS 'cost' FROM 
-                  ((SELECT 
-                      (CASE
-                            WHEN activity_day = 'd' THEN total_time * d
-                            ELSE total_time
-                       END) AS total,role_id FROM 
-                    (SELECT (freq*time_duration) as total_time, role_id, patient_id, activity_day FROM reports WHERE activity_id<=6) AS R 
-                    INNER JOIN 
-                    (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as d FROM patients WHERE checkout IS NOT NULL) AS cPatients ON R.patient_id = cPatients.patient_id) AS Rep 
-                    INNER JOIN 
-                    (SELECT role_id, role_name, (salary/124800) AS per_hour_salary FROM `roles`) AS phSalary ON Rep.role_id = phSalary.role_id) 
-                GROUP BY role_name";
-    } else if ($type=='po') {
-        $q = "SELECT role_name AS 'role', TRUNCATE(AVG(per_hour_salary * total),2) AS 'cost' FROM 
-                  ((SELECT 
-                      (CASE
-                            WHEN activity_day = 'd' THEN total_time * d
-                            ELSE total_time
-                       END) AS total,role_id FROM 
-                    (SELECT (freq*time_duration) as total_time, role_id, patient_id, activity_day FROM reports WHERE activity_id>6) AS R 
-                    INNER JOIN 
-                    (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as d FROM patients WHERE checkout IS NOT NULL) AS cPatients ON R.patient_id = cPatients.patient_id) AS Rep 
-                    INNER JOIN 
-                    (SELECT role_id, role_name, (salary/124800) AS per_hour_salary FROM `roles`) AS phSalary ON Rep.role_id = phSalary.role_id) 
-                GROUP BY role_name";    
-    } else {
-        $q = "SELECT role_name AS 'role', TRUNCATE(AVG(per_hour_salary * total),2) AS 'cost' FROM 
-                  ((SELECT 
-                      (CASE
-                            WHEN activity_day = 'd' THEN total_time * d
-                            ELSE total_time
-                       END) AS total,role_id FROM 
-                    (SELECT (freq*time_duration) as total_time, role_id, patient_id, activity_day FROM reports) AS R 
-                    INNER JOIN 
-                    (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as d FROM patients WHERE checkout IS NOT NULL) AS cPatients ON R.patient_id = cPatients.patient_id) AS Rep 
-                    INNER JOIN 
-                    (SELECT role_id, role_name, (salary/124800) AS per_hour_salary FROM `roles`) AS phSalary ON Rep.role_id = phSalary.role_id) 
-                GROUP BY role_name"; 
-    }  
-    $r = @mysqli_query($dbc, $q);  // run query
-    while ($row = mysqli_fetch_assoc($r)) {
-        $output = "<tr><td>" . $row['role'] . "</td><td><span class=\"" . $type . "\" name=\"" . $row['role'] . "\">" . $row['cost'] . "</span></td></tr>"; 
-        echo $output;
-    }
-    mysqli_close($dbc);
-}
-
-
-function get_value($graph, $input, $bar) {
-    require ('../mysqli_connect.php'); // Connect to the db.
-    
-    if ($graph == "cost") {
-        if ($input == "avg") { // get hospital wide cost
-            if ($bar == "hospital") {
-                $q = "SELECT AVG(d.total) AS 'result' FROM
-                    (SELECT a.patient_id, SUM(a.freq * a.time_duration * b.salary / 124800 *
-		                    (CASE
-			                     WHEN a.activity_day = 'd' THEN c.d
-			                     ELSE 1
-                             END)) AS 'total' 
-                     FROM   reports a
-		             INNER JOIN (SELECT role_id, salary FROM roles) b ON a.role_id=b.role_id
-                     INNER JOIN (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as 'd' FROM patients WHERE checkout IS NOT NULL) c ON a.patient_id=c.patient_id
-                     GROUP BY patient_id) d";   
-            } else { // get reimbursement
-                
-            }
-        } else if ($input == "diabetes") {
-                $q = "SELECT AVG(d.total) AS 'result' FROM
-                    (SELECT a.patient_id, SUM(a.freq * a.time_duration * b.salary / 124800 *
-		                    (CASE
-			                     WHEN a.activity_day = 'd' THEN c.d
-			                     ELSE 1
-                             END)) AS 'total' 
-                     FROM   reports a
-		             INNER JOIN (SELECT role_id, salary FROM roles) b ON a.role_id=b.role_id
-                     INNER JOIN (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as 'd' FROM patients WHERE checkout IS NOT NULL AND diabetes='$bar') c ON a.patient_id=c.patient_id
-                     GROUP BY patient_id) d";
-        } else if ($input == "insurance") {
-            $q = "SELECT AVG(d.total) AS 'result' FROM
-                (SELECT a.patient_id, SUM(a.freq * a.time_duration * b.salary / 124800 *
-                        (CASE
-                             WHEN a.activity_day = 'd' THEN c.d
-                             ELSE 1
-                         END)) AS 'total' 
-                 FROM   reports a
-                 INNER JOIN (SELECT role_id, salary FROM roles ) b ON a.role_id=b.role_id
-                 INNER JOIN (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as 'd' FROM patients 
-                             WHERE checkout IS NOT NULL AND insurance=$bar) c ON a.patient_id=c.patient_id
-                 GROUP BY patient_id) d"; 
-        } else { // age
-            switch($bar){
-                case "1":
-                    $start = 0; $end = 35; break;
-                case "2":
-                    $start = 35; $end = 65; break;
-                default:
-                    $start = 65; $end = 200; break;
-            }
-            $q = "SELECT AVG(d.total) AS 'result' FROM
-                (SELECT a.patient_id, SUM(a.freq * a.time_duration * b.salary / 124800 *
-                        (CASE
-                             WHEN a.activity_day = 'd' THEN c.d
-                             ELSE 1
-                         END)) AS 'total' 
-                 FROM   reports a
-                 INNER JOIN (SELECT role_id, salary FROM roles ) b ON a.role_id=b.role_id
-                 INNER JOIN (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as 'd' FROM patients 
-                             WHERE checkout IS NOT NULL AND TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN $start AND $end) c ON a.patient_id=c.patient_id
-                 GROUP BY patient_id) d";   
-        }
-    } else { // stay
-        if ($input == "avg") { // get stay
-            if ($bar == "hospital") { // hospital stay
-                $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL";
-            } else { // national stay
-                
-            }
-        } else if ($input == "diabetes") { // diabetes
-            $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL AND diabetes='$bar'";
-        } else if ($input == "insurance") { // insurance
-            $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL AND insurance='$bar'";
-        } else { // age
-            switch($bar){
-                case "1":
-                    $start = 0; $end = 35; break;
-                case "2":
-                    $start = 35; $end = 65; break;
-                default:
-                    $start = 65; $end = 200; break;
-            }
-            $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients 
-                  WHERE checkout IS NOT NULL AND TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN $start AND $end";
-        }
-    }
-    
-    $r = @mysqli_query($dbc, $q);  // run query
-    if (mysqli_num_rows($r) == 1) { // ok
-        $row = mysqli_fetch_array($r);
-        $result = $row['result'];
-        return $result;
-    } else {
-        return "error:";
-    }
-    mysqli_close($dbc);
-}
-
 if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
     redirect_user('login.php');
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -236,7 +84,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php echo get_cost("sg")?>
+                                            <?php echo get_patient_cost("sg")?>
                                             <tr>
                                                 <td><strong>Total:</strong></td>
                                                 <td><strong><span id="sg-result"></span></strong></td>
@@ -254,7 +102,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <tbody>
                                             <tr>
                                             <td>All Direct Material</td>
-                                            <td><span name="sg-dm">1</span></td>                                                     
+                                            <td><span name="sg-dm"><?php echo get_all_dm() ?></span></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -269,7 +117,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <tbody>
                                             <tr>
                                             <td>All Overhead</td>
-                                            <td><span name="sg-oh">1000</span></td>                                                     
+                                            <td><span name="sg-oh"><?php echo get_all_oh() ?></span></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -298,7 +146,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php echo get_cost("po")?>
+                                            <?php echo get_patient_cost("po")?>
                                             <tr>
                                                 <td><strong>Total:</strong></td>
                                                 <td><strong><span id="po-result"></span></strong></td>
@@ -360,7 +208,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php echo get_cost("to")?>
+                                            <?php echo get_patient_cost("to")?>
                                             <tr>
                                                 <td><strong>Total:</strong></td>
                                                 <td><strong><span id="to-result"></span></strong></td>
@@ -475,7 +323,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('costChart').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // Cost Table
-            var h_cost = parseFloat("<?php echo get_value('cost', 'avg', 'hospital'); ?>").toFixed(0);
+            var h_cost = parseFloat("<?php echo get_patient_value('cost', 'avg', 'hospital'); ?>").toFixed(0);
             var data = [h_cost, 6000];
             var dataLabel = ["Average Cost (Hospital)","Average Reimbursement"];
             // axis
@@ -538,9 +386,9 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('ageChart1').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // Cost Table
-            var age1_cost = parseFloat("<?php echo get_value('cost','age','1'); ?>").toFixed(0);
-            var age2_cost = parseFloat("<?php echo get_value('cost','age','2'); ?>").toFixed(0);
-            var age3_cost = parseFloat("<?php echo get_value('cost','age','3'); ?>").toFixed(0);
+            var age1_cost = parseFloat("<?php echo get_patient_value('cost','age','1'); ?>").toFixed(0);
+            var age2_cost = parseFloat("<?php echo get_patient_value('cost','age','2'); ?>").toFixed(0);
+            var age3_cost = parseFloat("<?php echo get_patient_value('cost','age','3'); ?>").toFixed(0);
             var data = [age1_cost, age2_cost, age3_cost];
             var dataLabel = ["Average Cost (Age: 35-)","Average Cost (Age: 35 - 65)","Average Cost (Age: 65+)"];
             // axis
@@ -602,9 +450,9 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('diabetesChart1').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // get avg stay
-            var age1_stay = parseFloat("<?php echo get_value('cost','age','1'); ?>").toFixed(0);
-            var age2_stay = parseFloat("<?php echo get_value('cost','age','2'); ?>").toFixed(0);
-            var age3_stay = parseFloat("<?php echo get_value('cost','age','3'); ?>").toFixed(0);
+            var age1_stay = parseFloat("<?php echo get_patient_value('cost','age','1'); ?>").toFixed(0);
+            var age2_stay = parseFloat("<?php echo get_patient_value('cost','age','2'); ?>").toFixed(0);
+            var age3_stay = parseFloat("<?php echo get_patient_value('cost','age','3'); ?>").toFixed(0);
             var data = [age1_stay, age2_stay, age3_stay];
             var dataLabel = ["Average Stay (Age: 35-)","Average Stay (Age: 35 - 65)","Average Stay (Age: 65+)"];
             // y-axis
@@ -667,8 +515,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('diabetesChart1').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // Cost Table
-            var d_cost = parseFloat("<?php echo get_value('cost','diabetes','Y'); ?>").toFixed(0);
-            var nd_cost = parseFloat("<?php echo get_value('cost','diabetes','N'); ?>").toFixed(0);
+            var d_cost = parseFloat("<?php echo get_patient_value('cost','diabetes','Y'); ?>").toFixed(0);
+            var nd_cost = parseFloat("<?php echo get_patient_value('cost','diabetes','N'); ?>").toFixed(0);
             var data = [d_cost, nd_cost];
             var dataLabel = ["Average Cost with Diabetes","Average Cost without Diabetes"];
             // axis
@@ -731,8 +579,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var h = 3 * barWidth;
             // 1. Cost Table
             // get avg cost
-            var d_cost = parseFloat("<?php echo get_value('stay','diabetes','Y'); ?>").toFixed(0);
-            var nd_cost = parseFloat("<?php echo get_value('stay','diabetes','N'); ?>").toFixed(0);
+            var d_cost = parseFloat("<?php echo get_patient_value('stay','diabetes','Y'); ?>").toFixed(0);
+            var nd_cost = parseFloat("<?php echo get_patient_value('stay','diabetes','N'); ?>").toFixed(0);
             var data = [d_cost, nd_cost];
             var dataLabel = ["Average Stay with Diabetes","Average Stay without Diabetes"];
             // y-axis
