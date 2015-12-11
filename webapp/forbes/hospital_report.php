@@ -1,5 +1,5 @@
 <?php // The user is redirected here from login.php.
-include 'data_retriever.php';
+include 'hospital_functions.php';
 function redirect_user($page)
 {
     // Start defining the URL...
@@ -84,7 +84,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php echo get_patient_cost("sg")?>
+                                            <?php echo get_cost("sg")?>
                                             <tr>
                                                 <td><strong>Total:</strong></td>
                                                 <td><strong><span id="sg-result"></span></strong></td>
@@ -146,7 +146,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php echo get_patient_cost("po")?>
+                                            <?php echo get_cost("po")?>
                                             <tr>
                                                 <td><strong>Total:</strong></td>
                                                 <td><strong><span id="po-result"></span></strong></td>
@@ -208,7 +208,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php echo get_patient_cost("to")?>
+                                            <?php echo get_cost("to")?>
                                             <tr>
                                                 <td><strong>Total:</strong></td>
                                                 <td><strong><span id="to-result"></span></strong></td>
@@ -323,7 +323,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('costChart').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // Cost Table
-            var h_cost = parseFloat("<?php echo get_patient_value('cost', 'avg', 'hospital'); ?>").toFixed(0);
+            var h_cost = parseFloat("<?php echo get_value('cost', 'avg', 'hospital'); ?>").toFixed(0);
             var data = [h_cost, 6000];
             var dataLabel = ["Average Cost (Hospital)","Average Reimbursement"];
             // axis
@@ -386,9 +386,9 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('ageChart1').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // Cost Table
-            var age1_cost = parseFloat("<?php echo get_patient_value('cost','age','1'); ?>").toFixed(0);
-            var age2_cost = parseFloat("<?php echo get_patient_value('cost','age','2'); ?>").toFixed(0);
-            var age3_cost = parseFloat("<?php echo get_patient_value('cost','age','3'); ?>").toFixed(0);
+            var age1_cost = parseFloat("<?php echo get_value('cost','age','1'); ?>").toFixed(0);
+            var age2_cost = parseFloat("<?php echo get_value('cost','age','2'); ?>").toFixed(0);
+            var age3_cost = parseFloat("<?php echo get_value('cost','age','3'); ?>").toFixed(0);
             var data = [age1_cost, age2_cost, age3_cost];
             var dataLabel = ["Average Cost (Age: 35-)","Average Cost (Age: 35 - 65)","Average Cost (Age: 65+)"];
             // axis
@@ -450,9 +450,9 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('diabetesChart1').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // get avg stay
-            var age1_stay = parseFloat("<?php echo get_patient_value('cost','age','1'); ?>").toFixed(0);
-            var age2_stay = parseFloat("<?php echo get_patient_value('cost','age','2'); ?>").toFixed(0);
-            var age3_stay = parseFloat("<?php echo get_patient_value('cost','age','3'); ?>").toFixed(0);
+            var age1_stay = parseFloat("<?php echo get_value('cost','age','1'); ?>").toFixed(0);
+            var age2_stay = parseFloat("<?php echo get_value('cost','age','2'); ?>").toFixed(0);
+            var age3_stay = parseFloat("<?php echo get_value('cost','age','3'); ?>").toFixed(0);
             var data = [age1_stay, age2_stay, age3_stay];
             var dataLabel = ["Average Stay (Age: 35-)","Average Stay (Age: 35 - 65)","Average Stay (Age: 65+)"];
             // y-axis
@@ -515,8 +515,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('diabetesChart1').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // Cost Table
-            var d_cost = parseFloat("<?php echo get_patient_value('cost','diabetes','Y'); ?>").toFixed(0);
-            var nd_cost = parseFloat("<?php echo get_patient_value('cost','diabetes','N'); ?>").toFixed(0);
+            var d_cost = parseFloat("<?php echo get_value('cost','diabetes','Y'); ?>").toFixed(0);
+            var nd_cost = parseFloat("<?php echo get_value('cost','diabetes','N'); ?>").toFixed(0);
             var data = [d_cost, nd_cost];
             var dataLabel = ["Average Cost with Diabetes","Average Cost without Diabetes"];
             // axis
@@ -579,8 +579,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var h = 3 * barWidth;
             // 1. Cost Table
             // get avg cost
-            var d_cost = parseFloat("<?php echo get_patient_value('stay','diabetes','Y'); ?>").toFixed(0);
-            var nd_cost = parseFloat("<?php echo get_patient_value('stay','diabetes','N'); ?>").toFixed(0);
+            var d_cost = parseFloat("<?php echo get_value('stay','diabetes','Y'); ?>").toFixed(0);
+            var nd_cost = parseFloat("<?php echo get_value('stay','diabetes','N'); ?>").toFixed(0);
             var data = [d_cost, nd_cost];
             var dataLabel = ["Average Stay with Diabetes","Average Stay without Diabetes"];
             // y-axis

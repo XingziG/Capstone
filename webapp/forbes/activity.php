@@ -1,5 +1,5 @@
 <?php
-include 'data_retriever.php';
+include 'patient_functions.php';
 function redirect_user($page)
 {
     // Start defining the URL...

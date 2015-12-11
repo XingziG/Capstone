@@ -1,6 +1,6 @@
 <?php
 // The user is redirected here from login.php.
-include 'data_retriever.php';
+include 'patient_functions.php';
 function redirect_user($page)
 {
     // Start defining the URL...
@@ -106,23 +106,23 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <tbody>
                                             <tr>
                                                 <td>Anesthesiologist</td>
-                                                <td><span class="sg" name="sg-an"><?php echo get_patient_cost('to',1) ?></span></td>
+                                                <td><span class="sg" name="sg-an"><?php echo get_cost('to',1) ?></span></td>
                                             </tr>
                                             <tr>
                                                 <td>Cardiovascular Surgeon</td>
-                                                <td><span class="sg" name="sg-cs"><?php echo get_patient_cost('to',3) ?></span></td>
+                                                <td><span class="sg" name="sg-cs"><?php echo get_cost('to',3) ?></span></td>
                                             </tr> 
                                             <tr>
                                                 <td>Physician Assistant</td>
-                                                <td><span class="sg" name="sg-pa"><?php echo get_patient_cost('sg',10) ?></span></td>
+                                                <td><span class="sg" name="sg-pa"><?php echo get_cost('sg',10) ?></span></td>
                                             </tr>                                            
                                             <tr>
                                                 <td>Registered Nurse</td>
-                                                <td><span class="sg" name="sg-rn"><?php echo get_patient_cost('sg',8) ?></span></td>
+                                                <td><span class="sg" name="sg-rn"><?php echo get_cost('sg',8) ?></span></td>
                                             </tr>
                                             <tr>
                                                 <td>Scrub Tech</td>
-                                                <td><span class="sg" name="sg-st"><?php echo get_patient_cost('sg',13) ?></span></td>
+                                                <td><span class="sg" name="sg-st"><?php echo get_cost('sg',13) ?></span></td>
                                             </tr>  
                                             <tr>
                                                 <td><strong>Total:</strong></td>
@@ -187,54 +187,24 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <tbody>
                                             <tr>
                                             <td>Case Manager</td>
-                                            <td><span class="po" name="po-cm"><?php echo get_patient_cost('po',4) ?></span></td>
+                                            <td><span class="po" name="po-cm"><?php echo get_cost('po',4) ?></span></td>
                                             </tr>    
                                             <tr>
                                             <td>Physician Assistant</td>
-                                            <td><span class="po" name="po-pa"><?php echo get_patient_cost('po',10) ?></span></td>
+                                            <td><span class="po" name="po-pa"><?php echo get_cost('po',10) ?></span></td>
                                             </tr>                                             
                                             <tr>
                                             <td>Registered Nurse</td>
-                                            <td><span class="po" name="po-rn"><?php echo get_patient_cost('po',8) ?></span></td>
+                                            <td><span class="po" name="po-rn"><?php echo get_cost('po',8) ?></span></td>
                                             </tr>
                                             <tr>
                                             <td>Respiratory Therapist</td>
-                                            <td><span class="po" name="po-rt"><?php echo get_patient_cost('po',12) ?></span></td>
+                                            <td><span class="po" name="po-rt"><?php echo get_cost('po',12) ?></span></td>
                                             </tr>
                                             <tr>
                                                 <td><strong>Total:</strong></td>
                                                 <td><strong><span id="po-result"></span></strong></td>
                                             </tr>                                            
-                                        </tbody>
-                                    </table>
-                                    <!--Direct Material-->
-                                    <table id="po-dm" class="table table-striped" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th class="col-md-8">Direct Material</th>
-                                                <th class="col-md-4">Total Cost</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                            <td>All Direct Material</td>
-                                            <td><span name="po-dm">1000</span></td>                                                     
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <!--Overhead-->
-                                    <table id="po-oh" class="table table-striped" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th class="col-md-8">Overhead</th>
-                                                <th class="col-md-4">Total Cost</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                            <td>All Overhead</td>
-                                            <td><span name="po-oh">1000</span></td>                                                     
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -264,31 +234,31 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <tbody>
                                             <tr>
                                             <td>Anesthesiologist</td>
-                                            <td><span class="to" name="to-an"><?php echo get_patient_cost('to',1) ?></span></td>
+                                            <td><span class="to" name="to-an"><?php echo get_cost('to',1) ?></span></td>
                                             </tr>
                                             <tr>
                                             <td>Cardiovascular Surgeon</td>
-                                            <td><span class="to" name="to-cs"><?php echo get_patient_cost('to',3) ?></span></td>
+                                            <td><span class="to" name="to-cs"><?php echo get_cost('to',3) ?></span></td>
                                             </tr>                                            
                                             <tr>
                                             <td>Case Manager</td>
-                                            <td><span class="to" name="to-cm"><?php echo get_patient_cost('to',4) ?></span></td>
+                                            <td><span class="to" name="to-cm"><?php echo get_cost('to',4) ?></span></td>
                                             </tr>    
                                             <tr>
                                             <td>Physician Assistant</td>
-                                            <td><span class="to" name="to-pa"><?php echo get_patient_cost('to',10) ?></span></td>
+                                            <td><span class="to" name="to-pa"><?php echo get_cost('to',10) ?></span></td>
                                             </tr>                                             
                                             <tr>
                                             <td>Registered Nurse</td>
-                                            <td><span class="to" name="to-rn"><?php echo get_patient_cost('to',8) ?></span></td>
+                                            <td><span class="to" name="to-rn"><?php echo get_cost('to',8) ?></span></td>
                                             </tr>
                                             <tr>
                                             <td>Respiratory Therapist</td>
-                                            <td><span class="to" name="to-rt"><?php echo get_patient_cost('to',12) ?></span></td>
+                                            <td><span class="to" name="to-rt"><?php echo get_cost('to',12) ?></span></td>
                                             </tr> 
                                             <tr>
                                             <td>Scrub Tech</td>
-                                            <td><span class="to" name="to-st"><?php echo get_patient_cost('to',13) ?></span></td>
+                                            <td><span class="to" name="to-st"><?php echo get_cost('to',13) ?></span></td>
                                             </tr>
                                             <tr>
                                                 <td><strong>Total:</strong></td>
@@ -307,7 +277,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <tbody>
                                             <tr>
                                             <td>All Direct Material</td>
-                                            <td><span id="to-result2">1000</span></td>                                                     
+                                            <td><span id="to-result2"><?php echo get_dm()?></span></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -322,7 +292,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <tbody>
                                             <tr>
                                             <td>All Overhead</td>
-                                            <td><span id="to-result3">1000</span></td>                                                 
+                                            <td><span id="to-result3"><?php echo get_oh()?></span></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -403,7 +373,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             // get patient total cost
             var p_cost = (parseFloat($("#to-result").text().replace(/\,/g, '')) + parseFloat($("#to-result2").text()) + parseFloat($("#to-result3").text())).toFixed(0);
             // get avg cost
-            var h_cost = parseFloat("<?php echo get_patient_value('cost', 'hospital'); ?>").toFixed(0);
+            var h_cost = parseFloat("<?php echo get_value('cost', 'hospital'); ?>").toFixed(0);
             var data = [p_cost, h_cost, 6000];
             var dataLabel = ["Patient Cost","Average Cost (Hospital)","Average Reimbursement"];
             // y-axis
@@ -461,8 +431,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         
         function timeChartFunction() {
             // 1. Time Table
-            var p_time = parseFloat("<?php echo get_patient_value('time', 'patient'); ?>").toFixed(1);
-            var h_time = parseFloat("<?php echo get_patient_value('time', 'hospital'); ?>").toFixed(1);
+            var p_time = parseFloat("<?php echo get_value('time', 'patient'); ?>").toFixed(1);
+            var h_time = parseFloat("<?php echo get_value('time', 'hospital'); ?>").toFixed(1);
             var data = [p_time, h_time, 4.2];
             var dataLabel = ["Patient Stay","Average Stay (Hospital)","Average Stay (National)"];
             var barWidth = 30;
