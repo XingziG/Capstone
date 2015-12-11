@@ -1,9 +1,4 @@
 <?php
-
-DEFINE ('DB_USER', 'apple');
-DEFINE ('DB_PASSWORD', 'monkey');
-DEFINE ('DB_HOST', 'localhost');
-DEFINE ('DB_NAME', 'forbes');
 // The user is redirected here from login.php.
 function redirect_user($page)
 {
@@ -17,9 +12,7 @@ function redirect_user($page)
 }
 function get_cost($type, $rid)
 {
-    $dbc = @mysqli_connect (DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) OR die ('Could not connect to MySQL: ' . mysqli_connect_error());
-    // Set the encoding...
-    mysqli_set_charset($dbc, 'utf8');
+    require "../mysqli_connect.php"; // Connect to the db.
 
     $pid = $_GET["id"];
     // get days in day2-x

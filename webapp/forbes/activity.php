@@ -1,12 +1,4 @@
 <?php
-//error_reporting(E_ALL);
-//ini_set('display_errors', 1);
-
-DEFINE ('DB_USER', 'apple');
-DEFINE ('DB_PASSWORD', 'monkey');
-DEFINE ('DB_HOST', 'localhost');
-DEFINE ('DB_NAME', 'forbes');
-
 function redirect_user($page)
 {
     // Start defining the URL...
@@ -20,9 +12,7 @@ function redirect_user($page)
 
 function get_result($field, $aid, $ad, $rid) {
 
-    $dbc = @mysqli_connect (DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) OR die ('Could not connect to MySQL: ' . mysqli_connect_error());
-    // Set the encoding...
-    mysqli_set_charset($dbc, 'utf8');
+    require "../mysqli_connect.php"; // Connect to the db.
 
     $pid = $_GET["id"];
     $q = "SELECT $field AS 'result' FROM reports WHERE (patient_id='$pid' AND activity_id=$aid) AND (activity_day='$ad' AND role_id=$rid)";
