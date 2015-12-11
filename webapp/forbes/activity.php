@@ -25,12 +25,11 @@ function get_result($field, $aid, $ad, $rid) {
     mysqli_set_charset($dbc, 'utf8');
 
     $pid = $_GET["id"];
-    $q = "SELECT * FROM reports WHERE (patient_id=$pid AND activity_id=$aid) AND (activity_day='$ad' AND role_id=$rid)";
-
+    $q = "SELECT $field AS 'result' FROM reports WHERE (patient_id='$pid' AND activity_id=$aid) AND (activity_day='$ad' AND role_id=$rid)";
     $r = @mysqli_query($dbc, $q);  // run query
     if (mysqli_num_rows($r) > 0) { // ok
         $row = mysqli_fetch_assoc($r);
-        return $row[$field];
+        return $row['result'];
     }
     mysqli_close($dbc);
 }
@@ -52,6 +51,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         //  array($row['activity_id'], $row['activity_day'], $row['role_id'])
     }
 }*/
+
+get_result('time_duration',1,0,1);
 
 ?>
 <!DOCTYPE html>
@@ -1213,6 +1214,4 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
 </html>
 
 <!-- To do: 1. Future work: add actors & corresponding activities
-            2. connect to db - display entered info
-            3. Visualization / Report
 -->

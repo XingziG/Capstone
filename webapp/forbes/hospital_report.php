@@ -90,7 +90,7 @@ function get_value($graph, $input, $bar) {
                              END)) AS 'total' 
                      FROM   reports a
 		             INNER JOIN (SELECT role_id, salary FROM roles) b ON a.role_id=b.role_id
-                     INNER JOIN (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as 'd' FROM patients WHERE checkout IS NOT NULL) c ON a.patient_id=c.patient_id
+                     INNER JOIN (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as 'd' FROM patients WHERE checkout IS NOT NULL AND diabetes='$bar') c ON a.patient_id=c.patient_id
                      GROUP BY patient_id) d";
         } else if ($input == "insurance") {
             $q = "SELECT AVG(d.total) AS 'result' FROM
@@ -115,9 +115,9 @@ function get_value($graph, $input, $bar) {
                 
             }
         } else if ($input == "diabetes") { // diabetes
-            $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL AND diabetes=$bar";
+            $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL AND diabetes='$bar'";
         } else if ($input == "insurance") {
-            $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL AND insurance=$bar";
+            $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL AND insurance='$bar'";
         } else { // age
             
         }
@@ -137,9 +137,6 @@ function get_value($graph, $input, $bar) {
 if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
     redirect_user('login.php');
 }
-
-echo get_value('cost', 'diabetes',"Y");
-echo get_value('cost', 'avg','hospital');
 
 ?>
 
@@ -391,8 +388,8 @@ echo get_value('cost', 'avg','hospital');
                         <div id="graph" class="panel-collapse collapse in">
                             <div class="panel-body">
                                 <div class='col-sm-12 col-md-0' id="costChart"></div>
-                                <div class='col-sm-6 col-md-0' id="diabetesChart1"></div>
-                                <div class='col-sm-6 col-md-0' id="diabetesChart2"></div>
+                                <div class='col-sm-12 col-md-0' id="diabetesChart1"></div>
+                                <div class='col-sm-12 col-md-0' id="diabetesChart2"></div>
 
                             </div>
                         </div>
@@ -515,7 +512,7 @@ echo get_value('cost', 'avg','hospital');
             console.log(d_cost);
             var nd_cost = parseFloat("<?php echo get_value('cost','diabetes','N'); ?>").toFixed(0);
             var data = [d_cost, nd_cost];
-            var dataLabel = ["Average Cost with Diabetes","Average Cost Without"];
+            var dataLabel = ["Average Cost with Diabetes","Average Cost without Diabetes"];
             // axis
             var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
             var xAxis = d3.svg.axis()
@@ -580,7 +577,7 @@ echo get_value('cost', 'avg','hospital');
             console.log(d_cost);
             var nd_cost = parseFloat("<?php echo get_value('stay','diabetes','N'); ?>").toFixed(0);
             var data = [d_cost, nd_cost];
-            var dataLabel = ["Average Stay with Diabetes","Average Stay Without"];
+            var dataLabel = ["Average Stay with Diabetes","Average Stay without Diabetes"];
             // y-axis
             var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
             var xAxis = d3.svg.axis()
@@ -618,7 +615,7 @@ echo get_value('cost', 'avg','hospital');
                             .attr("x", function(d){ return 0 + "px"; })
                             .attr("width", function(d){ return x(d) + "px"; })
                             .attr("height", function(d){ return barWidth-1 + "px"; })
-                            .attr("fill", "#3D9970")
+                            .attr("fill", "#0074D9")
                             .on("mouseover", tip.show)
                             .on("mouseout", tip.hide);
 
@@ -633,9 +630,8 @@ echo get_value('cost', 'avg','hospital');
                             .attr("y", function(d, i){ return barWidth*i+22+ "px"; });
         }
         $(diabetesChartFunction2);    
-        
-        
-        //$(timeChartFunction);    
+
+        //$(ageChartFunction);    
         
     </script>
     </body>

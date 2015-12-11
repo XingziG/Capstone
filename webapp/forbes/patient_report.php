@@ -23,7 +23,7 @@ function get_cost($type, $rid)
 
     $pid = $_GET["id"];
     // get days in day2-x
-    $qDay = "SELECT DATEDIFF(IFNULL(DATE_SUB(checkout, INTERVAL 1 DAY), CURDATE()), checkin) as 'day' FROM patients WHERE patient_id=$pid";
+    $qDay = "SELECT DATEDIFF(IFNULL(DATE_SUB(checkout, INTERVAL 1 DAY), CURDATE()), checkin) as 'day' FROM patients WHERE patient_id='$pid'";
     $rDay = @mysqli_query($dbc, $qDay);  // run query
     if (mysqli_num_rows($rDay) == 1) { // ok
         $rowDay = mysqli_fetch_assoc($rDay);
@@ -39,16 +39,16 @@ function get_cost($type, $rid)
 
     // get time spent 
     if ($type=='sg') {
-        $qTime = "SELECT SUM(freq * time_duration) as 'total' FROM reports WHERE (patient_id=$pid AND role_id=$rid AND activity_id<=6)";
+        $qTime = "SELECT SUM(freq * time_duration) as 'total' FROM reports WHERE (patient_id='$pid' AND role_id=$rid AND activity_id<=6)";
     } else if ($type=='po') {
         $qTime = "SELECT
-                    (SELECT SUM(freq * time_duration) as 't' FROM reports WHERE patient_id=$pid AND role_id=$rid AND activity_id>6 AND activity_day!='d') +
-                    (SELECT $day*SUM(freq * time_duration) as 't' FROM reports WHERE patient_id=$pid AND role_id=$rid AND activity_id>6 AND activity_day='d')
+                    (SELECT SUM(freq * time_duration) as 't' FROM reports WHERE patient_id='$pid' AND role_id=$rid AND activity_id>6 AND activity_day!='d') +
+                    (SELECT $day*SUM(freq * time_duration) as 't' FROM reports WHERE patient_id='$pid' AND role_id=$rid AND activity_id>6 AND activity_day='d')
                   AS 'total';";     
     } else {
         $qTime = "SELECT
-                    (SELECT SUM(freq * time_duration) as 't' FROM reports WHERE patient_id=$pid AND role_id=$rid AND activity_day!='d') +
-                    (SELECT IFNULL($day*SUM(freq * time_duration),0) as 't' FROM reports WHERE patient_id=$pid AND role_id=$rid AND activity_day='d')
+                    (SELECT SUM(freq * time_duration) as 't' FROM reports WHERE patient_id='$pid' AND role_id=$rid AND activity_day!='d') +
+                    (SELECT IFNULL($day*SUM(freq * time_duration),0) as 't' FROM reports WHERE patient_id='$pid' AND role_id=$rid AND activity_day='d')
                   AS 'total';"; 
     }  
     $rTime = @mysqli_query($dbc, $qTime);  // run query
@@ -88,7 +88,7 @@ function get_value($graph, $input) {
         }
     } else {
         if ($input == "patient") { // get patient stay
-            $q = "SELECT DATEDIFF(IFNULL(checkout, CURDATE()), checkin) as 'result' FROM patients WHERE patient_id=$pid";
+            $q = "SELECT DATEDIFF(IFNULL(checkout, CURDATE()), checkin) as 'result' FROM patients WHERE patient_id='$pid'";
         } else if ($input == "hospital") { // get hospital wide stay
             $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL";
         } else { // get national

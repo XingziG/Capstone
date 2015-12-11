@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } elseif ($param_name == "cday") {
                 //update discharge date:
                 $checkout_date = $param_val;
-                $q = "UPDATE patients SET checkout=STR_TO_DATE('$checkout_date', '%Y-%m-%d') WHERE patient_id=$patient_id";
+                $q = "UPDATE patients SET checkout=STR_TO_DATE('$checkout_date', '%Y-%m-%d') WHERE patient_id='$patient_id'";
                 $r = @mysqli_query($dbc, $q); // Run the query.
                 if ($r) { // If it ran OK.
                     $success_update = "Activities Successfully Added!";
@@ -31,15 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $role_id = $attribute[2];
                 if ($attribute[3] == "time") {
                     $time_dur = $param_val;
-                    $q = "UPDATE reports SET time_duration=$time_dur WHERE patient_id=$patient_id AND activity_id=$act_id AND activity_day='$act_day' AND role_id=$role_id";
+                    $q = "UPDATE reports SET time_duration=$time_dur WHERE patient_id='$patient_id' AND activity_id=$act_id AND activity_day='$act_day' AND role_id=$role_id";
                 }
                 if ($attribute[3] == "freq") {
                     $frequency = $param_val;
-                    $q = "UPDATE reports SET freq=$frequency WHERE patient_id=$patient_id AND activity_id=$act_id AND activity_day='$act_day' AND role_id=$role_id";
+                    $q = "UPDATE reports SET freq=$frequency WHERE patient_id='$patient_id' AND activity_id=$act_id AND activity_day='$act_day' AND role_id=$role_id";
                 }
                 if ($attribute[3] == "perf") {
                     $performer = $param_val;
-                    $q = "UPDATE reports SET performer='$performer' WHERE patient_id=$patient_id AND activity_id=$act_id AND activity_day='$act_day' AND role_id=$role_id";
+                    $q = "UPDATE reports SET performer='$performer' WHERE patient_id='$patient_id' AND activity_id=$act_id AND activity_day='$act_day' AND role_id=$role_id";
                 }
                 // update in the database:
                 $r = @mysqli_query($dbc, $q); // Run the query.
@@ -72,11 +72,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $role_id = $attribute[2];
                 if ($attribute[3] == "t") {
                     $time_dur = $param_val;
-                    $q = "UPDATE reports SET freq=1, time_duration=$time_dur WHERE patient_id=$patient_id AND activity_id=$act_id AND activity_day='$act_day' AND role_id=$role_id";
+                    $q = "UPDATE reports SET freq=1, time_duration=$time_dur WHERE patient_id='$patient_id' AND activity_id=$act_id AND activity_day='$act_day' AND role_id=$role_id";
                 }
                 if ($attribute[3] == "p") {
                     $performer = $param_val;
-                    $q = "UPDATE reports SET freq=1, performer='$performer' WHERE patient_id=$patient_id AND activity_id=$act_id AND activity_day='$act_day' AND role_id=$role_id";
+                    $q = "UPDATE reports SET freq=1, performer='$performer' WHERE patient_id='$patient_id' AND activity_id=$act_id AND activity_day='$act_day' AND role_id=$role_id";
                 }
             }
             // update in the database:
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     // redirect
-    $q = "SELECT patient_id, patient_fname, patient_lname, gender FROM patients WHERE patient_id=$patient_id";
+    $q = "SELECT patient_id, patient_fname, patient_lname, gender FROM patients WHERE patient_id='$patient_id'";
     $r = @mysqli_query($dbc, $q); // Run the query.
     $row = mysqli_fetch_assoc($r);
     $link = "activity.php?id=" . $row["patient_id"] . "&fname=" . $row["patient_fname"] . "&lname=" . $row["patient_lname"] . "&sex=" . $row["gender"];
