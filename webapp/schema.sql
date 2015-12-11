@@ -24,6 +24,8 @@ checkout DATETIME,
 gender VARCHAR(6) NOT NULL,
 diabetes VARCHAR(3) NOT NULL,
 insurance VARCHAR(25) NOT NULL,
+direct_material INT UNSIGNED,
+over_head INT UNSIGNED,
 PRIMARY KEY (patient_id)
 );
 
@@ -100,3 +102,4 @@ END;
 //
 delimiter ;
 /* trigger end */
+
