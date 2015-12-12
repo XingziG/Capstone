@@ -57,10 +57,10 @@ function get_cost($type)
 
 /**
  * Get value for hospital report
- * @param $graph
- * @param $input
- * @param $bar
- * @return string
+ * @param $graph: cost or stay
+ * @param $input: hospital, diabetes, insurance or age
+ * @param $bar: different bars for each category
+ * @return string: average cost value or duration
  */
 function get_value($graph, $input, $bar) {
     require ('../mysqli_connect.php'); // Connect to the db.
@@ -102,7 +102,7 @@ function get_value($graph, $input, $bar) {
                  FROM   reports a
                  INNER JOIN (SELECT role_id, salary FROM roles ) b ON a.role_id=b.role_id
                  INNER JOIN (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as 'd' FROM patients
-                             WHERE checkout IS NOT NULL AND insurance=$bar) c ON a.patient_id=c.patient_id
+                             WHERE checkout IS NOT NULL AND insurance='$bar') c ON a.patient_id=c.patient_id
                  GROUP BY patient_id) d";
         } else { // age
             switch($bar){
@@ -187,5 +187,3 @@ function get_all_oh() {
     }
     mysqli_close($dbc);
 }
-
-
