@@ -415,7 +415,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var data = [age1_cost, age2_cost, age3_cost];
             var dataLabel = ["Average Cost (Age: 35-)","Average Cost (Age: 35 - 65)","Average Cost (Age: 65+)"];
             // axis
-            var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
+            var x = d3.scale.linear().domain([0, d3.max(data).toFixed(0)]).range([0, w]);
             var xAxis = d3.svg.axis()
                           .scale(x)
                           .orient("top");            
@@ -540,7 +540,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var legendSpacing = 4; 
             
             var color = d3.scale.category10();
-            var data = [{label: "Age 35-", value:5}, {label: "Age 35-65", value: 60}, {label: "Age 65+", value: 35}];
+            var data = [{label: "Age 35-", value:parseInt("<?php echo get_value('num','age','1'); ?>")}, 
+                        {label: "Age 35-65", value: parseInt("<?php echo get_value('num','age','2'); ?>")}, 
+                        {label: "Age 65+", value: parseInt("<?php echo get_value('num','age','3'); ?>")}];
+            
+            // tooltip
             var tip = d3.tip()
                         .attr('class', 'd3-tip')
                         .html(function(d) {
@@ -732,7 +736,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var legendSpacing = 4; 
             
             var color = d3.scale.category10();
-            var data = [{label: "Diabetes", value:80}, {label: "No Diabetes", value: 20}];
+            var data = [{label: "Diabetes", value: parseInt("<?php echo get_value('num','diabetes','Y'); ?>")}, 
+                        {label: "No Diabetes", value: parseInt("<?php echo get_value('num','diabetes','N'); ?>")}];
             var svg = d3.select('#diabetesPie')
                         .append('svg')
                         .attr('width', w)
@@ -933,11 +938,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var legendSpacing = 4; 
             
             var color = d3.scale.category10();
-            var data = [{label: "Highmark", value:80}, 
-                        {label: "Medicare", value: 20},
-                        {label: "Medicaid", value: 20},
-                        {label: "Others", value: 20},
-                       ];
+            var data = [{label: "Highmark", value:parseInt("<?php echo get_value('num','insurance','Highmark Inc.'); ?>")}, 
+                        {label: "IBC", value:parseInt("<?php echo get_value('num','insurance','Independence Blue Cross'); ?>")},
+                        {label: "Medicaid", value: parseInt("<?php echo get_value('num','insurance','Capital Blue Cross'); ?>")},
+                        {label: "Aetna", value: parseInt("<?php echo get_value('num','insurance','Aetna Health Inc.'); ?>")}];
+            
             var svg = d3.select('#insurancePie')
                         .append('svg')
                         .attr('width', w)

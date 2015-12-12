@@ -104,26 +104,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Anesthesiologist</td>
-                                                <td><span class="sg" name="sg-an"><?php echo get_cost('to',1) ?></span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Cardiovascular Surgeon</td>
-                                                <td><span class="sg" name="sg-cs"><?php echo get_cost('to',3) ?></span></td>
-                                            </tr> 
-                                            <tr>
-                                                <td>Physician Assistant</td>
-                                                <td><span class="sg" name="sg-pa"><?php echo get_cost('sg',10) ?></span></td>
-                                            </tr>                                            
-                                            <tr>
-                                                <td>Registered Nurse</td>
-                                                <td><span class="sg" name="sg-rn"><?php echo get_cost('sg',8) ?></span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Scrub Tech</td>
-                                                <td><span class="sg" name="sg-st"><?php echo get_cost('sg',13) ?></span></td>
-                                            </tr>  
+                                            <?php echo get_table_value("sg")?>
                                             <tr>
                                                 <td><strong>Total:</strong></td>
                                                 <td><strong><span id="sg-result"></span></strong></td>
@@ -185,22 +166,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                            <td>Case Manager</td>
-                                            <td><span class="po" name="po-cm"><?php echo get_cost('po',4) ?></span></td>
-                                            </tr>    
-                                            <tr>
-                                            <td>Physician Assistant</td>
-                                            <td><span class="po" name="po-pa"><?php echo get_cost('po',10) ?></span></td>
-                                            </tr>                                             
-                                            <tr>
-                                            <td>Registered Nurse</td>
-                                            <td><span class="po" name="po-rn"><?php echo get_cost('po',8) ?></span></td>
-                                            </tr>
-                                            <tr>
-                                            <td>Respiratory Therapist</td>
-                                            <td><span class="po" name="po-rt"><?php echo get_cost('po',12) ?></span></td>
-                                            </tr>
+                                            <?php echo get_table_value("po")?>
                                             <tr>
                                                 <td><strong>Total:</strong></td>
                                                 <td><strong><span id="po-result"></span></strong></td>
@@ -232,34 +198,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                            <td>Anesthesiologist</td>
-                                            <td><span class="to" name="to-an"><?php echo get_cost('to',1) ?></span></td>
-                                            </tr>
-                                            <tr>
-                                            <td>Cardiovascular Surgeon</td>
-                                            <td><span class="to" name="to-cs"><?php echo get_cost('to',3) ?></span></td>
-                                            </tr>                                            
-                                            <tr>
-                                            <td>Case Manager</td>
-                                            <td><span class="to" name="to-cm"><?php echo get_cost('to',4) ?></span></td>
-                                            </tr>    
-                                            <tr>
-                                            <td>Physician Assistant</td>
-                                            <td><span class="to" name="to-pa"><?php echo get_cost('to',10) ?></span></td>
-                                            </tr>                                             
-                                            <tr>
-                                            <td>Registered Nurse</td>
-                                            <td><span class="to" name="to-rn"><?php echo get_cost('to',8) ?></span></td>
-                                            </tr>
-                                            <tr>
-                                            <td>Respiratory Therapist</td>
-                                            <td><span class="to" name="to-rt"><?php echo get_cost('to',12) ?></span></td>
-                                            </tr> 
-                                            <tr>
-                                            <td>Scrub Tech</td>
-                                            <td><span class="to" name="to-st"><?php echo get_cost('to',13) ?></span></td>
-                                            </tr>
+                                            <?php echo get_table_value("to")?>
                                             <tr>
                                                 <td><strong>Total:</strong></td>
                                                 <td><strong><span id="to-result"></span></strong></td>
@@ -339,7 +278,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                     sum += parseFloat(value);
                 }
             });
-            $(this).find('#sg-result').text(commaSeparateNumber(sum));
+            $(this).find('#sg-result').text(commaSeparateNumber(sum.toFixed(2)));
 
             var sum = 0;
             // iterate through each td based on class and add the values
@@ -349,7 +288,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                     sum += parseFloat(value);
                 }
             });
-            $(this).find('#po-result').text(commaSeparateNumber(sum));
+            $(this).find('#po-result').text(commaSeparateNumber(sum.toFixed(2)));
 
             var sum = 0;
             $(".to").each(function() {
@@ -358,7 +297,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                     sum += parseFloat(value);
                 }
             });
-            $(this).find('#to-result').text(commaSeparateNumber(sum));
+            $(this).find('#to-result').text(commaSeparateNumber(sum.toFixed(2)));
         }
         $(calculateSum);        
         
@@ -370,14 +309,12 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('costChart').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // 1. Cost Table
-            // get patient total cost
-            var p_cost = (parseFloat($("#to-result").text().replace(/\,/g, '')) + parseFloat($("#to-result2").text()) + parseFloat($("#to-result3").text())).toFixed(0);
-            // get avg cost
-            var h_cost = parseFloat("<?php echo get_value('cost', 'hospital'); ?>").toFixed(0);
+            var p_cost = parseFloat($("#to-result").text().replace(/\,/g, '')) + parseFloat($("#to-result2").text()); //+ parseFloat($("#to-result3").text());            
+            var h_cost = parseFloat("<?php echo get_barchart_value('cost', 'hospital'); ?>");
             var data = [p_cost, h_cost, 6000];
-            var dataLabel = ["Patient Cost","Average Cost (Hospital)","Average Reimbursement"];
+            var dataLabel = ["Patient Cost","Average Hospital Cost","Average Reimbursement"];
             // y-axis
-            var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
+            var x = d3.scale.linear().domain([0, d3.max(data).toFixed(0)]).range([0, w]);
             var xAxis = d3.svg.axis()
                           .scale(x)
                           .orient("top");            
@@ -386,7 +323,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([0, 0])
                         .html(function(d) {
-                            return "<strong>Cost: $</strong><span style='color:red'>" + d + "</span>"; });
+                            return "<strong>Cost: $</strong><span style='color:red'>" + d.toFixed(0) + "</span>"; });
 
             // create svg canvas            
             var svg = d3.select("#costChart")
@@ -411,7 +348,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .attr("class", "bar")
                             .attr("y", function(d, i){ return 1+(i*barWidth) + "px"; })
                             .attr("x", function(d){ return 0 + "px"; })
-                            .attr("width", function(d){ return x(d) + "px"; })
+                            .attr("width", function(d){ return x(d.toFixed(0)) + "px"; })
                             .attr("height", function(d){ return barWidth-1 + "px"; })
                             .attr("fill", "#3D9970")
                             .on("mouseover", tip.show)
@@ -430,17 +367,18 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         $(costChartFunction);
         
         function timeChartFunction() {
-            // 1. Time Table
-            var p_time = parseFloat("<?php echo get_value('time', 'patient'); ?>").toFixed(1);
-            var h_time = parseFloat("<?php echo get_value('time', 'hospital'); ?>").toFixed(1);
-            var data = [p_time, h_time, 4.2];
+            // Data Table
+            var p_time = parseFloat("<?php echo get_barchart_value('time', 'patient'); ?>");
+            var h_time = parseFloat("<?php echo get_barchart_value('time', 'hospital'); ?>");
+            var data = [p_time, h_time, 5.8];
             var dataLabel = ["Patient Stay","Average Stay (Hospital)","Average Stay (National)"];
+            // canvas size
             var barWidth = 30;
             var margin = {top: 60, right: 60, bottom: 20, left: 20};
             var w = document.getElementById('timeChart').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // x-axis
-            var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
+            var x = d3.scale.linear().domain([0, d3.max(data).toFixed(1)]).range([0, w]);
             var xAxis = d3.svg.axis()
                           .scale(x)
                           .orient("top");            
@@ -449,7 +387,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Stay:</strong> <span style='color:red'>" + d + "</span> days"; });
+                            return "<strong>Stay:</strong> <span style='color:red'>" + d.toFixed(1) + "</span> days"; });
 
             // create svg canvas            
             var svg = d3.select("#timeChart")
@@ -474,7 +412,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .attr("class", "bar")
                             .attr("y", function(d, i){ return 1+(i*barWidth) + "px"; })
                             .attr("x", function(d){ return 0 + "px"; })
-                            .attr("width", function(d){ return x(d) + "px"; })
+                            .attr("width", function(d){ return x(d.toFixed(1)) + "px"; })
                             .attr("height", function(d){ return barWidth-1 + "px"; })
                             .attr("fill", "#0074D9")
                             .on("mouseover", tip.show)
