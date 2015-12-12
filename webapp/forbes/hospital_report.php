@@ -1,4 +1,6 @@
 <?php // The user is redirected here from login.php.
+// TODO: down load all the resources from the internet
+
 include 'hospital_functions.php';
 function redirect_user($page)
 {
