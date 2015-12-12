@@ -49,11 +49,11 @@ function get_table_value($type)
     require "../mysqli_connect.php"; // Connect to the db.
 
     if ($type=='sg') {
-        $q = get_avg_sg_cost_query();
+        $q = get_sg_cost_query();
     } else if ($type=='po') {
-        $q = get_avg_po_cost_query();
+        $q = get_po_cost_query();
     } else {
-        $q = get_avg_total_cost_query();
+        $q = get_total_cost_query();
     }
     $r = @mysqli_query($dbc, $q);  // run query
     while ($row = mysqli_fetch_assoc($r)) {
@@ -63,7 +63,7 @@ function get_table_value($type)
     mysqli_close($dbc);
 }
 
-function get_avg_sg_cost_query() {
+function get_sg_cost_query() {
     $pid = $_GET["id"];
     $q = "SELECT ro.role_name AS 'role',
               TRUNCATE(SUM((ro.salary/124800) * r.freq * r.time_duration *
@@ -80,7 +80,7 @@ function get_avg_sg_cost_query() {
     return $q;
 }
 
-function get_avg_po_cost_query() {$pid = $_GET["id"];
+function get_po_cost_query() {$pid = $_GET["id"];
     
     $q = "SELECT ro.role_name AS 'role',
               TRUNCATE(SUM((ro.salary/124800) * r.freq * r.time_duration *
@@ -97,7 +97,7 @@ function get_avg_po_cost_query() {$pid = $_GET["id"];
     return $q;
 }
 
-function get_avg_total_cost_query() {
+function get_total_cost_query() {
     $pid = $_GET["id"];
     $q = "SELECT ro.role_name AS 'role',
               TRUNCATE(SUM((ro.salary/124800) * r.freq * r.time_duration *
