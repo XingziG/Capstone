@@ -1,6 +1,4 @@
 <?php // The user is redirected here from login.php.
-// TODO: down load all the resources from the internet
-
 include 'hospital_functions.php';
 function redirect_user($page)
 {
@@ -265,13 +263,34 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         </div>
                         <div id="graph" class="panel-collapse collapse in">
                             <div class="panel-body">
-                                <div class='col-sm-12 col-md-0' id="costChart"></div>
-                                <div class='col-sm-12 col-md-0' id="ageChart1"></div>
-                                <div class='col-sm-12 col-md-0' id="ageChart2"></div>
-                                <div class='col-sm-12 col-md-0' id="diabetesChart1"></div>
-                                <div class='col-sm-12 col-md-0' id="diabetesChart2"></div>
-                                <div class='col-sm-12 col-md-0' id="insuranceChart1"></div>
-                                <div class='col-sm-12 col-md-0' id="insuranceChart2"></div>
+                                <div class="btn-toolbar">
+                                    <div class='col-sm-12 col-md-0' id="costChart"></div>
+                                </div><br/><hr><br/>
+                                
+                                <div class="btn-toolbar">
+                                    <div class='col-sm-0 col-md-5' id="agePie">
+                                        <h4 class="text-center">Different Age Groups</h4><br/><br/>
+                                    </div>
+                                    <div class='col-sm-7 col-md-0' id="ageChart1"></div>
+                                    <div class='col-sm-7 col-md-0' id="ageChart2"></div>
+                                </div><br/><hr><br/>
+                                
+                                <div class="btn-toolbar">
+                                    <div class='col-sm-0 col-md-5' id="diabetesPie">
+                                        <h4 class="text-center">Diabetes Vs. Non-diabetes</h4><br/>
+                                    </div>
+                                    <div class='col-sm-7 col-md-0' id="diabetesChart1"></div>
+                                    <div class='col-sm-7 col-md-0' id="diabetesChart2"></div>
+                                </div><br/><hr><br/>
+                                
+                                <div class="btn-toolbar">
+                                    <div class='col-sm-0 col-md-5' id="insurancePie">
+                                        <h4 class="text-center">Different Insurance Groups</h4><br/><br/><br/><br/>
+                                    </div>
+                                    <div class='col-sm-7 col-md-0' id="insuranceChart1"></div>
+                                    <div class='col-sm-7 col-md-0' id="insuranceChart2"></div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -279,6 +298,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             </div>
         </div>
     </div>
+        <script src="https://raw.githubusercontent.com/benkeen/d3pie/0.1.8/d3pie/d3pie.min.js"></script>
     <script>
         //
         function commaSeparateNumber(val){ 
@@ -389,12 +409,10 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('ageChart1').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // Cost Table
-            var age1_cost = parseInt("<?php echo get_value('cost','age','1'); ?>").toFixed(0);
-            var age2_cost = parseInt("<?php echo get_value('cost','age','2'); ?>").toFixed(0);
-            var age3_cost = parseInt("<?php echo get_value('cost','age','3'); ?>").toFixed(0);
+            var age1_cost = parseFloat("<?php echo get_value('cost','age','1'); ?>");
+            var age2_cost = parseFloat("<?php echo get_value('cost','age','2'); ?>");
+            var age3_cost = parseFloat("<?php echo get_value('cost','age','3'); ?>");
             var data = [age1_cost, age2_cost, age3_cost];
-            console.log(data);
-            console.log(d3.max(data));
             var dataLabel = ["Average Cost (Age: 35-)","Average Cost (Age: 35 - 65)","Average Cost (Age: 65+)"];
             // axis
             var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
@@ -406,7 +424,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Cost:</strong> <span style='color:red'>" + d + "</span>"; });
+                            return "<strong>Cost:</strong> <span style='color:red'>" + d.toFixed(0) + "</span>"; });
 
             // create svg canvas            
             var svg = d3.select("#ageChart1")
@@ -431,7 +449,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .attr("class", "bar")
                             .attr("y", function(d, i){ return 1+(i*barWidth) + "px"; })
                             .attr("x", function(d){ return 0 + "px"; })
-                            .attr("width", function(d){ return x(d) + "px"; })
+                            .attr("width", function(d){ return x(d.toFixed(0)) + "px"; })
                             .attr("height", function(d){ return barWidth-1 + "px"; })
                             .attr("fill", "#3D9970")
                             .on("mouseover", tip.show)
@@ -455,22 +473,22 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('ageChart2').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // get avg stay
-            var age1_stay = parseFloat("<?php echo get_value('cost','age','1'); ?>").toFixed(0);
-            var age2_stay = parseFloat("<?php echo get_value('cost','age','2'); ?>").toFixed(0);
-            var age3_stay = parseFloat("<?php echo get_value('cost','age','3'); ?>").toFixed(0);
+            var age1_stay = parseFloat("<?php echo get_value('stay','age','1'); ?>");
+            var age2_stay = parseFloat("<?php echo get_value('stay','age','2'); ?>");
+            var age3_stay = parseFloat("<?php echo get_value('stay','age','3'); ?>");
             var data = [age1_stay, age2_stay, age3_stay];
             var dataLabel = ["Average Stay (Age: 35-)","Average Stay (Age: 35 - 65)","Average Stay (Age: 65+)"];
             // y-axis
-            var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
+            var x = d3.scale.linear().domain([0, d3.max(data).toFixed(1)]).range([0, w]);
             var xAxis = d3.svg.axis()
                           .scale(x)
-                          .orient("top");            
+                          .orient("top");         
             // tool tip
             var tip = d3.tip()
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Stay:</strong> <span style='color:red'>" + d + "</span>"; });
+                            return "<strong>Stay:</strong> <span style='color:red'>" + d.toFixed(1) + "</span>"; });
 
             // create svg canvas            
             var svg = d3.select("#ageChart2")
@@ -495,7 +513,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .attr("class", "bar")
                             .attr("y", function(d, i){ return 1+(i*barWidth) + "px"; })
                             .attr("x", function(d){ return 0 + "px"; })
-                            .attr("width", function(d){ return x(d) + "px"; })
+                            .attr("width", function(d){ return x(d.toFixed(1)) + "px"; })
                             .attr("height", function(d){ return barWidth-1 + "px"; })
                             .attr("fill", "#0074D9")
                             .on("mouseover", tip.show)
@@ -513,6 +531,70 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         }
         $(ageChartFunction2);  
         
+        function ageChartFunction3() {
+            var margin = {top: 20, right: 20, bottom: 20, left: 20};
+            var w = document.getElementById("agePie").offsetWidth - margin.left - margin.right;
+            var h = 300 - margin.top - margin.bottom;
+            var radius = Math.min(w, h) / 2;
+            var legendRectSize = 18;
+            var legendSpacing = 4; 
+            
+            var color = d3.scale.category10();
+            var data = [{label: "Age 35-", value:5}, {label: "Age 35-65", value: 60}, {label: "Age 65+", value: 35}];
+            var tip = d3.tip()
+                        .attr('class', 'd3-tip')
+                        .html(function(d) {
+                var total = d3.sum(data.map(function(d) { return d.value; }));                                                     // NEW
+                var percent = Math.round(1000 * d.data.value / total) / 10;
+                return "<strong>" + d.data.label + ":<span style='color:red'> " + percent + "%</span></strong>"});
+            
+            var svg = d3.select('#agePie')
+                        .append('svg')
+                        .attr('width', w)
+                        .attr('height', h)
+                        .append('g')
+                        .attr('transform', 'translate(' + (w / 2) +  ',' + (h / 2) + ')');
+            var arc = d3.svg.arc().innerRadius(70).outerRadius(radius);
+            var pie = d3.layout.pie()
+                        .value(function(d) { return d.value; })
+                        .sort(null);
+            svg.call(tip);
+
+            var path = svg.selectAll('path')
+                            .data(pie(data))
+                            .enter()
+                            .append('path')
+                            .attr('d', arc)
+                            .attr('fill', function(d, i) { return color(d.data.label); })
+                            .on("mouseover", tip.show)
+                            .on("mouseout", tip.hide);
+
+            var legend = svg.selectAll('.legend')               
+                              .data(color.domain())
+                              .enter()  
+                              .append('g')       
+                              .attr('class', 'legend')          
+                              .attr('transform', function(d, i) { 
+                                var height = legendRectSize + legendSpacing;  
+                                var offset =  height * color.domain().length / 2;
+                                var horz = -2 * legendRectSize;
+                                var vert = i * height - offset; 
+                                return 'translate(' + horz + ',' + vert + ')'; 
+                              });                                             
+
+            legend.append('rect') 
+                  .attr('width', legendRectSize) 
+                  .attr('height', legendRectSize)
+                  .style('fill', color)
+                  .style('stroke', color);
+
+            legend.append('text')               
+              .attr('x', legendRectSize + legendSpacing) 
+              .attr('y', legendRectSize - legendSpacing) 
+              .text(function(d) { return d; });
+        }
+        $(ageChartFunction3); 
+        
         // daibetes
         function diabetesChartFunction() { // diabetes cost
             var barWidth = 30;
@@ -520,12 +602,12 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('diabetesChart1').offsetWidth - margin.left - margin.right;
             var h = 2 * barWidth;
             // Cost Table
-            var d_cost = parseFloat("<?php echo get_value('cost','diabetes','Y'); ?>").toFixed(0);
-            var nd_cost = parseFloat("<?php echo get_value('cost','diabetes','N'); ?>").toFixed(0);
+            var d_cost = parseFloat("<?php echo get_value('cost','diabetes','Y'); ?>");
+            var nd_cost = parseFloat("<?php echo get_value('cost','diabetes','N'); ?>");
             var data = [d_cost, nd_cost];
             var dataLabel = ["Average Cost with Diabetes","Average Cost without Diabetes"];
             // axis
-            var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
+            var x = d3.scale.linear().domain([0, d3.max(data).toFixed(0)]).range([0, w]);
             var xAxis = d3.svg.axis()
                           .scale(x)
                           .orient("top");            
@@ -534,7 +616,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Cost:</strong> <span style='color:red'>" + d + "</span>"; });
+                            return "<strong>Cost:</strong> <span style='color:red'>" + d.toFixed(0) + "</span>"; });
 
             // create svg canvas            
             var svg = d3.select("#diabetesChart1")
@@ -559,7 +641,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .attr("class", "bar")
                             .attr("y", function(d, i){ return 1+(i*barWidth) + "px"; })
                             .attr("x", function(d){ return 0 + "px"; })
-                            .attr("width", function(d){ return x(d) + "px"; })
+                            .attr("width", function(d){ return x(d.toFixed(0)) + "px"; })
                             .attr("height", function(d){ return barWidth-1 + "px"; })
                             .attr("fill", "#3D9970")
                             .on("mouseover", tip.show)
@@ -584,12 +666,12 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var h = 2 * barWidth;
             // 1. Cost Table
             // get avg cost
-            var d_cost = parseFloat("<?php echo get_value('stay','diabetes','Y'); ?>").toFixed(0);
-            var nd_cost = parseFloat("<?php echo get_value('stay','diabetes','N'); ?>").toFixed(0);
+            var d_cost = parseFloat("<?php echo get_value('stay','diabetes','Y'); ?>");
+            var nd_cost = parseFloat("<?php echo get_value('stay','diabetes','N'); ?>");
             var data = [d_cost, nd_cost];
             var dataLabel = ["Average Stay with Diabetes","Average Stay without Diabetes"];
             // y-axis
-            var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
+            var x = d3.scale.linear().domain([0, d3.max(data).toFixed(1)]).range([0, w]);
             var xAxis = d3.svg.axis()
                           .scale(x)
                           .orient("top");            
@@ -598,7 +680,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Stay:</strong> <span style='color:red'>" + d + "</span>"; });
+                            return "<strong>Stay:</strong> <span style='color:red'>" + d.toFixed(1) + "</span>"; });
 
             // create svg canvas            
             var svg = d3.select("#diabetesChart2")
@@ -623,7 +705,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .attr("class", "bar")
                             .attr("y", function(d, i){ return 1+(i*barWidth) + "px"; })
                             .attr("x", function(d){ return 0 + "px"; })
-                            .attr("width", function(d){ return x(d) + "px"; })
+                            .attr("width", function(d){ return x(d.toFixed(1)) + "px"; })
                             .attr("height", function(d){ return barWidth-1 + "px"; })
                             .attr("fill", "#0074D9")
                             .on("mouseover", tip.show)
@@ -641,6 +723,69 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         }
         $(diabetesChartFunction2);    
 
+        function diabetesChartFunction3() {
+            var margin = {top: 20, right: 20, bottom: 20, left: 20};
+            var w = document.getElementById("diabetesPie").offsetWidth - margin.left - margin.right;
+            var h = 300 - margin.top - margin.bottom;
+            var radius = Math.min(w, h) / 2;
+            var legendRectSize = 18;
+            var legendSpacing = 4; 
+            
+            var color = d3.scale.category10();
+            var data = [{label: "Diabetes", value:80}, {label: "No Diabetes", value: 20}];
+            var svg = d3.select('#diabetesPie')
+                        .append('svg')
+                        .attr('width', w)
+                        .attr('height', h)
+                        .append('g')
+                        .attr('transform', 'translate(' + (w / 2) +  ',' + (h / 2) + ')');
+            var arc = d3.svg.arc().innerRadius(70).outerRadius(radius);
+            var pie = d3.layout.pie()
+                        .value(function(d) { return d.value; })
+                        .sort(null);
+            var tip = d3.tip()
+                        .attr('class', 'd3-tip')
+                        .html(function(d) {
+                var total = d3.sum(data.map(function(d) { return d.value; }));                                                     // NEW
+                var percent = Math.round(1000 * d.data.value / total) / 10;
+                return "<strong>" + d.data.label + ":<span style='color:red'> " + percent + "%</span></strong>"});
+            svg.call(tip);
+            
+            var path = svg.selectAll('path')
+                            .data(pie(data))
+                            .enter()
+                            .append('path')
+                            .attr('d', arc)
+                            .attr('fill', function(d, i) { return color(d.data.label); })
+                            .on("mouseover", tip.show)
+                            .on("mouseout", tip.hide);
+
+            var legend = svg.selectAll('.legend')               
+                              .data(color.domain())
+                              .enter()  
+                              .append('g')       
+                              .attr('class', 'legend')          
+                              .attr('transform', function(d, i) { 
+                                var height = legendRectSize + legendSpacing;  
+                                var offset =  height * color.domain().length / 2;
+                                var horz = -2 * legendRectSize;
+                                var vert = i * height - offset; 
+                                return 'translate(' + horz + ',' + vert + ')'; 
+                              });                                             
+
+            legend.append('rect') 
+                  .attr('width', legendRectSize) 
+                  .attr('height', legendRectSize)
+                  .style('fill', color)
+                  .style('stroke', color);
+
+            legend.append('text')               
+              .attr('x', legendRectSize + legendSpacing) 
+              .attr('y', legendRectSize - legendSpacing) 
+              .text(function(d) { return d; });
+        }
+        $(diabetesChartFunction3); 
+
         // insurance   
         function insuranceChartFunction() { // insurance cost
             var barWidth = 30;
@@ -648,17 +793,17 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('insuranceChart1').offsetWidth - margin.left - margin.right;
             var h = 6 * barWidth;
             // Cost Table
-            var hm_cost = parseFloat("<?php echo get_value('cost','insurance','Highmark Inc.'); ?>").toFixed(0);
-            var ibc_cost = parseFloat("<?php echo get_value('cost','insurance','Independence Blue Cross'); ?>").toFixed(0);
-            var cbc_cost = parseFloat("<?php echo get_value('cost','insurance','Capital Blue Cross'); ?>").toFixed(0);
-            var aetna_cost = parseFloat("<?php echo get_value('cost','insurance','Aetna Health Inc.'); ?>").toFixed(0);
-            var upmc_cost = parseFloat("<?php echo get_value('cost','insurance','UPMC Health Plan'); ?>").toFixed(0);
-            var other_cost = parseFloat("<?php echo get_value('cost','insurance','Others'); ?>").toFixed(0);
+            var hm_cost = parseFloat("<?php echo get_value('cost','insurance','Highmark Inc.'); ?>");
+            var ibc_cost = parseFloat("<?php echo get_value('cost','insurance','Independence Blue Cross'); ?>");
+            var cbc_cost = parseFloat("<?php echo get_value('cost','insurance','Capital Blue Cross'); ?>");
+            var aetna_cost = parseFloat("<?php echo get_value('cost','insurance','Aetna Health Inc.'); ?>");
+            var upmc_cost = parseFloat("<?php echo get_value('cost','insurance','UPMC Health Plan'); ?>");
+            var other_cost = parseFloat("<?php echo get_value('cost','insurance','Others'); ?>");
             
             var data = [hm_cost, ibc_cost, cbc_cost, aetna_cost, upmc_cost, other_cost];
             var dataLabel = ["Average Cost (Highmark)","Average Cost (Independent Blue Cross)","Average Cost (Capital Blue Cross)","Average Cost (Aetna)","Average Cost (UPMC)","Average Cost (Others)"];
             // axis
-            var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
+            var x = d3.scale.linear().domain([0, d3.max(data).toFixed(0)]).range([0, w]);
             var xAxis = d3.svg.axis()
                           .scale(x)
                           .orient("top");            
@@ -667,7 +812,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Cost:</strong> <span style='color:red'>" + d + "</span>"; });
+                            return "<strong>Cost:</strong> <span style='color:red'>" + d.toFixed(0) + "</span>"; });
 
             // create svg canvas            
             var svg = d3.select("#insuranceChart1")
@@ -684,6 +829,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                           .attr("transform", "translate(0,0)")
                           .call(xAxis);
 
+            
             // add svg bars
             var bars = svg.selectAll("rect")
                             .data(data)
@@ -691,8 +837,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .append("rect")
                             .attr("class", "bar")
                             .attr("y", function(d, i){ return 1+(i*barWidth) + "px"; })
-                            .attr("x", function(d){ return 0 + "px"; })
-                            .attr("width", function(d){ return x(d) + "px"; })
+                            .attr("x", function(d){ return "0px"; })
+                            .attr("width", function(d, i){ return x(parseInt(d.toFixed(0))) + "px"; })
                             .attr("height", function(d){ return barWidth-1 + "px"; })
                             .attr("fill", "#3D9970")
                             .on("mouseover", tip.show)
@@ -716,17 +862,17 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('insuranceChart2').offsetWidth - margin.left - margin.right;
             var h = 6 * barWidth;
             // Cost Table
-            var hm_stay = parseFloat("<?php echo get_value('stay','insurance','Highmark Inc.'); ?>").toFixed(0);
-            var ibc_stay = parseFloat("<?php echo get_value('stay','insurance','Independence Blue Cross'); ?>").toFixed(0);
-            var cbc_stay = parseFloat("<?php echo get_value('stay','insurance','Capital Blue Cross'); ?>").toFixed(0);
-            var aetna_stay = parseFloat("<?php echo get_value('stay','insurance','Aetna Health Inc.'); ?>").toFixed(0);
-            var upmc_stay = parseFloat("<?php echo get_value('stay','insurance','UPMC Health Plan'); ?>").toFixed(0);
-            var other_stay = parseFloat("<?php echo get_value('stay','insurance','Others'); ?>").toFixed(0);
+            var hm_stay = parseFloat("<?php echo get_value('stay','insurance','Highmark Inc.'); ?>");
+            var ibc_stay = parseFloat("<?php echo get_value('stay','insurance','Independence Blue Cross'); ?>");
+            var cbc_stay = parseFloat("<?php echo get_value('stay','insurance','Capital Blue Cross'); ?>");
+            var aetna_stay = parseFloat("<?php echo get_value('stay','insurance','Aetna Health Inc.'); ?>");
+            var upmc_stay = parseFloat("<?php echo get_value('stay','insurance','UPMC Health Plan'); ?>");
+            var other_stay = parseFloat("<?php echo get_value('stay','insurance','Others'); ?>");
             
             var data = [hm_stay, ibc_stay, cbc_stay, aetna_stay, upmc_stay, other_stay];
             var dataLabel = ["Average Stay (Highmark)","Average Stay (Independent Blue Cross)","Average Stay (Capital Blue Cross)","Average Stay (Aetna)","Average Stay (UPMC)","Average Stay (Others)"];
             // axis
-            var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
+            var x = d3.scale.linear().domain([0, d3.max(data).toFixed(1)]).range([0, w]);
             var xAxis = d3.svg.axis()
                           .scale(x)
                           .orient("top");            
@@ -735,7 +881,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Stay:</strong> <span style='color:red'>" + d + "</span>"; });
+                            return "<strong>Stay:</strong> <span style='color:red'>" + d.toFixed(1) + "</span>"; });
 
             // create svg canvas            
             var svg = d3.select("#insuranceChart2")
@@ -760,7 +906,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .attr("class", "bar")
                             .attr("y", function(d, i){ return 1+(i*barWidth) + "px"; })
                             .attr("x", function(d){ return 0 + "px"; })
-                            .attr("width", function(d){ return x(d) + "px"; })
+                            .attr("width", function(d){ return x(d.toFixed(1)) + "px"; })
                             .attr("height", function(d){ return barWidth-1 + "px"; })
                             .attr("fill", "#0074D9")
                             .on("mouseover", tip.show)
@@ -778,6 +924,73 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         }
         $(insuranceChartFunction2);                 
         
+        function insuranceChartFunction3() {
+            var margin = {top: 20, right: 20, bottom: 20, left: 20};
+            var w = document.getElementById("insurancePie").offsetWidth - margin.left - margin.right;
+            var h = 300 - margin.top - margin.bottom;
+            var radius = Math.min(w, h) / 2;
+            var legendRectSize = 18;
+            var legendSpacing = 4; 
+            
+            var color = d3.scale.category10();
+            var data = [{label: "Highmark", value:80}, 
+                        {label: "Medicare", value: 20},
+                        {label: "Medicaid", value: 20},
+                        {label: "Others", value: 20},
+                       ];
+            var svg = d3.select('#insurancePie')
+                        .append('svg')
+                        .attr('width', w)
+                        .attr('height', h)
+                        .append('g')
+                        .attr('transform', 'translate(' + (w / 2) +  ',' + (h / 2) + ')');
+            var arc = d3.svg.arc().innerRadius(70).outerRadius(radius);
+            var pie = d3.layout.pie()
+                        .value(function(d) { return d.value; })
+                        .sort(null);
+            var tip = d3.tip()
+                        .attr('class', 'd3-tip')
+                        .html(function(d) {
+                var total = d3.sum(data.map(function(d) { return d.value; }));                                                     // NEW
+                var percent = Math.round(1000 * d.data.value / total) / 10;
+                return "<strong>" + d.data.label + ":<span style='color:red'> " + percent + "%</span></strong>"});
+            svg.call(tip);
+            
+            var path = svg.selectAll('path')
+                            .data(pie(data))
+                            .enter()
+                            .append('path')
+                            .attr('d', arc)
+                            .attr('fill', function(d, i) { return color(d.data.label); })
+                            .on("mouseover", tip.show)
+                            .on("mouseout", tip.hide);
+
+            var legend = svg.selectAll('.legend')               
+                              .data(color.domain())
+                              .enter()  
+                              .append('g')       
+                              .attr('class', 'legend')          
+                              .attr('transform', function(d, i) { 
+                                var height = legendRectSize + legendSpacing;  
+                                var offset =  height * color.domain().length / 2;
+                                var horz = -2 * legendRectSize;
+                                var vert = i * height - offset; 
+                                return 'translate(' + horz + ',' + vert + ')'; 
+                              });                                             
+
+            legend.append('rect') 
+                  .attr('width', legendRectSize) 
+                  .attr('height', legendRectSize)
+                  .style('fill', color)
+                  .style('stroke', color);
+
+            legend.append('text')               
+              .attr('x', legendRectSize + legendSpacing) 
+              .attr('y', legendRectSize - legendSpacing) 
+              .text(function(d) { return d; });
+        }
+        $(insuranceChartFunction3); 
+
         
     </script>
     </body>
