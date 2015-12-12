@@ -1,6 +1,6 @@
 <?php
 /**
- * Get cost for hospital report
+ * Get average cost for hospital report
  * @param $type
  */
 function get_cost($type)
@@ -8,44 +8,11 @@ function get_cost($type)
     require "../mysqli_connect.php"; // Connect to the db.
 
     if ($type=='sg') {
-        $q = "SELECT role_name AS 'role', TRUNCATE(AVG(per_hour_salary * total),2) AS 'cost' FROM
-                  ((SELECT
-                      (CASE
-                            WHEN activity_day = 'd' THEN total_time * d
-                            ELSE total_time
-                       END) AS total,role_id FROM
-                    (SELECT (freq*time_duration) as total_time, role_id, patient_id, activity_day FROM reports WHERE activity_id<=6) AS R
-                    INNER JOIN
-                    (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as d FROM patients WHERE checkout IS NOT NULL) AS cPatients ON R.patient_id = cPatients.patient_id) AS Rep
-                    INNER JOIN
-                    (SELECT role_id, role_name, (salary/124800) AS per_hour_salary FROM `roles`) AS phSalary ON Rep.role_id = phSalary.role_id)
-                GROUP BY role_name";
+        $q = get_avg_sg_cost_query();
     } else if ($type=='po') {
-        $q = "SELECT role_name AS 'role', TRUNCATE(AVG(per_hour_salary * total),2) AS 'cost' FROM
-                  ((SELECT
-                      (CASE
-                            WHEN activity_day = 'd' THEN total_time * d
-                            ELSE total_time
-                       END) AS total,role_id FROM
-                    (SELECT (freq*time_duration) as total_time, role_id, patient_id, activity_day FROM reports WHERE activity_id>6) AS R
-                    INNER JOIN
-                    (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as d FROM patients WHERE checkout IS NOT NULL) AS cPatients ON R.patient_id = cPatients.patient_id) AS Rep
-                    INNER JOIN
-                    (SELECT role_id, role_name, (salary/124800) AS per_hour_salary FROM `roles`) AS phSalary ON Rep.role_id = phSalary.role_id)
-                GROUP BY role_name";
+        $q = get_avg_po_cost_query();
     } else {
-        $q = "SELECT role_name AS 'role', TRUNCATE(AVG(per_hour_salary * total),2) AS 'cost' FROM
-                  ((SELECT
-                      (CASE
-                            WHEN activity_day = 'd' THEN total_time * d
-                            ELSE total_time
-                       END) AS total,role_id FROM
-                    (SELECT (freq*time_duration) as total_time, role_id, patient_id, activity_day FROM reports) AS R
-                    INNER JOIN
-                    (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as d FROM patients WHERE checkout IS NOT NULL) AS cPatients ON R.patient_id = cPatients.patient_id) AS Rep
-                    INNER JOIN
-                    (SELECT role_id, role_name, (salary/124800) AS per_hour_salary FROM `roles`) AS phSalary ON Rep.role_id = phSalary.role_id)
-                GROUP BY role_name";
+        $q = get_avg_total_cost_query();
     }
     $r = @mysqli_query($dbc, $q);  // run query
     while ($row = mysqli_fetch_assoc($r)) {
@@ -53,6 +20,53 @@ function get_cost($type)
         echo $output;
     }
     mysqli_close($dbc);
+}
+
+function get_avg_sg_cost_query() {
+    $q = "SELECT ro.role_name AS 'role',
+              TRUNCATE(AVG((ro.salary / 124800) * r.freq * r.time_duration *
+              (CASE r.activity_day
+                  WHEN 'd' THEN DATEDIFF(p.checkout, p.checkin) - 2
+                  ELSE 1
+               END)),2) AS 'cost'
+               FROM patients p, reports r, roles ro
+               WHERE r.activity_id<=6
+               AND p.checkout IS NOT NULL
+               AND p.patient_id = r.patient_id
+               AND r.role_id = ro.role_id
+               GROUP BY ro.role_name";
+    return $q;
+}
+
+function get_avg_po_cost_query() {
+    $q = "SELECT ro.role_name AS 'role',
+              TRUNCATE(AVG((ro.salary/124800) * r.freq * r.time_duration *
+              (CASE r.activity_day
+                    WHEN 'd' THEN DATEDIFF(p.checkout, p.checkin)-2
+                    ELSE 1
+               END)),2) AS 'cost'
+               FROM patients p, reports r, roles ro
+               WHERE r.activity_id > 6
+               AND p.checkout IS NOT NULL
+               AND p.patient_id = r.patient_id
+               AND r.role_id = ro.role_id
+               GROUP BY ro.role_name";
+    return $q;
+}
+
+function get_avg_total_cost_query() {
+    $q = "SELECT ro.role_name AS 'role',
+              TRUNCATE(AVG((ro.salary/124800) * r.freq * r.time_duration *
+              (CASE r.activity_day
+                    WHEN 'd' THEN DATEDIFF(p.checkout, p.checkin)-2
+                    ELSE 1
+               END)),2) AS 'cost'
+               FROM patients p, reports r, roles ro
+               WHERE p.checkout IS NOT NULL
+               AND p.patient_id = r.patient_id
+               AND r.role_id = ro.role_id
+               GROUP BY ro.role_name";
+    return $q;
 }
 
 /**
@@ -68,16 +82,18 @@ function get_value($graph, $input, $bar) {
     if ($graph == "cost") {
         if ($input == "avg") { // get hospital wide cost
             if ($bar == "hospital") {
-                $q = "SELECT AVG(d.total) AS 'result' FROM
-                    (SELECT a.patient_id, SUM(a.freq * a.time_duration * b.salary / 124800 *
-		                    (CASE
-			                     WHEN a.activity_day = 'd' THEN c.d
-			                     ELSE 1
+                $q = "SELECT AVG(d.total) AS 'result'
+                      FROM
+                      (SELECT p.patient_id, SUM(r.freq * r.time_duration * ro.salary / 124800 *
+                            (CASE r.activity_day
+                                  WHEN 'd' THEN DATEDIFF(checkout, checkin)-2
+                                  ELSE 1
                              END)) AS 'total'
-                     FROM   reports a
-		             INNER JOIN (SELECT role_id, salary FROM roles) b ON a.role_id=b.role_id
-                     INNER JOIN (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as 'd' FROM patients WHERE checkout IS NOT NULL) c ON a.patient_id=c.patient_id
-                     GROUP BY patient_id) d";
+                      FROM patients p, reports r, roles ro
+                      WHERE p.checkout IS NOT NULL
+                      AND p.patient_id = r.patient_id
+                      AND r.role_id = ro.role_id
+                      GROUP BY p.patient_id) d;";
             } else { // get reimbursement
 
             }
