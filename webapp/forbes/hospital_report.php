@@ -82,7 +82,7 @@ function get_value($graph, $input, $bar) {
                 
             }
         } else if ($input == "diabetes") {
-                $q = "SELECT AVG(d.total) AS 'result' FROM
+                $q = "SELECT IFNULL(AVG(d.total),0) AS 'result' FROM
                     (SELECT a.patient_id, SUM(a.freq * a.time_duration * b.salary / 124800 *
 		                    (CASE
 			                     WHEN a.activity_day = 'd' THEN c.d
@@ -90,10 +90,11 @@ function get_value($graph, $input, $bar) {
                              END)) AS 'total' 
                      FROM   reports a
 		             INNER JOIN (SELECT role_id, salary FROM roles) b ON a.role_id=b.role_id
-                     INNER JOIN (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as 'd' FROM patients WHERE checkout IS NOT NULL AND diabetes='$bar') c ON a.patient_id=c.patient_id
+                     INNER JOIN (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as 'd' FROM patients 
+                                 WHERE checkout IS NOT NULL AND diabetes='$bar') c ON a.patient_id=c.patient_id
                      GROUP BY patient_id) d";
         } else if ($input == "insurance") {
-            $q = "SELECT AVG(d.total) AS 'result' FROM
+            $q = "SELECT IFNULL(AVG(d.total),0) AS 'result' FROM
                 (SELECT a.patient_id, SUM(a.freq * a.time_duration * b.salary / 124800 *
                         (CASE
                              WHEN a.activity_day = 'd' THEN c.d
@@ -102,7 +103,7 @@ function get_value($graph, $input, $bar) {
                  FROM   reports a
                  INNER JOIN (SELECT role_id, salary FROM roles ) b ON a.role_id=b.role_id
                  INNER JOIN (SELECT patient_id, DATEDIFF(checkout, checkin)-2 as 'd' FROM patients 
-                             WHERE checkout IS NOT NULL AND insurance=$bar) c ON a.patient_id=c.patient_id
+                             WHERE checkout IS NOT NULL AND insurance='$bar') c ON a.patient_id=c.patient_id
                  GROUP BY patient_id) d"; 
         } else { // age
             switch($bar){
@@ -113,7 +114,7 @@ function get_value($graph, $input, $bar) {
                 default:
                     $start = 65; $end = 200; break;
             }
-            $q = "SELECT AVG(d.total) AS 'result' FROM
+            $q = "SELECT IFNULL(AVG(d.total),0) AS 'result' FROM
                 (SELECT a.patient_id, SUM(a.freq * a.time_duration * b.salary / 124800 *
                         (CASE
                              WHEN a.activity_day = 'd' THEN c.d
@@ -128,14 +129,16 @@ function get_value($graph, $input, $bar) {
     } else { // stay
         if ($input == "avg") { // get stay
             if ($bar == "hospital") { // hospital stay
-                $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL";
+                $q = "SELECT IFNULL(AVG(DATEDIFF(checkout, checkin)),0) as 'result' FROM patients WHERE checkout IS NOT NULL";
             } else { // national stay
                 
             }
         } else if ($input == "diabetes") { // diabetes
-            $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL AND diabetes='$bar'";
+            $q = "SELECT IFNULL(AVG(DATEDIFF(checkout, checkin)),0) as 'result' FROM patients 
+                  WHERE checkout IS NOT NULL AND diabetes='$bar'";
         } else if ($input == "insurance") { // insurance
-            $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL AND insurance='$bar'";
+            $q = "SELECT IFNULL(AVG(DATEDIFF(checkout, checkin)),0) as 'result' FROM patients 
+                  WHERE checkout IS NOT NULL AND insurance='$bar'";
         } else { // age
             switch($bar){
                 case "1":
@@ -145,7 +148,7 @@ function get_value($graph, $input, $bar) {
                 default:
                     $start = 65; $end = 200; break;
             }
-            $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients 
+            $q = "SELECT IFNULL(AVG(DATEDIFF(checkout, checkin)),0) as 'result' FROM patients 
                   WHERE checkout IS NOT NULL AND TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN $start AND $end";
         }
     }
@@ -473,7 +476,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var barWidth = 30;
             var margin = {top: 60, right: 60, bottom: 20, left: 20};
             var w = document.getElementById('costChart').offsetWidth - margin.left - margin.right;
-            var h = 3 * barWidth;
+            var h = 2 * barWidth;
             // Cost Table
             var h_cost = parseFloat("<?php echo get_value('cost', 'avg', 'hospital'); ?>").toFixed(0);
             var data = [h_cost, 6000];
@@ -538,10 +541,12 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('ageChart1').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // Cost Table
-            var age1_cost = parseFloat("<?php echo get_value('cost','age','1'); ?>").toFixed(0);
-            var age2_cost = parseFloat("<?php echo get_value('cost','age','2'); ?>").toFixed(0);
-            var age3_cost = parseFloat("<?php echo get_value('cost','age','3'); ?>").toFixed(0);
+            var age1_cost = parseInt("<?php echo get_value('cost','age','1'); ?>").toFixed(0);
+            var age2_cost = parseInt("<?php echo get_value('cost','age','2'); ?>").toFixed(0);
+            var age3_cost = parseInt("<?php echo get_value('cost','age','3'); ?>").toFixed(0);
             var data = [age1_cost, age2_cost, age3_cost];
+            console.log(data);
+            console.log(d3.max(data));
             var dataLabel = ["Average Cost (Age: 35-)","Average Cost (Age: 35 - 65)","Average Cost (Age: 65+)"];
             // axis
             var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
@@ -556,7 +561,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             return "<strong>Cost:</strong> <span style='color:red'>" + d + "</span>"; });
 
             // create svg canvas            
-            var svg = d3.select("#diabetesChart1")
+            var svg = d3.select("#ageChart1")
                         .append("svg")
                         .attr("width", w + margin.left + margin.right)
                         .attr("height", h + margin.top + margin.bottom)
@@ -599,7 +604,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         function ageChartFunction2() { // age stay
             var barWidth = 30;
             var margin = {top: 60, right: 60, bottom: 20, left: 20};
-            var w = document.getElementById('diabetesChart1').offsetWidth - margin.left - margin.right;
+            var w = document.getElementById('ageChart2').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // get avg stay
             var age1_stay = parseFloat("<?php echo get_value('cost','age','1'); ?>").toFixed(0);
@@ -620,7 +625,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             return "<strong>Stay:</strong> <span style='color:red'>" + d + "</span>"; });
 
             // create svg canvas            
-            var svg = d3.select("#diabetesChart1")
+            var svg = d3.select("#ageChart2")
                         .append("svg")
                         .attr("width", w + margin.left + margin.right)
                         .attr("height", h + margin.top + margin.bottom)
@@ -665,7 +670,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var barWidth = 30;
             var margin = {top: 60, right: 60, bottom: 20, left: 20};
             var w = document.getElementById('diabetesChart1').offsetWidth - margin.left - margin.right;
-            var h = 3 * barWidth;
+            var h = 2 * barWidth;
             // Cost Table
             var d_cost = parseFloat("<?php echo get_value('cost','diabetes','Y'); ?>").toFixed(0);
             var nd_cost = parseFloat("<?php echo get_value('cost','diabetes','N'); ?>").toFixed(0);
@@ -727,8 +732,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         function diabetesChartFunction2() { // diabetes stay
             var barWidth = 30;
             var margin = {top: 60, right: 60, bottom: 20, left: 20};
-            var w = document.getElementById('diabetesChart1').offsetWidth - margin.left - margin.right;
-            var h = 3 * barWidth;
+            var w = document.getElementById('diabetesChart2').offsetWidth - margin.left - margin.right;
+            var h = 2 * barWidth;
             // 1. Cost Table
             // get avg cost
             var d_cost = parseFloat("<?php echo get_value('stay','diabetes','Y'); ?>").toFixed(0);
@@ -748,7 +753,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             return "<strong>Stay:</strong> <span style='color:red'>" + d + "</span>"; });
 
             // create svg canvas            
-            var svg = d3.select("#diabetesChart1")
+            var svg = d3.select("#diabetesChart2")
                         .append("svg")
                         .attr("width", w + margin.left + margin.right)
                         .attr("height", h + margin.top + margin.bottom)
@@ -789,6 +794,142 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         $(diabetesChartFunction2);    
 
         // insurance   
+        function insuranceChartFunction() { // insurance cost
+            var barWidth = 30;
+            var margin = {top: 60, right: 60, bottom: 20, left: 20};
+            var w = document.getElementById('insuranceChart1').offsetWidth - margin.left - margin.right;
+            var h = 6 * barWidth;
+            // Cost Table
+            var hm_cost = parseFloat("<?php echo get_value('cost','insurance','Highmark Inc.'); ?>").toFixed(0);
+            var ibc_cost = parseFloat("<?php echo get_value('cost','insurance','Independence Blue Cross'); ?>").toFixed(0);
+            var cbc_cost = parseFloat("<?php echo get_value('cost','insurance','Capital Blue Cross'); ?>").toFixed(0);
+            var aetna_cost = parseFloat("<?php echo get_value('cost','insurance','Aetna Health Inc.'); ?>").toFixed(0);
+            var upmc_cost = parseFloat("<?php echo get_value('cost','insurance','UPMC Health Plan'); ?>").toFixed(0);
+            var other_cost = parseFloat("<?php echo get_value('cost','insurance','Others'); ?>").toFixed(0);
+            
+            var data = [hm_cost, ibc_cost, cbc_cost, aetna_cost, upmc_cost, other_cost];
+            var dataLabel = ["Average Cost (Highmark)","Average Cost (Independent Blue Cross)","Average Cost (Capital Blue Cross)","Average Cost (Aetna)","Average Cost (UPMC)","Average Cost (Others)"];
+            // axis
+            var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
+            var xAxis = d3.svg.axis()
+                          .scale(x)
+                          .orient("top");            
+            // tool tip
+            var tip = d3.tip()
+                        .attr("class", "d3-tip")
+                        .offset([1, 1])
+                        .html(function(d) {
+                            return "<strong>Cost:</strong> <span style='color:red'>" + d + "</span>"; });
+
+            // create svg canvas            
+            var svg = d3.select("#insuranceChart1")
+                        .append("svg")
+                        .attr("width", w + margin.left + margin.right)
+                        .attr("height", h + margin.top + margin.bottom)
+                        .append("g")
+                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            svg.call(tip);
+
+            // add axis
+            var axis = svg.append("g")
+                          .attr("class", "axis")
+                          .attr("transform", "translate(0,0)")
+                          .call(xAxis);
+
+            // add svg bars
+            var bars = svg.selectAll("rect")
+                            .data(data)
+                            .enter()
+                            .append("rect")
+                            .attr("class", "bar")
+                            .attr("y", function(d, i){ return 1+(i*barWidth) + "px"; })
+                            .attr("x", function(d){ return 0 + "px"; })
+                            .attr("width", function(d){ return x(d) + "px"; })
+                            .attr("height", function(d){ return barWidth-1 + "px"; })
+                            .attr("fill", "#3D9970")
+                            .on("mouseover", tip.show)
+                            .on("mouseout", tip.hide);
+
+            // add text labels            
+            var lab1 = svg.selectAll("text.lab")
+                            .data(dataLabel)
+                            .enter()
+                            .append("text")
+                            .attr("class", "title")
+                            .text(function(d, i) { return d; })
+                            .attr("x", function(d, i){ return 150 + "px"; })
+                            .attr("y", function(d, i){ return barWidth*i+22+ "px"; });
+        }
+        $(insuranceChartFunction); 
+
+        function insuranceChartFunction2() { // insurance cost
+            var barWidth = 30;
+            var margin = {top: 60, right: 60, bottom: 20, left: 20};
+            var w = document.getElementById('insuranceChart2').offsetWidth - margin.left - margin.right;
+            var h = 6 * barWidth;
+            // Cost Table
+            var hm_stay = parseFloat("<?php echo get_value('stay','insurance','Highmark Inc.'); ?>").toFixed(0);
+            var ibc_stay = parseFloat("<?php echo get_value('stay','insurance','Independence Blue Cross'); ?>").toFixed(0);
+            var cbc_stay = parseFloat("<?php echo get_value('stay','insurance','Capital Blue Cross'); ?>").toFixed(0);
+            var aetna_stay = parseFloat("<?php echo get_value('stay','insurance','Aetna Health Inc.'); ?>").toFixed(0);
+            var upmc_stay = parseFloat("<?php echo get_value('stay','insurance','UPMC Health Plan'); ?>").toFixed(0);
+            var other_stay = parseFloat("<?php echo get_value('stay','insurance','Others'); ?>").toFixed(0);
+            
+            var data = [hm_stay, ibc_stay, cbc_stay, aetna_stay, upmc_stay, other_stay];
+            var dataLabel = ["Average Stay (Highmark)","Average Stay (Independent Blue Cross)","Average Stay (Capital Blue Cross)","Average Stay (Aetna)","Average Stay (UPMC)","Average Stay (Others)"];
+            // axis
+            var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
+            var xAxis = d3.svg.axis()
+                          .scale(x)
+                          .orient("top");            
+            // tool tip
+            var tip = d3.tip()
+                        .attr("class", "d3-tip")
+                        .offset([1, 1])
+                        .html(function(d) {
+                            return "<strong>Stay:</strong> <span style='color:red'>" + d + "</span>"; });
+
+            // create svg canvas            
+            var svg = d3.select("#insuranceChart2")
+                        .append("svg")
+                        .attr("width", w + margin.left + margin.right)
+                        .attr("height", h + margin.top + margin.bottom)
+                        .append("g")
+                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            svg.call(tip);
+
+            // add axis
+            var axis = svg.append("g")
+                          .attr("class", "axis")
+                          .attr("transform", "translate(0,0)")
+                          .call(xAxis);
+
+            // add svg bars
+            var bars = svg.selectAll("rect")
+                            .data(data)
+                            .enter()
+                            .append("rect")
+                            .attr("class", "bar")
+                            .attr("y", function(d, i){ return 1+(i*barWidth) + "px"; })
+                            .attr("x", function(d){ return 0 + "px"; })
+                            .attr("width", function(d){ return x(d) + "px"; })
+                            .attr("height", function(d){ return barWidth-1 + "px"; })
+                            .attr("fill", "#0074D9")
+                            .on("mouseover", tip.show)
+                            .on("mouseout", tip.hide);
+
+            // add text labels            
+            var lab1 = svg.selectAll("text.lab")
+                            .data(dataLabel)
+                            .enter()
+                            .append("text")
+                            .attr("class", "title")
+                            .text(function(d, i) { return d; })
+                            .attr("x", function(d, i){ return 150 + "px"; })
+                            .attr("y", function(d, i){ return barWidth*i+22+ "px"; });
+        }
+        $(insuranceChartFunction2);                 
+        
         
     </script>
     </body>

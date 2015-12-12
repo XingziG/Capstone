@@ -51,7 +51,7 @@ hr { /* This defines the hr line style */
   shape-rendering: crispEdges;
 }
 .bar:hover {
-  fill: #3B3738;
+  fill: #D9853B;
 }
 .d3-tip {
     line-height: 1;
@@ -64,5 +64,5 @@ hr { /* This defines the hr line style */
 .title {
     text-anchor: middle;
     font: 1.3em Helvetica, Times New Roman, Times, serif;
-    fill: #fff;
+    fill: #404040;
 }
