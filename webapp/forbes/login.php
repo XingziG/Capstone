@@ -1,70 +1,55 @@
-<!-- To do: 
--->
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <title> Login </title>
-        <style>
-            html { 
-                /* The background code is referenced from:
-                https://css-tricks.com/perfect-full-page-background-image/ */
-                background: 
-                    url("bg01.jpg") no-repeat center center fixed; 
-                -webkit-background-size: cover;
-                -moz-background-size: cover;
-                -o-background-size: cover;
-                background-size: cover;
-            }   
-            img { /* This defines the header image */
-                float: left;
-                width: 250px;
-                height: 80px;
-                padding-top: 15px;
-                /*display: block; margin-left: auto; margin-right: auto*/
-            }         
-            h1 { /* This defines the header */
-                text-align: center;
-                font-family: Times New Roman, Times, serif;
-            }
-            hr { /* This defines the hr line style */
-                height: 2px; background-color: #599BB3; width: 80%; border: none;
-            }
-            .main { /* This defines the div displaying the page */
-                font: 1em Hoefler Text, Times New Roman, Times, serif;
-                width: 60%; 
-                margin: 50px auto;
-                padding: 10px;
-                background-color: #FFFFFF;
-            }  
-            .info { /* This defines the page information */
-                font: italic bold 1.0em Times New Roman;  
-                margin-left: 4em; margin-right: 4em;
-            }
-            .error { color: #FF0000; font: italic bold 0.9em Times New Roman;  }
-            .formfield { /* This defines the login form display */
-                font-size: 1em; margin-left: 6em; line-height: 200%;
-            }         
-            label {
-                display: inline-block;
-                width:10em;
-                text-align: left;
-            }
-        </style>                      
-    </head>
-    <body>
-    <!-- php -->
-    <?php // define variables and set to empty values
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-        require ('../mysqli_connect.php'); // Connect to the db.
-
+<?php
+// redirect user to another webpage based on login result
+function redirect_user ($page) {
+    // Start defining the URL...
+    $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+    $url = rtrim($url, '/\\');
+    $url .= '/' . $page;
+    // Redirect the user: 
+    header("Location: $url"); exit(); // Quit the script.
+}
+// check login info from database
+function check_login($dbc, $username = '', $userpass = '') {
+    $errors = array();
+    if (empty($username)) { // username
+        $errors[] = 'You forgot to enter your email address.';
+    } else{
+        $e = mysqli_real_escape_string($dbc, trim($username));
+    }
+    if (empty($userpass)) { // password
+        $errors[] = 'You forgot to enter your password.';
+    }else{
+        $p = mysqli_real_escape_string($dbc, trim($userpass));
+    }
+    if (empty($errors)) { // If everything's OK.
+        // Retrieve for the email/password combination:
+        $q = "SELECT email, name FROM users WHERE email='$e' AND pass='$p'";
+        $r = @mysqli_query ($dbc, $q); // run query       
+        // Check the result:
+        if (mysqli_num_rows($r) == 1) { // Fetch the record            
+            $row = mysqli_fetch_array ($r, MYSQLI_ASSOC);
+            return array(true, $row);
+        } else { // Not a match!
+            $errors[] = 'The email address and password entered do not match.';
+        }
+    }
+    return array(false, $errors);
+}
+// when a button is clicked
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    require ('../mysqli_connect.php'); // Connect to the db.
+    if (isset($_POST['register'])) { // register button clicked
         $errors = array();
-
         if (empty($_POST["email"])) {
             $errors['emailErr'] = 'Email is required';
         } else {
             $email = mysqli_real_escape_string($dbc, trim($_POST['email']));
+        }
+
+        if (empty($_POST["fname"])) {
+            $errors['fnameErr'] = 'Name is required';
+        } else {
+            $fname = mysqli_real_escape_string($dbc, trim($_POST['fname']));
         }
 
         if (!empty($_POST["password"])) {
@@ -77,79 +62,139 @@
             $errors['passwordErr'] = "Password is required";
         }
 
-        if (empty($errors)) {
-            //everything is OK, register the user into the db
-
+        if (empty($errors)) { //everything is OK, register the user into the db
             //make a query:
-            $q = "INSERT INTO users (email, pass) VALUES ('$email', '$password')";
+            $q = "INSERT INTO users (email, name, pass) VALUES ('$email', '$fname', '$password')";
             $r = @mysqli_query($dbc, $q); // Run the query.
             if ($r) { // If it ran OK.
                 $successRegister = true;
-
-                echo'<h1>Successfully Registered!</h1>';
-
+                $message = 'Successfully Registered!';
             } else {
                 // Public message:
-                echo '<h1>System Error</h1>
+                $message = '<h1>System Error</h1>
                 <p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>';
                 // Debugging message:
-                echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
+                $message = $message . '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
             }
-            mysqli_close($dbc); // Close the database connection.
         } else {
             $successRegister = false;
-            mysqli_close($dbc);
+            $message = 'The following error(s) occurred:<br />';
+            foreach ($errors as $msg) {
+                $message = $message . " - $msg<br />\n";
+            }
         }
+    } else { // login button clicked
+        list ($check, $data) = check_login($dbc, $_POST['username'], $_POST['userpass']);
+        if ($check) { // OK!
+            // Set the cookies:
+            setcookie ('email', $data['email']);
+            setcookie ('name', $data['name']);
+            // Redirect:
+            redirect_user('main.php');
+        } else { // Unsuccessful!
+            $errors = $data; // Assign $data to $errors
+            $message = 'The following error(s) occurred:<br />';
+            foreach ($errors as $msg) {
+                $message = $message . " - $msg<br />\n";
+            }
+        }               
     }
-    ?>
-     <!-- Displays the Login Page -->
-        <div class="main"> 
-            <img src="head.jpg" alt="Allegheny Health Network">
-            <h1>Forbes Regional Hospital <br/>
-                CABG Expense Analyzer</h1><hr>
-            <!-- Page Information -->
-            <p class="info"><br/>
-                Please type in your user name and passowrd to login. 
-            </p>
-            <!-- Login -->
-            <form action="check_user.php" class="formfield" method="POST">
-                <label> User Email </label>
-                    <input type="text" name="username" size="26" required>@ahn.org<br/>
-                <label> Password </label>
-                    <input type="password" name="password" size="26" required><br/>
-                <input type="submit" value="Login">
-            </form><br/>
-            <!-- Registration -->
-            <hr>
-            <p class="error" style="margin-left: 6em;"><?php if(isset($successRegister) && $successRegister) echo 'Successfully Registered!' ?></p>
-            <p class="info"><br/>
-                New user? Please click the register checkbox.
-                <input type="checkbox" id="register"/> Register          
-            </p>
-            <div id="register_box">
-                <!--<p class="error" style="margin-left: 6em;">All fields are required</p>-->
-                <form class="formfield" id="registerForm" method="POST" action="login.php">
-                    <label>Hospital Email</label>
-                        <input type="text" name="email" size="26">@ahn.org<br/>
-                    <label>New Password</label>
-                        <input type="password" name="password" id="pw1" size="26"><br/>
-                    <label>Re-type Password</label>
-                        <input type="password" name="password2" id="pw2" size="26"><br/> 
-                    <input type="submit" value="Register" class="button">
+    mysqli_close($dbc); // Close the database connection.
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>        
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="mystyle.css">
+        <title> Login </title>               
+    </head>
+    <body>
+        <!-- Displays the Login Page -->
+        <div class="container-fluid">
+            <div class="main">
+                <!-- Header -->
+                <img src="head.jpg" alt="Allegheny Health Network">
+                <h1 class="head">Forbes Regional Hospital <br/> CABG Expense Analyzer </h1><hr>
+                <!-- Page Information -->
+                <p class="error" style="margin-left: 6em">
+                    <?php if(isset($check) && !$check) echo "$message" ?></p>
+                <div class="panel panel-default">
+                    <div class="panel-heading"> Please enter your email and passowrd to login. </div>
+                </div>
+                <!-- Login -->
+                <form class="form-horizontal" method="POST" action="login.php">
+                    <div class="form-group">
+                        <label class="control-label col-sm-4"> User Email </label>
+                        <div class="input-group col-xs-4">
+                            <input class="form-control" type="text" name="username" required>
+                            <div class="input-group-addon">@ahn.org</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4"> Password </label>
+                        <div class="col-xs-4 input-group">
+                            <input class="form-control" type="password" name="userpass" required>
+                        </div>
+                    </div>
+                    <button type="submit" name="login" class="btn btn-info btn-lg center-block">Login</button> 
                 </form>
-            </div>  
-        </div> 
+                <!-- Registration -->
+                <hr>
+                <p class="error" style="margin-left: 6em;">
+                    <?php if(isset($successRegister)) echo "$message" ?></p>
+                <div class="panel panel-default">
+                    <div class="panel-heading"> 
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="register"/>New user? Please click the checkbox. 
+                        </label> 
+                    </div>
+                </div>
+
+                <form class="form-horizontal" id="registerForm" method="POST" action="login.php">
+                    <div class="form-group">
+                        <label class="control-label col-sm-4"> Hospital Email </label>
+                        <div class="input-group col-xs-4">
+                            <input class="form-control" type="text" name="email" required>
+                            <div class="input-group-addon">@ahn.org</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4"> Full Name </label>
+                        <div class="col-xs-4 input-group">
+                            <input class="form-control" type="text" name="fname" required>
+                        </div>
+                    </div>                    
+                    <div class="form-group">
+                        <label class="control-label col-sm-4"> Password </label>
+                        <div class="col-xs-4 input-group">
+                            <input class="form-control" type="password" name="password" id="pw1" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4"> Re-type Password </label>
+                        <div class="col-xs-4 input-group">
+                            <input class="form-control" type="password" name="password2" id="pw2" required>
+                        </div>
+                    </div>
+                    <center>
+                        <button type="submit" name="register" class="btn btn-info btn-lg center-block">Register</button>
+                    </center>
+                </form> 
+            </div>
+        </div>        
         <script>
-        // show or hide register box
         $(document).ready(function () {
             // show or hide register box
             $("#register").change(function () { 
-                $("#register_box").fadeToggle(this.checked);
+                $("#registerForm").fadeToggle(this.checked);
             }).change();
             // validate form input
-            $('form#registerForm :input').blur(function() {
+            $('form.form-horizontal :input').blur(function() {
                 if( $(this).val().length == 0 ) { // input is empty
-                    $(this).after($("<span class='error'> Please fill this in </span>"));
+                    $(this).parent().after($("<label class='control-label col-sm-6'><span class='error'> Please fill this in </span></label>"));
                 } else if ($(this).is("#pw1") | $(this).is("#pw2")) { // when user input password
                     if ($("#pw1").val() != 0 & $("#pw2").val() != 0) { 
                         if ($("#pw2").val() != $("#pw1").val()) { // passwords do not match
@@ -162,8 +207,8 @@
                 }
             });
             // remove warning message when on focus
-            $('form#registerForm :input').focus(function() {
-                $(this).next("span").empty();
+            $('form.form-horizontal :input').focus(function() {
+                $(this).parent().next("label").empty();
             });
         });
         </script>    
