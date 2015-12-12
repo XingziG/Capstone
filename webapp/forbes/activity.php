@@ -304,7 +304,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </table>
                                         </div>
                                     </div>
-                                </div>                   
+                                </div>
                                 <!--Direct material-->
                                 <div class="panel panel-info">
                                     <div class="panel-heading">
@@ -318,7 +318,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                 <thead>
                                                     <tr>
                                                         <th>Item</th>
-                                                        <th>Total Cost</th>
+                                                        <th>Cost Per Day ($)</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -329,33 +329,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div> 
-                                </div>    
-                                <!--Overhead-->
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#surgery2" href="#overhead"> Overhead </a>
-                                        </h4>
                                     </div>
-                                    <div id="overhead" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <table id="oh" class="table table-striped" cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Item</th>
-                                                        <th>Total Cost</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                    <td>All Overhead</td>
-                                                        <td><input type="text" id="oh-r1" name="ohcost" value="<?php echo get_oh() ?>"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>                             
                                 </div>
                             </div>
                                 <button type="submit" class="btn btn-info btn-lg center-block" name="surgery">Submit</button>

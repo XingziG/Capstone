@@ -1,4 +1,5 @@
 drop trigger add_new_patients_report;
+drop trigger update_total_labor_cost;
 drop table reports;
 drop table activ_role;
 drop table roles;
@@ -26,6 +27,7 @@ diabetes VARCHAR(3) NOT NULL,
 insurance VARCHAR(25) NOT NULL,
 direct_material INT UNSIGNED,
 over_head INT UNSIGNED,
+total_labor_cost FLOAT(13,2),
 PRIMARY KEY (patient_id)
 );
 
@@ -100,6 +102,21 @@ BEGIN
         CLOSE c1;
 END;
 //
+
+CREATE TRIGGER update_total_labor_cost BEFORE UPDATE ON patients
+FOR EACH ROW
+BEGIN 
+    IF NEW.checkout <> OLD.checkout
+    THEN
+    SET NEW.total_labor_cost = (SELECT SUM(r.freq * r.time_duration * ro.salary / 124800 *
+                            (CASE r.activity_day
+                                 WHEN 'd' THEN DATEDIFF(NEW.checkout, NEW.checkin)-2
+                                 ELSE 1
+                             END)) AS 'days'
+                FROM reports r, roles ro 
+                WHERE NEW.patient_id = r.patient_id AND r.role_id = ro.role_id);
+    END IF;
+END;
+//
 delimiter ;
 /* trigger end */
-

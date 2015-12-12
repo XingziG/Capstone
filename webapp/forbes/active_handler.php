@@ -64,9 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } elseif ($param_name == "dmcost") {
                 $direct_material = $param_val;
                 $q = "UPDATE patients SET direct_material = $direct_material WHERE patient_id='$patient_id'";
-            } elseif ($param_name == "ohcost") {
-                $overhead = $param_val;
-                $q = "UPDATE patients SET over_head = $overhead WHERE patient_id='$patient_id'";
             } else {
                 // split the string by "-"
                 $attribute = explode("-", $param_name);
