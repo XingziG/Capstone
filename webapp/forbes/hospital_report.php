@@ -94,36 +94,6 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </tr> 
                                         </tbody>
                                     </table>
-                                    <!--Direct Material-->
-                                    <table id="sg-dm" class="table table-striped" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th class="col-md-8">Direct Material</th>
-                                                <th class="col-md-4">Total Cost</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                            <td>All Direct Material</td>
-                                            <td><span name="sg-dm"><?php echo get_all_dm() ?></span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <!--Overhead-->
-                                    <table id="sg-oh" class="table table-striped" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th class="col-md-8">Overhead</th>
-                                                <th class="col-md-4">Total Cost</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                            <td>All Overhead</td>
-                                            <td><span name="sg-oh"><?php echo get_all_oh() ?></span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -154,36 +124,6 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                 <td><strong>Total:</strong></td>
                                                 <td><strong><span id="po-result"></span></strong></td>
                                             </tr>                                            
-                                        </tbody>
-                                    </table>
-                                    <!--Direct Material-->
-                                    <table id="po-dm" class="table table-striped" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th class="col-md-8">Direct Material</th>
-                                                <th class="col-md-4">Total Cost</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                            <td>All Direct Material</td>
-                                            <td><span name="po-dm">1000</span></td>                                                     
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <!--Overhead-->
-                                    <table id="po-oh" class="table table-striped" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th class="col-md-8">Overhead</th>
-                                                <th class="col-md-4">Total Cost</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                            <td>All Overhead</td>
-                                            <td><span name="po-oh">1000</span></td>                                                     
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
