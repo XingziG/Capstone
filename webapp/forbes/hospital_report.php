@@ -26,6 +26,8 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script> 
         <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+        <script src="https://raw.githubusercontent.com/benkeen/d3pie/0.1.8/d3pie/d3pie.min.js"></script>
+        <script src="sankey.js"></script>
         <title> Hospital Report </title>
     </head>
     <body>
@@ -258,7 +260,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#d3-graph" href="#graph">
-                                    Hospital Vs. National Average In Terms of Cost and Stay Duration</a>
+                                    Hospital Wide CABG Cost and Stay Duration Analysis </a>
                             </h4>
                         </div>
                         <div id="graph" class="panel-collapse collapse in">
@@ -298,7 +300,6 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             </div>
         </div>
     </div>
-        <script src="https://raw.githubusercontent.com/benkeen/d3pie/0.1.8/d3pie/d3pie.min.js"></script>
     <script>
         //
         function commaSeparateNumber(val){ 
@@ -339,69 +340,130 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         }
         $(calculateSum);
 
-        // D3
-        function costChartFunction() { // hospital cost
-            var barWidth = 30;
-            var margin = {top: 60, right: 60, bottom: 20, left: 20};
-            var w = document.getElementById('costChart').offsetWidth - margin.left - margin.right;
-            var h = 2 * barWidth;
-            // Cost Table
-            var h_cost = parseFloat("<?php echo get_value('cost', 'avg', 'hospital'); ?>").toFixed(0);
-            var data = [h_cost, 6000];
-            var dataLabel = ["Average Cost (Hospital)","Average Reimbursement"];
-            // axis
-            var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, w]);
-            var xAxis = d3.svg.axis()
-                          .scale(x)
-                          .orient("top");            
-            // tool tip
-            var tip = d3.tip()
-                        .attr("class", "d3-tip")
-                        .offset([1, 1])
-                        .html(function(d) {
-                            return "<strong>Cost:</strong> <span style='color:red'>" + d + "</span>"; });
+        // D3        
+        function costChartFunction() {
+            var units = "$";
+            var margin = {top: 10, right: 40, bottom: 10, left: 10},
+                width = document.getElementById("costChart").offsetWidth - margin.left - margin.right,
+                height = 300 - margin.top - margin.bottom;
 
-            // create svg canvas            
-            var svg = d3.select("#costChart")
-                        .append("svg")
-                        .attr("width", w + margin.left + margin.right)
-                        .attr("height", h + margin.top + margin.bottom)
+            var formatNumber = d3.format(",.0f"),    // zero decimal places
+                format = function(d) { return units + formatNumber(d); },
+                color = d3.scale.category10();
+
+            // append the svg canvas to the page
+            var svg = d3.select("#costChart").append("svg")
+                        .attr("width", width + margin.left + margin.right)
+                        .attr("height", height + margin.top + margin.bottom)
                         .append("g")
                         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-            svg.call(tip);
 
-            // add axis
-            var axis = svg.append("g")
-                          .attr("class", "axis")
-                          .attr("transform", "translate(0,0)")
-                          .call(xAxis);
+            // Set the sankey diagram properties
+            var sankey = d3.sankey()
+                            .nodeWidth(36)
+                            .nodePadding(40)
+                            .size([width, height]);
 
-            // add svg bars
-            var bars = svg.selectAll("rect")
-                            .data(data)
-                            .enter()
-                            .append("rect")
-                            .attr("class", "bar")
-                            .attr("y", function(d, i){ return 1+(i*barWidth) + "px"; })
-                            .attr("x", function(d){ return 0 + "px"; })
-                            .attr("width", function(d){ return x(d) + "px"; })
-                            .attr("height", function(d){ return barWidth-1 + "px"; })
-                            .attr("fill", "#3D9970")
-                            .on("mouseover", tip.show)
-                            .on("mouseout", tip.hide);
+            var path = sankey.link();
 
-            // add text labels            
-            var lab1 = svg.selectAll("text.lab")
-                            .data(dataLabel)
-                            .enter()
-                            .append("text")
-                            .attr("class", "title")
-                            .text(function(d, i) { return d; })
-                            .attr("x", function(d, i){ return 150 + "px"; })
-                            .attr("y", function(d, i){ return barWidth*i+22+ "px"; });
+            // load the data   
+            var dl = parseFloat($("#to-result").text().replace(/\,/g, '')); 
+            var dm = parseFloat($("#to-result2").text().replace(/\,/g, ''));
+            var oh = parseFloat($("#to-result3").text().replace(/\,/g, ''));
+            var ri = 2000;
+            var de = dl + dm + oh - ri;
+            
+            var graph = {"nodes":
+                            [
+                            {"node":0,"name":"Direct Labor"},
+                            {"node":1,"name":"Direct Material"},
+                            {"node":2,"name":"Overhead"},
+                            {"node":3,"name":"Average Cost"},
+                            {"node":4,"name":"Reimbursement"},
+                            {"node":5,"name":"Deficit"}
+                            ],
+                        "links":
+                            [
+                            {"source":0,"target":3,"value":dl},
+                            {"source":1,"target":3,"value":dm},
+                            {"source":2,"target":3,"value":oh},
+                            {"source":3,"target":4,"value":ri},
+                            {"source":3,"target":5,"value":de}
+                        ]}
+
+            sankey.nodes(graph.nodes)
+                  .links(graph.links)
+                  .layout(32);
+
+            // add in the links
+            var link = svg.append("g").selectAll(".link")
+                        .data(graph.links)
+                        .enter().append("path")
+                        .attr("class", "link")
+                        .attr("d", path)
+                        .style("fill", "none")
+                        .style("stroke", "tan")
+                        .style("stroke-opacity", ".33")
+                        .on("mouseover", function() { d3.select(this).style("stroke-opacity", ".5") } )
+                        .on("mouseout", function()  { d3.select(this).style("stroke-opacity", ".2") } )
+                        .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+                        .sort(function(a, b) { return b.dy - a.dy; });
+
+            // add the link titles
+            link.append("title")
+                .text(function(d) {
+                    return d.source.name + " -> " + d.target.name + "\n" + format(d.value); });
+
+            // add in the nodes
+            var node = svg.append("g").selectAll(".node")
+                            .data(graph.nodes)
+                            .enter().append("g")
+                            .attr("class", "node")
+                            .attr("transform", function(d) { 
+                                return "translate(" + d.x + "," + d.y + ")"; })
+                            .call(d3.behavior.drag()
+                            .origin(function(d) { return d; })
+                            .on("dragstart", function() {  this.parentNode.appendChild(this); })
+                            .on("drag", dragmove));
+
+            // add the rectangles for the nodes - here
+            node.append("rect")
+                  .attr("height", function(d) { return d.dy; })
+                  .attr("width", sankey.nodeWidth())
+                  .style("fill", function(d) { 
+                      return d.color = color(d.name.replace(/ .*/, "")); })
+                  .style("fill-opacity", ".9")
+                  .style("shape-rendering", "crispEdges")
+                  .style("stroke", function(d) { 
+                      return d3.rgb(d.color).darker(2); })
+                  .append("title")
+                  .text(function(d) { 
+                      return d.name + "\n" + format(d.value); });
+
+            // add in the title for the nodes
+            node.append("text")
+                .attr("x", -6)
+                .attr("y", function(d) { return d.dy / 2; })
+                .attr("dy", ".35em")
+                .attr("text-anchor", "end")
+                .attr("transform", null)
+                .text(function(d) { return d.name + ": " + format(d.value); })
+                .filter(function(d) { return d.x < width / 2; })
+                .attr("x", 6 + sankey.nodeWidth())
+                .attr("text-anchor", "start");
+
+            // the function for moving the nodes
+            function dragmove(d) {
+                d3.select(this).attr("transform", 
+                    "translate(" + d.x + "," + (
+                        d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))
+                    ) + ")");
+                sankey.relayout();
+                link.attr("d", path);
+            }
         }
         $(costChartFunction);
-        
+         
         // Age
         function ageChartFunction() { // age cost
             var barWidth = 30;
@@ -424,7 +486,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Cost:</strong> <span style='color:red'>" + d.toFixed(0) + "</span>"; });
+                            return "<strong>Cost: $</strong><span style='color:red'>" + d.toFixed(0) + "</span>"; });
 
             // create svg canvas            
             var svg = d3.select("#ageChart1")
@@ -488,7 +550,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Stay:</strong> <span style='color:red'>" + d.toFixed(1) + "</span>"; });
+                            return "<strong>Stay:</strong> <span style='color:red'>" + d.toFixed(1) + "</span> days"; });
 
             // create svg canvas            
             var svg = d3.select("#ageChart2")
@@ -620,7 +682,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Cost:</strong> <span style='color:red'>" + d.toFixed(0) + "</span>"; });
+                            return "<strong>Cost: $</strong><span style='color:red'>" + d.toFixed(0) + "</span>"; });
 
             // create svg canvas            
             var svg = d3.select("#diabetesChart1")
@@ -684,7 +746,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Stay:</strong> <span style='color:red'>" + d.toFixed(1) + "</span>"; });
+                            return "<strong>Stay:</strong> <span style='color:red'>" + d.toFixed(1) + "</span> days"; });
 
             // create svg canvas            
             var svg = d3.select("#diabetesChart2")
@@ -817,7 +879,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Cost:</strong> <span style='color:red'>" + d.toFixed(0) + "</span>"; });
+                            return "<strong>Cost: $</strong><span style='color:red'>" + d.toFixed(0) + "</span>"; });
 
             // create svg canvas            
             var svg = d3.select("#insuranceChart1")
@@ -886,7 +948,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Stay:</strong> <span style='color:red'>" + d.toFixed(1) + "</span>"; });
+                            return "<strong>Stay:</strong> <span style='color:red'>" + d.toFixed(1) + "</span> days"; });
 
             // create svg canvas            
             var svg = d3.select("#insuranceChart2")

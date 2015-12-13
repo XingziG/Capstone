@@ -113,9 +113,9 @@ function get_value($graph, $input, $bar) {
 
             }
         } else if ($input == "diabetes") { // diabetes
-            $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL AND diabetes='$bar'";
+            $q = "SELECT IFNULL(AVG(DATEDIFF(checkout, checkin)),0) as 'result' FROM patients WHERE checkout IS NOT NULL AND diabetes='$bar'";
         } else if ($input == "insurance") {
-            $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL AND insurance='$bar'";
+            $q = "SELECT IFNULL(AVG(DATEDIFF(checkout, checkin)),0) as 'result' FROM patients WHERE checkout IS NOT NULL AND insurance='$bar'";
         } else { // age
             switch($bar){
                 case "1":
