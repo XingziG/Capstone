@@ -204,8 +204,3 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
 </div>
 </body>
 </html>
-
-<!-- To do: 1. Show 5 patients without checkout date?
-            2. Add correct activities in activities table
-            3. Add correct activities-role relations in activ_role table
--->
