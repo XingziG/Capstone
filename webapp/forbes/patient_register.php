@@ -158,12 +158,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group">
                     <label class="control-label col-sm-4"> Insurance </label>
                     <select class="form-control" name="insurance" style="width:300px" required>
-                        <option value="Highmark Inc.">Highmark Inc.</option>
-                        <option value="Independence Blue Cross">Independence Blue Cross</option>
-                        <option value="Capital Blue Cross">Capital Blue Cross</option>
-                        <option value="Aetna Health">Aetna Health</option>
-                        <option value="UPMC Health Plan">UPMC Health Plan</option>
-                        <option value="Others"> Others</option>
+                        <option value="medicare">Medicare</option>
+                        <option value="securityblue">MC Security Blue</option>
+                        <option value="bluecross">Blue Cross</option>
+                        <option value="advantra">MC Advantra</option>
+                        <option value="others"> Others</option>
                     </select>
                 </div>
                 <button method="POST" type="submit" class="btn btn-info btn-lg center-block">Submit</button>

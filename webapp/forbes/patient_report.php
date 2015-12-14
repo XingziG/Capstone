@@ -223,7 +223,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         </div>
                         <div id="graph" class="panel-collapse collapse in">
                             <div class="panel-body">
-                                <div class='col-sm-12' id="costChart2"></div><br/>
+                                <div class='col-sm-12' id="costSankey"></div><br/>
                                 <div class='col-sm-12' id="costChart"></div><br/>
                                 <div class='col-sm-12' id="timeChart"></div>
                             </div>
@@ -274,18 +274,18 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         $(calculateSum);        
         
         // D3
-        function costChartFunction2() {
+        function sankeyChartFunction() {
             var units = "$";
             var margin = {top: 10, right: 50, bottom: 10, left: 20},
-                width = document.getElementById("costChart2").offsetWidth - margin.left - margin.right,
-                height = 300 - margin.top - margin.bottom;
+                width = document.getElementById("costSankey").offsetWidth - margin.left - margin.right,
+                height = 250 - margin.top - margin.bottom;
 
             var formatNumber = d3.format(",.0f"),    // zero decimal places
                 format = function(d) { return units + formatNumber(d); },
                 color = d3.scale.category10();
 
             // append the svg canvas to the page
-            var svg = d3.select("#costChart2").append("svg")
+            var svg = d3.select("#costSankey").append("svg")
                         .attr("width", width + margin.left + margin.right)
                         .attr("height", height + margin.top + margin.bottom)
                         .append("g")
@@ -305,10 +305,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             //var oh = parseFloat($("#to-result3").text().replace(/\,/g, ''));
             var oh = 5000;
             var ri = 2000;
-            var de = dl + dm + oh - ri;
-            console.log(dl,dm,oh,ri,de);
-            
-            var graph = {"nodes":
+            var toc = dl + dm + oh; // total cost
+            var ri = 9689;  // reimbursment
+            if (toc > ri) {
+                var de = toc - ri; // deficit
+                var graph = {"nodes":
                             [
                             {"node":0,"name":"Direct Labor"},
                             {"node":1,"name":"Direct Material"},
@@ -324,8 +325,28 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             {"source":2,"target":3,"value":oh},
                             {"source":3,"target":4,"value":ri},
                             {"source":3,"target":5,"value":de}
-                        ]}
-
+                        ]};   
+            } else {
+                var re = ri - toc; // revenue
+                var graph = {"nodes":
+                            [
+                            {"node":0,"name":"Direct Labor"},
+                            {"node":1,"name":"Direct Material"},
+                            {"node":2,"name":"Overhead"},
+                            {"node":3,"name":"Average Cost"},
+                            {"node":4,"name":"Reimbursement"},
+                            {"node":5,"name":"Revenue"}
+                            ],
+                        "links":
+                            [
+                            {"source":0,"target":3,"value":dl},
+                            {"source":1,"target":3,"value":dm},
+                            {"source":2,"target":3,"value":oh},
+                            {"source":3,"target":4,"value":toc},
+                            {"source":5,"target":4,"value":re}
+                        ]} 
+            }            
+            
             sankey.nodes(graph.nodes)
                   .links(graph.links)
                   .layout(32);
@@ -397,8 +418,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                 link.attr("d", path);
             }
         }
-        $(costChartFunction2);
-        
+        $(sankeyChartFunction);       
         
         function costChartFunction() {
             var barWidth = 30;
