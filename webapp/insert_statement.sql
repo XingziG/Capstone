@@ -1,18 +1,18 @@
 /* roles table */
-INSERT INTO roles (role_id, role_name, salary) VALUES (1,'Anesthesiologist',180000);
-INSERT INTO roles (role_id, role_name, salary) VALUES (2,'Cardiologist',50000);
+INSERT INTO roles (role_id, role_name, salary) VALUES (1,'Anesthesiologist',234000);
+INSERT INTO roles (role_id, role_name, salary) VALUES (2,'Cardiologist',37500);
 INSERT INTO roles (role_id, role_name, salary) VALUES (3,'Cardiovascular Surgeon',600000);
-INSERT INTO roles (role_id, role_name, salary) VALUES (4,'Case Manager',50000);
-INSERT INTO roles (role_id, role_name, salary) VALUES (5,'Endocrinologist',50000);
-INSERT INTO roles (role_id, role_name, salary) VALUES (6,'Housekeeping',50000);
-INSERT INTO roles (role_id, role_name, salary) VALUES (7,'IC Doctor',50000);
-INSERT INTO roles (role_id, role_name, salary) VALUES (8,'Registered Nurse',120000);
-INSERT INTO roles (role_id, role_name, salary) VALUES (9,'Occupational Therapist',50000);
-INSERT INTO roles (role_id, role_name, salary) VALUES (10,'Physician Assistant',72000);
-INSERT INTO roles (role_id, role_name, salary) VALUES (11,'Physical Therapist',50000);
-INSERT INTO roles (role_id, role_name, salary) VALUES (12,'Respiratory Therapist',50000);
-INSERT INTO roles (role_id, role_name, salary) VALUES (13,'Scub Tech',42000);
-INSERT INTO roles (role_id, role_name, salary) VALUES (14,'Perfusionist',50000);
+INSERT INTO roles (role_id, role_name, salary) VALUES (4,'Case Manager',69800);
+INSERT INTO roles (role_id, role_name, salary) VALUES (5,'Endocrinologist',201129);
+INSERT INTO roles (role_id, role_name, salary) VALUES (6,'Housekeeping',24327);
+INSERT INTO roles (role_id, role_name, salary) VALUES (7,'IC Doctor',307088);
+INSERT INTO roles (role_id, role_name, salary) VALUES (8,'Registered Nurse',55082);
+INSERT INTO roles (role_id, role_name, salary) VALUES (9,'Occupational Therapist',78544);
+INSERT INTO roles (role_id, role_name, salary) VALUES (10,'Physician Assistant',75509);
+INSERT INTO roles (role_id, role_name, salary) VALUES (11,'Physical Therapist',76002);
+INSERT INTO roles (role_id, role_name, salary) VALUES (12,'Respiratory Therapist',62675);
+INSERT INTO roles (role_id, role_name, salary) VALUES (13,'Scub Tech',40387);
+INSERT INTO roles (role_id, role_name, salary) VALUES (14,'Perfusionist',112935);
 
 /* activities table */
 INSERT INTO activities (activity_id, acticity_name, activity_category) VALUES (1,'Transesophaegal Echocardiogram','S');
@@ -97,26 +97,26 @@ INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_da
 INSERT INTO activ_role (activity_id, role_id, activity_default_time, activity_day) VALUES (24,10,15,'n');
 
 /* patients table */
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(1,'Ayesha','Leona',STR_TO_DATE('1941-11-08', '%Y-%m-%d'), STR_TO_DATE('2012-02-27', '%Y-%m-%d'), STR_TO_DATE('2012-03-07', '%Y-%m-%d'),'M','N', 'others');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(2,'Zetta','Ronny',STR_TO_DATE('1943-10-12', '%Y-%m-%d'), STR_TO_DATE('2012-05-07', '%Y-%m-%d'), STR_TO_DATE('2012-05-14', '%Y-%m-%d'),'F','N', 'others');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(3,'Alton','Shad',STR_TO_DATE('1946-04-19', '%Y-%m-%d'), STR_TO_DATE('2012-07-05', '%Y-%m-%d'), STR_TO_DATE('2012-07-16', '%Y-%m-%d'),'M','Y','medicare');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(4,'Wanda','Taneka',STR_TO_DATE('1949-02-14', '%Y-%m-%d'), STR_TO_DATE('2012-07-27', '%Y-%m-%d'), STR_TO_DATE('2012-08-08', '%Y-%m-%d'),'M','N','others');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(5,'Tiffany','Phillip',STR_TO_DATE('1951-08-03', '%Y-%m-%d'), STR_TO_DATE('2012-09-04', '%Y-%m-%d'), STR_TO_DATE('2012-09-10', '%Y-%m-%d'),'F','N','securityblue');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(6,'Marna','Antony',STR_TO_DATE('1953-11-29', '%Y-%m-%d'), STR_TO_DATE('2013-04-10', '%Y-%m-%d'), STR_TO_DATE('2013-04-16', '%Y-%m-%d'),'M','Y','advantra');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(7,'Dwayne','Tifany',STR_TO_DATE('1956-01-23', '%Y-%m-%d'), STR_TO_DATE('2013-07-22', '%Y-%m-%d'), STR_TO_DATE('2013-07-26', '%Y-%m-%d'),'M','N','securityblue');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(8,'Talia','Mayme',STR_TO_DATE('1957-01-24', '%Y-%m-%d'), STR_TO_DATE('2013-08-07', '%Y-%m-%d'), STR_TO_DATE('2013-08-13', '%Y-%m-%d'),'F','N','medicare');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(9,'Irmgard','Yuette',STR_TO_DATE('1961-12-24', '%Y-%m-%d'), STR_TO_DATE('2013-09-15', '%Y-%m-%d'), STR_TO_DATE('2013-09-23', '%Y-%m-%d'),'M','Y','securityblue');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(10,'Eden','Saul',STR_TO_DATE('1964-05-07', '%Y-%m-%d'), STR_TO_DATE('2014-03-06', '%Y-%m-%d'), STR_TO_DATE('2014-03-12', '%Y-%m-%d'),'F','N','others');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(11,'Lizzie','Dante',STR_TO_DATE('1967-05-08', '%Y-%m-%d'), STR_TO_DATE('2014-03-05', '%Y-%m-%d'), STR_TO_DATE('2014-03-12', '%Y-%m-%d'),'M','N','securityblue');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(12,'Zoe','Ignacia',STR_TO_DATE('1967-10-08', '%Y-%m-%d'), STR_TO_DATE('2014-05-09', '%Y-%m-%d'), STR_TO_DATE('2014-05-12', '%Y-%m-%d'),'F','N','advantra');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(13,'Kerrie','Mertie',STR_TO_DATE('1971-03-06', '%Y-%m-%d'), STR_TO_DATE('2014-05-28', '%Y-%m-%d'), STR_TO_DATE('2014-06-04', '%Y-%m-%d'),'F','Y','bluecross');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(14,'Jacquetta','Gerald',STR_TO_DATE('1973-04-01', '%Y-%m-%d'), STR_TO_DATE('2014-07-24', '%Y-%m-%d'), STR_TO_DATE('2014-08-02', '%Y-%m-%d'),'M','N','bluecross');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(15,'Daphine','Velvet',STR_TO_DATE('1974-05-31', '%Y-%m-%d'), STR_TO_DATE('2014-08-14', '%Y-%m-%d'), STR_TO_DATE('2014-08-19', '%Y-%m-%d'),'F','Y','others');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(16,'Leeanna','Irene',STR_TO_DATE('1976-01-15', '%Y-%m-%d'), STR_TO_DATE('2014-09-15', '%Y-%m-%d'), STR_TO_DATE('2014-09-23',  '%Y-%m-%d'),'F','Y','advantra');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(17,'Daina','Lecia',STR_TO_DATE('1977-10-25', '%Y-%m-%d'), STR_TO_DATE('2014-10-28', '%Y-%m-%d'), STR_TO_DATE('2014-11-03', '%Y-%m-%d'),'M','N','others');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(18,'Anika','Isidro',STR_TO_DATE('1986-07-23', '%Y-%m-%d'), STR_TO_DATE('2014-12-08', '%Y-%m-%d'), STR_TO_DATE('2014-12-12', '%Y-%m-%d'),'F','Y','others');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(19,'Karey','Rheba',STR_TO_DATE('1986-11-25', '%Y-%m-%d'), STR_TO_DATE('2015-01-27', '%Y-%m-%d'), STR_TO_DATE('2015-01-31', '%Y-%m-%d'),'M','N','advantra');
-INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, checkout, gender, diabetes, insurance) VALUES(20,'Buster','Adah',STR_TO_DATE('1991-08-16', '%Y-%m-%d'), STR_TO_DATE('2013-06-03', '%Y-%m-%d'), STR_TO_DATE('2013-06-06', '%Y-%m-%d'),'M','N','others');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(1,'Ayesha','Leona',STR_TO_DATE('1941-11-08', '%Y-%m-%d'), STR_TO_DATE('2012-02-27', '%Y-%m-%d'), 'M','N', 'others');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(2,'Zetta','Ronny',STR_TO_DATE('1943-10-12', '%Y-%m-%d'), STR_TO_DATE('2012-05-07', '%Y-%m-%d'), 'F','N', 'others');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(3,'Alton','Shad',STR_TO_DATE('1946-04-19', '%Y-%m-%d'), STR_TO_DATE('2012-07-05', '%Y-%m-%d'), 'M','Y','medicare');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(4,'Wanda','Taneka',STR_TO_DATE('1949-02-14', '%Y-%m-%d'), STR_TO_DATE('2012-07-27', '%Y-%m-%d'), 'M','N','others');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(5,'Tiffany','Phillip',STR_TO_DATE('1951-08-03', '%Y-%m-%d'), STR_TO_DATE('2012-09-04', '%Y-%m-%d'), 'F','N','securityblue');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(6,'Marna','Antony',STR_TO_DATE('1953-11-29', '%Y-%m-%d'), STR_TO_DATE('2013-04-10', '%Y-%m-%d'), 'M','Y','advantra');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(7,'Dwayne','Tifany',STR_TO_DATE('1956-01-23', '%Y-%m-%d'), STR_TO_DATE('2013-07-22', '%Y-%m-%d'), 'M','N','securityblue');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(8,'Talia','Mayme',STR_TO_DATE('1957-01-24', '%Y-%m-%d'), STR_TO_DATE('2013-08-07', '%Y-%m-%d'), 'F','N','medicare');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(9,'Irmgard','Yuette',STR_TO_DATE('1961-12-24', '%Y-%m-%d'), STR_TO_DATE('2013-09-15', '%Y-%m-%d'), 'M','Y','securityblue');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(10,'Eden','Saul',STR_TO_DATE('1964-05-07', '%Y-%m-%d'), STR_TO_DATE('2014-03-06', '%Y-%m-%d'), 'F','N','others');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(11,'Lizzie','Dante',STR_TO_DATE('1967-05-08', '%Y-%m-%d'), STR_TO_DATE('2014-03-05', '%Y-%m-%d'), 'M','N','securityblue');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(12,'Zoe','Ignacia',STR_TO_DATE('1967-10-08', '%Y-%m-%d'), STR_TO_DATE('2014-05-09', '%Y-%m-%d'), 'F','N','advantra');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(13,'Kerrie','Mertie',STR_TO_DATE('1971-03-06', '%Y-%m-%d'), STR_TO_DATE('2014-05-28', '%Y-%m-%d'), 'F','Y','bluecross');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(14,'Jacquetta','Gerald',STR_TO_DATE('1973-04-01', '%Y-%m-%d'), STR_TO_DATE('2014-07-24', '%Y-%m-%d'), 'M','N','bluecross');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(15,'Daphine','Velvet',STR_TO_DATE('1974-05-31', '%Y-%m-%d'), STR_TO_DATE('2014-08-14', '%Y-%m-%d'), 'F','Y','others');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(16,'Leeanna','Irene',STR_TO_DATE('1976-01-15', '%Y-%m-%d'), STR_TO_DATE('2014-09-15', '%Y-%m-%d'), 'F','Y','advantra');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(17,'Daina','Lecia',STR_TO_DATE('1977-10-25', '%Y-%m-%d'), STR_TO_DATE('2014-10-28', '%Y-%m-%d'), 'M','N','others');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(18,'Anika','Isidro',STR_TO_DATE('1986-07-23', '%Y-%m-%d'), STR_TO_DATE('2014-12-08', '%Y-%m-%d'), 'F','Y','others');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(19,'Karey','Rheba',STR_TO_DATE('1986-11-25', '%Y-%m-%d'), STR_TO_DATE('2015-01-27', '%Y-%m-%d'), 'M','N','advantra');
+INSERT INTO patients (patient_id, patient_fname, patient_lname, birthdate, checkin, gender, diabetes, insurance) VALUES(20,'Buster','Adah',STR_TO_DATE('1991-08-16', '%Y-%m-%d'), STR_TO_DATE('2013-06-03', '%Y-%m-%d'), 'M','N','others');
 
 
 UPDATE reports SET freq = 1,time_duration = 90 WHERE report_id = 1;
@@ -1199,3 +1199,46 @@ UPDATE reports SET freq = 1,time_duration = 33 WHERE report_id = 1077;
 UPDATE reports SET freq = 1,time_duration = 30 WHERE report_id = 1078;
 UPDATE reports SET freq = 1,time_duration = 16 WHERE report_id = 1079;
 UPDATE reports SET freq = 1,time_duration = 15 WHERE report_id = 1080;
+
+
+UPDATE patients SET checkout = STR_TO_DATE('2012-03-07', '%Y-%m-%d') WHERE patient_id = 1;
+UPDATE patients SET checkout = STR_TO_DATE('2012-05-14', '%Y-%m-%d') WHERE patient_id = 2;
+UPDATE patients SET checkout = STR_TO_DATE('2012-07-16', '%Y-%m-%d') WHERE patient_id = 3;
+UPDATE patients SET checkout = STR_TO_DATE('2012-08-08', '%Y-%m-%d') WHERE patient_id = 4;
+UPDATE patients SET checkout = STR_TO_DATE('2012-09-10', '%Y-%m-%d') WHERE patient_id = 5;
+UPDATE patients SET checkout = STR_TO_DATE('2013-04-16', '%Y-%m-%d') WHERE patient_id = 6;
+UPDATE patients SET checkout = STR_TO_DATE('2013-07-26', '%Y-%m-%d') WHERE patient_id = 7;
+UPDATE patients SET checkout = STR_TO_DATE('2013-08-13', '%Y-%m-%d') WHERE patient_id = 8;
+UPDATE patients SET checkout = STR_TO_DATE('2013-09-23', '%Y-%m-%d') WHERE patient_id = 9;
+UPDATE patients SET checkout = STR_TO_DATE('2014-03-12', '%Y-%m-%d') WHERE patient_id = 10;
+UPDATE patients SET checkout = STR_TO_DATE('2014-03-12', '%Y-%m-%d') WHERE patient_id = 11;
+UPDATE patients SET checkout = STR_TO_DATE('2014-05-12', '%Y-%m-%d') WHERE patient_id = 12;
+UPDATE patients SET checkout = STR_TO_DATE('2014-06-04', '%Y-%m-%d') WHERE patient_id = 13;
+UPDATE patients SET checkout = STR_TO_DATE('2014-08-02', '%Y-%m-%d') WHERE patient_id = 14;
+UPDATE patients SET checkout = STR_TO_DATE('2014-08-19', '%Y-%m-%d') WHERE patient_id = 15;
+UPDATE patients SET checkout = STR_TO_DATE('2014-09-23', '%Y-%m-%d') WHERE patient_id = 16;
+UPDATE patients SET checkout = STR_TO_DATE('2014-11-03', '%Y-%m-%d') WHERE patient_id = 17;
+UPDATE patients SET checkout = STR_TO_DATE('2014-12-12', '%Y-%m-%d') WHERE patient_id = 18;
+UPDATE patients SET checkout = STR_TO_DATE('2015-01-31', '%Y-%m-%d') WHERE patient_id = 19;
+UPDATE patients SET checkout = STR_TO_DATE('2013-06-06', '%Y-%m-%d') WHERE patient_id = 20;
+
+UPDATE patients SET direct_material = 6095.94 WHERE patient_id = 1;
+UPDATE patients SET direct_material = 7918.88 WHERE patient_id = 2;
+UPDATE patients SET direct_material = 6490.1 WHERE patient_id = 3;
+UPDATE patients SET direct_material = 6490.1 WHERE patient_id = 4;
+UPDATE patients SET direct_material = 6490.1 WHERE patient_id = 5;
+UPDATE patients SET direct_material = 6095.94 WHERE patient_id = 6;
+UPDATE patients SET direct_material = 7918.88 WHERE patient_id = 7;
+UPDATE patients SET direct_material = 6774.33 WHERE patient_id = 8;
+UPDATE patients SET direct_material = 6095.94 WHERE patient_id = 9;
+UPDATE patients SET direct_material = 6490.1 WHERE patient_id = 10;
+UPDATE patients SET direct_material = 6774.33 WHERE patient_id = 11;
+UPDATE patients SET direct_material = 6774.33 WHERE patient_id = 12;
+UPDATE patients SET direct_material = 6095.94 WHERE patient_id = 13;
+UPDATE patients SET direct_material = 6774.33 WHERE patient_id = 14;
+UPDATE patients SET direct_material = 6490.1 WHERE patient_id = 15;
+UPDATE patients SET direct_material = 7918.88 WHERE patient_id = 16;
+UPDATE patients SET direct_material = 6774.33 WHERE patient_id = 17;
+UPDATE patients SET direct_material = 6095.94 WHERE patient_id = 18;
+UPDATE patients SET direct_material = 6095.94 WHERE patient_id = 19;
+UPDATE patients SET direct_material = 6095.94 WHERE patient_id = 20;
