@@ -98,7 +98,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         $lastname = $_GET["lastname"];
                         $query = "SELECT patient_id, patient_fname, patient_lname, DATE_FORMAT(birthdate, '%M %d, %Y'),
                               DATE_FORMAT(checkin, '%M %d, %Y'), gender
-                              FROM patients WHERE patient_fname='$firstname' OR patient_lname='$lastname'";
+                              FROM patients WHERE patient_fname LIKE '%$firstname%' OR patient_lname LIKE '%$lastname%' ORDER BY patient_id+0 ASC";
 
                         $result = @mysqli_query($dbc, $query);
                         $rnum = mysqli_num_rows($result);
