@@ -314,20 +314,15 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                     </div>
                                     <div id="material" class="panel-collapse collapse">
                                         <div class="panel-body">
-                                            <table id="dm" class="table table-striped" cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Item</th>
-                                                        <th>Cost Per Day ($)</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                    <td>All Materials</td>
-                                                        <td><input type="text" id="dm-r1" name="dmcost" value="<?php echo get_dm() ?>"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4"> DRG Code </label>
+                                                <select class="form-control" name="drg" style="width:300px" required>
+                                                    <option value="7918.88">233</option>
+                                                    <option value="6774.33">234</option>
+                                                    <option value="6490.10">235</option>
+                                                    <option value="6095.94">236</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

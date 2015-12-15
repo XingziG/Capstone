@@ -231,8 +231,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                     </div>
                                     <div class='col-sm-7 col-md-0' id="insuranceCost"></div>
                                     <div class='col-sm-7 col-md-0' id="insuranceStay"></div>
-                                </div>
-                                
+                                </div>                                
                             </div>
                         </div>
                     </div>
