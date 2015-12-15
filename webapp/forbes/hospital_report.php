@@ -83,7 +83,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <thead>
                                             <tr>
                                                 <th class="col-md-8">Direct Labor</th>
-                                                <th class="col-md-4">Average Cost</th>
+                                                <th class="col-md-4">Average Cost ($)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -115,7 +115,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <thead>
                                             <tr>
                                                 <th class="col-md-8">Direct Labor</th>
-                                                <th class="col-md-4">Average Cost</th>
+                                                <th class="col-md-4">Average Cost ($)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -147,7 +147,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <thead>
                                             <tr>
                                                 <th class="col-md-8">Direct Labor</th>
-                                                <th class="col-md-4">Average Cost</th>
+                                                <th class="col-md-4">Average Cost ($)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -163,7 +163,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <thead>
                                             <tr>
                                                 <th class="col-md-8">Direct Material</th>
-                                                <th class="col-md-4">Average Cost</th>
+                                                <th class="col-md-4">Average Cost ($)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -178,7 +178,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <thead>
                                             <tr>
                                                 <th class="col-md-8">Overhead</th>
-                                                <th class="col-md-4">Average Cost</th>
+                                                <th class="col-md-4">Average Cost ($)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -456,7 +456,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .html(function(d) {
                 var total = d3.sum(data.map(function(d) { return d.value; }));                                                     // NEW
                 var percent = Math.round(1000 * d.data.value / total) / 10;
-                return "<strong>" + d.data.label + ":<span style='color:red'> " + percent + "%</span></strong>"});
+                return "<strong>" + d.data.label + ":<span style='color:orange'> " + percent + "%</span></strong>"});
             svg.call(tip);
             
             var path = svg.selectAll('path')
@@ -510,11 +510,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .html(function(d, i) {
                             if (type == "cost") {
                                 var diff = d.toFixed(0) - data2[i];                                
-                                return "<strong>Cost: $</strong><span style='color:red'>" + commaSeparateNumber(d.toFixed(0)) + 
-                                    "</span><br/>National: $<span style='color:yellow'>" + commaSeparateNumber(data2[i]) + "</span><br/>Difference: $" +
+                                return "<strong>Cost: </strong><span style='color:orange'>$" + commaSeparateNumber(d.toFixed(0)) + 
+                                    "</span><br/>National: <span style='color:yellow'>$" + commaSeparateNumber(data2[i]) + "</span><br/>Difference: $" +
                                     commaSeparateNumber(diff);    
                             } else {
-                                return "<strong>Stay:</strong> <span style='color:red'>" + d.toFixed(1) + "</span> days";
+                                return "<strong>Stay:</strong> <span style='color:orange'>" + d.toFixed(1) + " days</span>";
                             }
                         });
 
@@ -543,7 +543,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .attr("x", function(d){ return 0 + "px"; })
                             .attr("width", function(d){ return x(d.toFixed(1)) + "px"; })
                             .attr("height", function(d){ return barWidth-1 + "px"; })
-                            .attr("fill", function(d) {if (type=="cost") { return "#3D9970";} else {return "#0074D9"}})
+                            .attr("fill", function(d) {if (type=="cost") { return "#CBE32D";} else {return "#67BCDB"}})
                             .on("mouseover", tip.show)
                             .on("mouseout", tip.hide);
 

@@ -101,7 +101,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <thead>
                                             <tr>
                                                 <th class="col-md-8">Direct Labor</th>
-                                                <th class="col-md-4">Total Cost</th>
+                                                <th class="col-md-4">Total Cost ($)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -133,7 +133,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <thead>
                                             <tr>
                                                 <th class="col-md-8">Direct Labor</th>
-                                                <th class="col-md-4">Total Cost</th>
+                                                <th class="col-md-4">Total Cost ($)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -165,7 +165,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <thead>
                                             <tr>
                                                 <th class="col-md-8">Direct Labor</th>
-                                                <th class="col-md-4">Total Cost</th>
+                                                <th class="col-md-4">Total Cost ($)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -181,7 +181,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <thead>
                                             <tr>
                                                 <th class="col-md-8">Direct Material</th>
-                                                <th class="col-md-4">Total Cost</th>
+                                                <th class="col-md-4">Total Cost ($)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -196,7 +196,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                         <thead>
                                             <tr>
                                                 <th class="col-md-8">Overhead</th>
-                                                <th class="col-md-4">Total Cost</th>
+                                                <th class="col-md-4">Total Cost ($)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -312,7 +312,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             {"node":0,"name":"Direct Labor"},
                             {"node":1,"name":"Direct Material"},
                             {"node":2,"name":"Overhead"},
-                            {"node":3,"name":"Average Cost"},
+                            {"node":3,"name":"Total Cost"},
                             {"node":4,"name":"Reimbursement"},
                             {"node":5,"name":"Deficit"}
                             ],
@@ -331,7 +331,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             {"node":0,"name":"Direct Labor"},
                             {"node":1,"name":"Direct Material"},
                             {"node":2,"name":"Overhead"},
-                            {"node":3,"name":"Average Cost"},
+                            {"node":3,"name":"Total Cost"},
                             {"node":4,"name":"Reimbursement"},
                             {"node":5,"name":"Revenue"}
                             ],
@@ -438,7 +438,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([0, 0])
                         .html(function(d) {
-                            return "<strong>Cost: $</strong><span style='color:red'>" + commaSeparateNumber(d.toFixed(0)) + "</span>"; });
+                            return "<strong>Cost: </strong><span style='color:orange'>$" + commaSeparateNumber(d.toFixed(0)) + "</span>"; });
 
             // create svg canvas            
             var svg = d3.select("#costChart")
@@ -465,7 +465,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .attr("x", function(d){ return 0 + "px"; })
                             .attr("width", function(d){ return x(d.toFixed(0)) + "px"; })
                             .attr("height", function(d){ return barWidth-1 + "px"; })
-                            .attr("fill", "#3D9970")
+                            .attr("fill", "#CBE32D")
                             .on("mouseover", tip.show)
                             .on("mouseout", tip.hide);
 
@@ -502,7 +502,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([1, 1])
                         .html(function(d) {
-                            return "<strong>Stay:</strong> <span style='color:red'>" + d.toFixed(1) + "</span> days"; });
+                            return "<strong>Stay:</strong> <span style='color:orange'>" + d.toFixed(1) + " days</span>"; });
 
             // create svg canvas            
             var svg = d3.select("#timeChart")
@@ -529,7 +529,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .attr("x", function(d){ return 0 + "px"; })
                             .attr("width", function(d){ return x(d.toFixed(1)) + "px"; })
                             .attr("height", function(d){ return barWidth-1 + "px"; })
-                            .attr("fill", "#0074D9")
+                            .attr("fill", "#67BCDB")
                             .on("mouseover", tip.show)
                             .on("mouseout", tip.hide);
 
