@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($param_name == "pid") {
                     $patient_id = $param_val;
                 } elseif ($param_name == "surgery") {//ignore these parameter
-                } elseif ($param_name == "dmcost") {
+                } elseif ($param_name == "drg") {
                         $direct_material = $param_val;
                         $q = "UPDATE patients SET direct_material = $direct_material WHERE patient_id='$patient_id'";
                 } else {

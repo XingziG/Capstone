@@ -25,7 +25,7 @@ checkout DATETIME,
 gender VARCHAR(6) NOT NULL,
 diabetes VARCHAR(3) NOT NULL,
 insurance VARCHAR(25) NOT NULL,
-direct_material INT UNSIGNED,
+direct_material FLOAT(13,2),
 over_head FLOAT(13,2),
 total_labor_cost FLOAT(13,2),
 PRIMARY KEY (patient_id)

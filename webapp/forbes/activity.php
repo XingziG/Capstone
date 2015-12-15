@@ -317,10 +317,10 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             <div class="form-group">
                                                 <label class="control-label col-sm-4"> DRG Code </label>
                                                 <select class="form-control" name="drg" style="width:300px" required>
-                                                    <option value="7918.88">233</option>
-                                                    <option value="6774.33">234</option>
-                                                    <option value="6490.10">235</option>
-                                                    <option value="6095.94">236</option>
+                                                    <option value="7918.88" <?php if(get_dm() == 7918.88) echo 'selected'?>>233</option>
+                                                    <option value="6774.33" <?php if(get_dm() == 6774.33) echo 'selected'?>>234</option>
+                                                    <option value="6490.10" <?php if(get_dm() == 6490.10) echo 'selected'?>>235</option>
+                                                    <option value="6095.94" <?php if(get_dm() == 6095.94) echo 'selected'?>>236</option>
                                                 </select>
                                             </div>
                                         </div>
