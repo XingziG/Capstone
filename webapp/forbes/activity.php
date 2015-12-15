@@ -327,7 +327,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                     </div>
                                 </div>
                             </div>
-                                <button type="submit" class="btn btn-info btn-lg center-block" name="surgery">Submit</button>
+                                <button type="submit" class="btn btn-info btn-lg center-block" name="surgery">Submit CABG</button>
                             </form>    
                         </div>
                         <!-- Post-Op Care Content -->
@@ -452,7 +452,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </div>
                                         </div>
                                     </div>
-                                        <button type="submit" class="btn btn-info btn-lg center-block" name="day0">Submit</button>
+                                        <button type="submit" class="btn btn-info btn-lg center-block" name="day0">Submit Day0</button>
                                     </form>
                                 </div>  
                                 <div id="day1" class="tab-pane fade">  
@@ -701,7 +701,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </div>
                                         </div>
                                     </div>
-                                        <button type="submit" class="btn btn-info btn-lg center-block" name="day1">Submit</button>
+                                        <button type="submit" class="btn btn-info btn-lg center-block" name="day1">Submit Day1</button>
                                     </form>
                                 </div>
                                 <div id="day2" class="tab-pane fade">
@@ -915,7 +915,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </div>
                                         </div>
                                     </div>
-                                        <button type="submit" class="btn btn-info btn-lg center-block" name="day2">Submit</button>
+                                        <button type="submit" class="btn btn-info btn-lg center-block" name="day2">Submit Day2-X</button>
                                     </form>    
                                 </div>
                                 <div id="dday" class="tab-pane fade">
@@ -1110,7 +1110,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                             </div>
                                         </div>
                                     </div>
-                                        <button type="submit" class="btn btn-info btn-lg center-block" name="dday">Submit</button>
+                                        <button type="submit" class="btn btn-info btn-lg center-block" name="dday">Submit Discharge Day</button>
                                     </form>    
                                 </div>
                             </div>
