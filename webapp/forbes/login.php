@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label class="control-label col-sm-4"> User Email </label>
                         <div class="input-group col-xs-4">
                             <input class="form-control" type="text" name="username" required>
-                            <div class="input-group-addon">@ahn.org</div>
+                            <div class="input-group-addon">@wpahs.org</div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -160,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label class="control-label col-sm-4"> Hospital Email </label>
                         <div class="input-group col-xs-4">
                             <input class="form-control" type="text" name="email" required>
-                            <div class="input-group-addon">@ahn.org</div>
+                            <div class="input-group-addon">@wpahs.org</div>
                         </div><label class='control-label col-sm-6'></label>
                     </div>
                     <div class="form-group">

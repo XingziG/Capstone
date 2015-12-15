@@ -84,12 +84,13 @@ function get_value($graph, $input, $bar) {
             if ($bar == "hospital") {
                 $q = "SELECT AVG(IFNULL(total_labor_cost,0) + IFNULL(over_head,0) + IFNULL(direct_material,0)) as 'result' 
                       FROM patients WHERE checkout IS NOT NULL";
-            } else { // get reimbursement
-
-            }
+            } 
         } else if ($input == "diabetes") {
             $q = "SELECT AVG(IFNULL(total_labor_cost,0) + IFNULL(over_head,0) + IFNULL(direct_material,0)) as 'result' 
                   FROM patients WHERE checkout IS NOT NULL AND diabetes='$bar'";
+        } else if ($input == "gender") {
+            $q = "SELECT AVG(IFNULL(total_labor_cost,0) + IFNULL(over_head,0) + IFNULL(direct_material,0)) as 'result' 
+                  FROM patients WHERE checkout IS NOT NULL AND gender='$bar'";
         } else if ($input == "insurance") {
             $q = "SELECT AVG(IFNULL(total_labor_cost,0) + IFNULL(over_head,0) + IFNULL(direct_material,0)) as 'result' 
                   FROM patients WHERE checkout IS NOT NULL AND insurance='$bar'";
@@ -109,11 +110,11 @@ function get_value($graph, $input, $bar) {
         if ($input == "avg") { // get stay
             if ($bar == "hospital") { // hospital stay
                 $q = "SELECT AVG(DATEDIFF(checkout, checkin)) as 'result' FROM patients WHERE checkout IS NOT NULL";
-            } else { // national stay
-
-            }
+            } 
         } else if ($input == "diabetes") { // diabetes
             $q = "SELECT IFNULL(AVG(DATEDIFF(checkout, checkin)),0) as 'result' FROM patients WHERE checkout IS NOT NULL AND diabetes='$bar'";
+        } else if ($input == "gender") {
+            $q = "SELECT IFNULL(AVG(DATEDIFF(checkout, checkin)),0) as 'result' FROM patients WHERE checkout IS NOT NULL AND gender='$bar'";
         } else if ($input == "insurance") {
             $q = "SELECT IFNULL(AVG(DATEDIFF(checkout, checkin)),0) as 'result' FROM patients WHERE checkout IS NOT NULL AND insurance='$bar'";
         } else { // age
@@ -131,6 +132,8 @@ function get_value($graph, $input, $bar) {
     } else { // number of patients
         if ($input == "diabetes") {
             $q = "SELECT COUNT(DISTINCT patient_id) as 'result' FROM patients WHERE checkout IS NOT NULL AND diabetes='$bar'";
+        } else if ($input == "gender") {
+            $q = "SELECT COUNT(DISTINCT patient_id) as 'result' FROM patients WHERE checkout IS NOT NULL AND gender='$bar'";
         } else if ($input == "insurance") {
             $q = "SELECT COUNT(DISTINCT patient_id) as 'result' FROM patients WHERE checkout IS NOT NULL AND insurance='$bar'";
         } else { // age
