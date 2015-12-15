@@ -1,5 +1,5 @@
 drop trigger add_new_patients_report;
-drop trigger update_total_labor_cost;
+drop trigger update_dl_oh;
 drop table reports;
 drop table activ_role;
 drop table roles;
@@ -26,7 +26,7 @@ gender VARCHAR(6) NOT NULL,
 diabetes VARCHAR(3) NOT NULL,
 insurance VARCHAR(25) NOT NULL,
 direct_material INT UNSIGNED,
-over_head INT UNSIGNED,
+over_head FLOAT(13,2),
 total_labor_cost FLOAT(13,2),
 PRIMARY KEY (patient_id)
 );
@@ -103,7 +103,7 @@ BEGIN
 END;
 //
 
-CREATE TRIGGER update_total_labor_cost BEFORE UPDATE ON patients
+CREATE TRIGGER update_dl_oh BEFORE UPDATE ON patients
 FOR EACH ROW
 BEGIN 
     IF NEW.checkout <> OLD.checkout
@@ -115,6 +115,7 @@ BEGIN
                              END)) AS 'days'
                 FROM reports r, roles ro 
                 WHERE NEW.patient_id = r.patient_id AND r.role_id = ro.role_id);
+    SET NEW.over_head = 1.1624 * NEW.total_labor_cost + 4602.6;
     END IF;
 END;
 //

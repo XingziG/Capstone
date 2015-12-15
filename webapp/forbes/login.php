@@ -144,7 +144,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <!-- Registration -->
                 <hr>
                 <p class="error" style="margin-left: 6em;">
-                    <?php if(isset($successRegister)) echo "$message" ?></p>
+                    <?php if(isset($successRegister) && !$successRegister) echo "$message" ?></p>
+                <p class="success" style="margin-left: 6em;">
+                    <?php if(isset($successRegister) && $successRegister) echo "$message" ?></p>
                 <div class="panel panel-default">
                     <div class="panel-heading"> 
                         <label class="checkbox-inline">
@@ -159,25 +161,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="input-group col-xs-4">
                             <input class="form-control" type="text" name="email" required>
                             <div class="input-group-addon">@ahn.org</div>
-                        </div>
+                        </div><label class='control-label col-sm-6'></label>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-4"> Full Name </label>
                         <div class="col-xs-4 input-group">
                             <input class="form-control" type="text" name="fname" required>
-                        </div>
+                        </div><label class='control-label col-sm-6'></label>
                     </div>                    
                     <div class="form-group">
                         <label class="control-label col-sm-4"> Password </label>
                         <div class="col-xs-4 input-group">
                             <input class="form-control" type="password" name="password" id="pw1" required>
-                        </div>
+                            <span></span>
+                        </div><label class='control-label col-sm-6'></label>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-4"> Re-type Password </label>
                         <div class="col-xs-4 input-group">
-                            <input class="form-control" type="password" name="password2" id="pw2" required>
-                        </div>
+                            <input class="form-control" type="password" name="password2" id="pw2" required><span></span>
+                        </div><label class='control-label col-sm-6'></label>
                     </div>
                     <center>
                         <button type="submit" name="register" class="btn btn-info btn-lg center-block">Register</button>
@@ -192,13 +195,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $("#registerForm").fadeToggle(this.checked);
             }).change();
             // validate form input
-            $('form.form-horizontal :input').blur(function() {
+            $('form.form-horizontal input').blur(function() {
                 if( $(this).val().length == 0 ) { // input is empty
-                    $(this).parent().after($("<label class='control-label col-sm-6'><span class='error'> Please fill this in </span></label>"));
+                    $(this).parent().next("label").html($("<span class='error'> Please fill this in </span>"));
                 } else if ($(this).is("#pw1") | $(this).is("#pw2")) { // when user input password
                     if ($("#pw1").val() != 0 & $("#pw2").val() != 0) { 
                         if ($("#pw2").val() != $("#pw1").val()) { // passwords do not match
-                            $(this).after($("<span class='error'> Passwords do not match </span>"));
+                            $(this).next("span").html($("<span class='error'> Passwords do not match </span>"));
                         } else { // matching passwords
                             $("#pw1").next("span").empty();
                             $("#pw2").next("span").empty();

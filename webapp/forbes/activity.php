@@ -1109,7 +1109,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                 <div class="form-group">
                                                     <label class="control-label"> Check-Out Date </label>
                                                     <div class="col-sm-4">
-                                                        <input class="form-control" type="text" id="datepicker" name="cday" required>
+                                                        <input class="form-control" type="text" id="datepicker" value="<?php echo get_discharge_day() ?>" name="cday">
                                                     </div>
                                                 </div>
                                             </div>

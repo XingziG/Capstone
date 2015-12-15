@@ -44,6 +44,22 @@ function get_result($field, $aid, $ad, $rid) {
     mysqli_close($dbc);
 }
 
+function get_discharge_day() {
+    require "../mysqli_connect.php"; // Connect to the db.
+    $pid = $_GET["id"];
+    $q = "SELECT STR_TO_DATE(checkout, '%Y-%m-%d') AS 'result' FROM patients WHERE patient_id='$pid'";
+    $r = @mysqli_query($dbc, $q);  // run query
+    if (mysqli_num_rows($r) > 0) { // ok
+        $row = mysqli_fetch_assoc($r);
+        if ($row == null) {
+            return "";
+        } else {
+            return $row['result'];
+        }
+    }
+    mysqli_close($dbc);
+}
+
 function get_table_value($type)
 {
     require "../mysqli_connect.php"; // Connect to the db.
