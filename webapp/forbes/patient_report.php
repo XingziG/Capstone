@@ -302,11 +302,9 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             // load the data   
             var dl = parseFloat($("#to-result").text().replace(/\,/g, '')); 
             var dm = parseFloat($("#to-result2").text().replace(/\,/g, ''));
-            //var oh = parseFloat($("#to-result3").text().replace(/\,/g, ''));
-            var oh = 5000;
-            var ri = 2000;
+            var oh = parseFloat($("#to-result3").text().replace(/\,/g, ''));
+            var ri = 29689; 
             var toc = dl + dm + oh; // total cost
-            var ri = 9689;  // reimbursment
             if (toc > ri) {
                 var de = toc - ri; // deficit
                 var graph = {"nodes":
@@ -426,9 +424,9 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var w = document.getElementById('costChart').offsetWidth - margin.left - margin.right;
             var h = 3 * barWidth;
             // 1. Cost Table
-            var p_cost = parseFloat($("#to-result").text().replace(/\,/g, '')) + parseFloat($("#to-result2").text()); //+ parseFloat($("#to-result3").text());            
+            var p_cost = parseFloat($("#to-result").text().replace(/\,/g, '')) + parseFloat($("#to-result2").text()) + parseFloat($("#to-result3").text());            
             var h_cost = parseFloat("<?php echo get_barchart_value('cost', 'hospital'); ?>");
-            var data = [p_cost, h_cost, 6000];
+            var data = [p_cost, h_cost, 29689];
             var dataLabel = ["Patient Cost","Average Hospital Cost","Average Reimbursement"];
             // y-axis
             var x = d3.scale.linear().domain([0, d3.max(data).toFixed(0)]).range([0, w]);
@@ -487,7 +485,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             // Data Table
             var p_time = parseFloat("<?php echo get_barchart_value('time', 'patient'); ?>");
             var h_time = parseFloat("<?php echo get_barchart_value('time', 'hospital'); ?>");
-            var data = [p_time, h_time, 5.8];
+            var data = [p_time, h_time, 6.8];
             var dataLabel = ["Patient Stay","Average Stay (Hospital)","Average Stay (National)"];
             // canvas size
             var barWidth = 30;

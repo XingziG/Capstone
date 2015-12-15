@@ -97,9 +97,9 @@ function get_value($graph, $input, $bar) {
         } else { // age
             switch($bar){
                 case "1":
-                    $start = 0; $end = 35; break;
+                    $start = 0; $end = 45; break;
                 case "2":
-                    $start = 35; $end = 65; break;
+                    $start = 45; $end = 65; break;
                 default:
                     $start = 65; $end = 200; break;
             }
@@ -120,9 +120,9 @@ function get_value($graph, $input, $bar) {
         } else { // age
             switch($bar){
                 case "1":
-                    $start = 0; $end = 35; break;
+                    $start = 0; $end = 45; break;
                 case "2":
-                    $start = 35; $end = 65; break;
+                    $start = 45; $end = 65; break;
                 default:
                     $start = 65; $end = 200; break;
             }
@@ -139,9 +139,9 @@ function get_value($graph, $input, $bar) {
         } else { // age
             switch($bar){
                 case "1":
-                    $start = 0; $end = 35; break;
+                    $start = 0; $end = 45; break;
                 case "2":
-                    $start = 35; $end = 65; break;
+                    $start = 45; $end = 65; break;
                 default:
                     $start = 65; $end = 200; break;
             }
@@ -162,7 +162,7 @@ function get_value($graph, $input, $bar) {
 
 function get_all_dm() {
     require ('../mysqli_connect.php'); // Connect to the db.
-    $q = "SELECT SUM(direct_material) AS 'result' FROM patients";
+    $q = "SELECT TRUNCATE(AVG(direct_material), 2) AS 'result' FROM patients";
     $r = @mysqli_query($dbc, $q);  // run query
     if (mysqli_num_rows($r) == 1) { // ok
         $row = mysqli_fetch_array($r);
@@ -176,7 +176,7 @@ function get_all_dm() {
 
 function get_all_oh() {
     require ('../mysqli_connect.php'); // Connect to the db.
-    $q = "SELECT SUM(over_head) AS 'result' FROM patients";
+    $q = "SELECT TRUNCATE(AVG(over_head), 2) AS 'result' FROM patients";
     $r = @mysqli_query($dbc, $q);  // run query
     if (mysqli_num_rows($r) == 1) { // ok
         $row = mysqli_fetch_array($r);
