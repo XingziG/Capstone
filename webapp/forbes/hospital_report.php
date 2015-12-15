@@ -57,14 +57,14 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                 <!-- Page Information -->
                 <div class="panel panel-default" style="width:100%">
                     <div class="panel-heading"> Please click on the <strong>CABG Surgery</strong>, 
-                        <strong>Postoperative Surgery</strong> or <strong>CABG Total</strong>  
+                        <strong>Postoperative Care</strong> or <strong> Total </strong>  
                         for the hospital-wide expense report. </div>
                 </div>
                 <!-- Header with surgery & postop care selection -->
                 <ul class="nav nav-pills nav-justified">
                     <li class="active"><a data-toggle="pill" href="#surgery"> <h5>CABG Surgery</h5> </a></li>
                     <li><a data-toggle="pill" href="#postop"> <h5>Postoperative Care</h5> </a></li>
-                    <li><a data-toggle="pill" href="#total"> <h5>CABG Total</h5> </a></li>
+                    <li><a data-toggle="pill" href="#total"> <h5>Total (CABG and Postoperative)</h5> </a></li>
                 </ul><br/>
                 <div class="tab-content">
                     <!-- Surgery Activity Content -->
@@ -137,7 +137,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         <div class="panel panel-info">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#total2" href="#to"> Total CABG Cost per Patient </a>
+                                    <a data-toggle="collapse" data-parent="#total2" href="#to"> Total (CABG and Postoperative) Cost per Patient </a>
                                 </h4>
                             </div>
                             <!-- Table -->
@@ -200,7 +200,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#d3-graph" href="#graph">
-                                    Hospital Wide CABG Cost and Stay Duration Analysis </a>
+                                    Hospital Wide CABG and Postoperative Performance Analysis </a>
                             </h4>
                         </div>
                         <div id="graph" class="panel-collapse collapse in">
@@ -347,7 +347,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             {"node":2,"name":"Overhead"},
                             {"node":3,"name":"Average Cost"},
                             {"node":4,"name":"Reimbursement"},
-                            {"node":5,"name":"Revenue"}
+                            {"node":5,"name":"Profit"}
                             ],
                         "links":
                             [
@@ -510,8 +510,9 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .html(function(d, i) {
                             if (type == "cost") {
                                 var diff = d.toFixed(0) - data2[i];                                
-                                return "<strong>Cost: $</strong><span style='color:red'>" + d.toFixed(0) + 
-                                    "</span><br/>National: $<span style='color:yellow'>" + data2[i] + "</span><br/>Difference: $" + diff;    
+                                return "<strong>Cost: $</strong><span style='color:red'>" + commaSeparateNumber(d.toFixed(0)) + 
+                                    "</span><br/>National: $<span style='color:yellow'>" + commaSeparateNumber(data2[i]) + "</span><br/>Difference: $" +
+                                    commaSeparateNumber(diff);    
                             } else {
                                 return "<strong>Stay:</strong> <span style='color:red'>" + d.toFixed(1) + "</span> days";
                             }

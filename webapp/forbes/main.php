@@ -51,13 +51,6 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
 
             <h1 class="head">Forbes Regional Hospital <br/> CABG Expense Analyzer </h1>
             <hr>
-            <!-- Page Information -->
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Please <strong>search</strong> a patient or
-                    <strong>add</strong> a new patient.
-                </div>
-            </div>
             <!-- Search Patient Button -->
             <div class="col-sm-5 center-block">
                     <button type="button" class="btn btn-primary btn-lg  center-block" data-toggle="collapse" data-target="#search">

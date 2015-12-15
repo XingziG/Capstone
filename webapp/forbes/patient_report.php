@@ -75,14 +75,14 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                 <!-- Page Information -->
                 <div class="panel panel-default" style="width:100%">
                     <div class="panel-heading"> Please click on the <strong>CABG Surgery</strong>, 
-                        <strong>Postoperative Surgery</strong> or <strong>CABG Total</strong>  
+                        <strong>Postoperative Surgery</strong> or <strong> Total</strong>  
                         for the patient expense report. </div>
                 </div>
                 <!-- Header with surgery & postop care selection -->
                 <ul class="nav nav-pills nav-justified">
                     <li class="active"><a data-toggle="pill" href="#surgery"> <h5>CABG Surgery</h5> </a></li>
                     <li><a data-toggle="pill" href="#postop"> <h5>Postoperative Care</h5> </a></li>
-                    <li><a data-toggle="pill" href="#total"> <h5>CABG Total</h5> </a></li>
+                    <li><a data-toggle="pill" href="#total"> <h5>Total (CABG and Postoperative)</h5> </a></li>
                 </ul><br/>
                 <div class="tab-content">
                     <!-- Surgery Activity Content -->
@@ -155,7 +155,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         <div class="panel panel-info">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#total2" href="#to"> Total Cost </a>
+                                    <a data-toggle="collapse" data-parent="#total2" href="#to"> Total (CABG and Postoperative) </a>
                                 </h4>
                             </div>
                             <!-- Table -->
@@ -218,7 +218,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#d3-graph" href="#graph">
-                                    Patient Vs. Hospital In Terms of Cost and Length of Stay</a>
+                                    Total (CABG and Postoperative) - Patient Vs. Hospital Performance Analysis</a>
                             </h4>
                         </div>
                         <div id="graph" class="panel-collapse collapse in">
@@ -438,7 +438,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("class", "d3-tip")
                         .offset([0, 0])
                         .html(function(d) {
-                            return "<strong>Cost: $</strong><span style='color:red'>" + d.toFixed(0) + "</span>"; });
+                            return "<strong>Cost: $</strong><span style='color:red'>" + commaSeparateNumber(d.toFixed(0)) + "</span>"; });
 
             // create svg canvas            
             var svg = d3.select("#costChart")
