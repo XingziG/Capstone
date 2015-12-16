@@ -22,13 +22,13 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         <title>Activities</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-        <link rel="stylesheet" type="text/css" href="mystyle.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
-        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <link rel="stylesheet" href="../auxiliary/bootstrap.min.css">
+        <link rel="stylesheet" href="../auxiliary/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="../auxiliary/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="../auxiliary/mystyle.css">
+        <script src="../auxiliary/jquery.min.js"></script>
+        <script src="../auxiliary/bootstrap.min.js"></script> 
+        <script src="../auxiliary/jquery-ui.js"></script>
     </head>
     <body>
         <!-- Displays the main Page -->
