@@ -162,7 +162,7 @@ UPDATE reports SET freq = 2,time_duration = 10 WHERE report_id = 40;
 UPDATE reports SET freq = 1,time_duration = 10 WHERE report_id = 41;
 UPDATE reports SET freq = 1,time_duration = 5 WHERE report_id = 42;
 UPDATE reports SET freq = 2,time_duration = 5 WHERE report_id = 43;
-UPDATE reports SET freq = ,time_duration = 60 WHERE report_id = 44;
+UPDATE reports SET freq = 1,time_duration = 60 WHERE report_id = 44;
 UPDATE reports SET freq = 1,time_duration = 15 WHERE report_id = 45;
 UPDATE reports SET freq = 1,time_duration = 30 WHERE report_id = 46;
 UPDATE reports SET freq = 1,time_duration = 20 WHERE report_id = 47;
