@@ -395,7 +395,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--RT no activity in db!! -->
+                                        <!--RT -->
                                         <div class="panel panel-info">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
@@ -1111,16 +1111,13 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                     });
                 });
                 // calculate total cost
-                $("input[name*='freq'],input[name*='time']").keyup(function(e) {
+                $( "input[name*='freq'],input[name*='time']" ).each(function(e) {
                     var $row = $(this).parent().parent();
                     var total = parseFloat($row.find('input[name*=freq]').val() * $row.find('input[name*=time]').val());
                     //update the row total
                     $row.find('.total').text(total);
-                }); 
+                });
             });
         </script> 
     </body>
 </html>
-
-<!-- To do: 1. Future work: add actors & corresponding activities
--->

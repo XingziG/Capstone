@@ -273,6 +273,15 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         }
         $(calculateSum);        
         
+        var ri; // insurance-dependent reimbursement
+        switch("<?php echo get_insurance(); ?>") {
+            case "medicare":     ri = 10433; break; // medicare
+            case "securityblue": ri = 11124; break; // mc security blue
+            case "bluecross":    ri = 12856; break; // blue cross managed care
+            case "advantra":     ri = 12565; break; // advantra
+            default:             ri = 12512; break; // all others
+        }
+        
         // D3
         function sankeyChartFunction() {
             var units = "$";
@@ -300,15 +309,6 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var path = sankey.link();
 
             // load the data   
-            var ri; // insurance-dependent reimbursement
-            switch("<?php echo get_insurance(); ?>") {
-                case "medicare":     ri = 10433; break; // medicare
-                case "securityblue": ri = 11124; break; // mc security blue
-                case "bluecross":    ri = 12856; break; // blue cross managed care
-                case "advantra":     ri = 12565; break; // advantra
-                default:             ri = 12512; break; // all others
-            }
-
             // cost data
             var dl = parseFloat($("#to-result").text().replace(/\,/g, '')); 
             var dm = parseFloat($("#to-result2").text().replace(/\,/g, ''));
@@ -435,7 +435,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             // 1. Cost Table
             var p_cost = parseFloat($("#to-result").text().replace(/\,/g, '')) + parseFloat($("#to-result2").text()) + parseFloat($("#to-result3").text());            
             var h_cost = parseFloat("<?php echo get_barchart_value('cost', 'hospital'); ?>");
-            var data = [p_cost, h_cost, 29689];
+            var data = [p_cost, h_cost, ri];
             var dataLabel = ["Patient Cost","Average Hospital Cost","Average Reimbursement"];
             // y-axis
             var x = d3.scale.linear().domain([0, d3.max(data).toFixed(0)]).range([0, w]);
