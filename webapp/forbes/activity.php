@@ -107,15 +107,15 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                    <td>Transesophaegal Echocardiogram</td>
+                                                    <td>Anesthesia TEE</td>
                                                         <td><input type="text" id="sg-an-r1-time" name="1-0-1-t" 
                                                                    value="<?php echo get_result('time_duration',1,0,1) ?>"></td>
                                                         <td><input type="text" id="sg-an-r1-perf" name="1-0-1-p" autocomplete="on"
                                                                    value="<?php echo get_result('performer',1,0,1) ?>"></td>                                                        
                                                     </tr>
                                                     <tr>
-                                                    <td>Surgery Completion OR Departure</td>
-                                                        <td><input type="text" id="sg-an-r2-time" name="6-0-1-t" 
+                                                    <td>Surgery Completion</td>
+                                                        <td><input type="text" id="sg-an-r2-time" name="6-0-1-t"
                                                                    value="<?php echo get_result('time_duration',6,0,1) ?>"></td>
                                                         <td><input type="text" id="sg-an-r2-perf" name="6-0-1-p" autocomplete="on"
                                                                    value="<?php echo get_result('performer',6,0,1) ?>"></td>
@@ -145,7 +145,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                    <td>Median Sternotomy</td>
+                                                    <td>Median Sternotomy / LIMA Harvest</td>
                                                         <td><input type="text" id="sg-cs-r1-time" name="4-0-3-t"
                                                                    value="<?php echo get_result('time_duration',4,0,3) ?>"></td>
                                                         <td><input type="text" id="sg-cs-r1-perf" name="4-0-3-p" autocomplete="on"
@@ -158,6 +158,13 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                         <td><input type="text" id="sg-cs-r2-perf" name="5-0-3-p" autocomplete="on"
                                                                    value="<?php echo get_result('performer',5,0,3) ?>"></td>
                                                     </tr>
+                                                    <tr>
+                                                    <td>Closure</td>
+                                                        <td><input type="text" id="sg-cs-r3-time" name="6-0-3-t"
+                                                                   value="<?php echo get_result('time_duration',6,0,3) ?>"></td>
+                                                        <td><input type="text" id="sg-cs-r3-perf" name="6-0-3-p" autocomplete="on"
+                                                                   value="<?php echo get_result('performer',6,0,3) ?>"></td>
+                                                    </tr>                                                    
                                                 </tbody>
                                             </table>
                                         </div>
@@ -183,38 +190,31 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                    <td>Transesophaegal Echocardiogram</td>
-                                                        <td><input type="text" id="sg-pa-r1-time" name="1-0-10-t" 
-                                                                   value="<?php echo get_result('time_duration',1,0,10) ?>"></td>
-                                                        <td><input type="text" id="sg-pa-r1-perf" name="1-0-10-p" autocomplete="on"
-                                                                   value="<?php echo get_result('performer',1,0,10) ?>"></td>                                                        
-                                                    </tr>
-                                                    <tr>
                                                     <td>Pre-Surgical Procedures</td>
-                                                        <td><input type="text" id="sg-pa-r2-time" name="2-0-10-t"
+                                                        <td><input type="text" id="sg-pa-r1-time" name="2-0-10-t"
                                                                    value="<?php echo get_result('time_duration',2,0,10) ?>"></td>
-                                                        <td><input type="text" id="sg-pa-r2-perf" name="2-0-10-p" autocomplete="on"
+                                                        <td><input type="text" id="sg-pa-r1-perf" name="2-0-10-p" autocomplete="on"
                                                                    value="<?php echo get_result('performer',2,0,10) ?>"></td>
                                                     </tr>
                                                     <tr>
                                                     <td>Scavenging of the Saphenous Vein</td>
-                                                        <td><input type="text" id="sg-pa-r3-time" name="3-0-10-t"
+                                                        <td><input type="text" id="sg-pa-r2-time" name="3-0-10-t"
                                                                    value="<?php echo get_result('time_duration',3,0,10) ?>"></td>
-                                                        <td><input type="text" id="sg-pa-r3-perf" name="3-0-10-p" autocomplete="on"
+                                                        <td><input type="text" id="sg-pa-r2-perf" name="3-0-10-p" autocomplete="on"
                                                                    value="<?php echo get_result('performer',3,0,10) ?>"></td>
                                                     </tr>
                                                     <tr>
                                                     <td>Grafting</td>
-                                                        <td><input type="text" id="sg-pa-r4-time" name="5-0-10-t"
+                                                        <td><input type="text" id="sg-pa-r3-time" name="5-0-10-t"
                                                                    value="<?php echo get_result('time_duration',5,0,10) ?>"></td>
-                                                        <td><input type="text" id="sg-pa-r4-perf" name="5-0-10-p" autocomplete="on"
+                                                        <td><input type="text" id="sg-pa-r3-perf" name="5-0-10-p" autocomplete="on"
                                                                    value="<?php echo get_result('performer',5,0,10) ?>"></td>
                                                     </tr>
                                                     <tr>
-                                                    <td>Surgery Completion to OR Departure</td>
-                                                        <td><input type="text" id="sg-pa-r5-time" name="6-0-10-t"
+                                                    <td>Closing to OR Departure</td>
+                                                        <td><input type="text" id="sg-pa-r4-time" name="6-0-10-t"
                                                                    value="<?php echo get_result('time_duration',6,0,10) ?>"></td>
-                                                        <td><input type="text" id="sg-pa-r5-perf" name="6-0-10-p" autocomplete="on"
+                                                        <td><input type="text" id="sg-pa-r4-perf" name="6-0-10-p" autocomplete="on"
                                                                    value="<?php echo get_result('performer',6,0,10) ?>"></td>
                                                     </tr>                                                    
                                                 </tbody>
@@ -242,19 +242,12 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                    <td>Pre-Surgical Procedures</td>
-                                                        <td><input type="text" id="sg-rn-r1-time" name="2-0-8-t"
-                                                                   value="<?php echo get_result('time_duration',2,0,8) ?>"></td>
-                                                        <td><input type="text" id="sg-rn-r1-perf" name="2-0-8-p" autocomplete="on"
-                                                                   value="<?php echo get_result('performer',2,0,8) ?>"></td>
-                                                    </tr>
-                                                    <tr>
-                                                    <td>Surgery Completion to OR Departure</td>
-                                                        <td><input type="text" id="sg-rn-r2-time" name="6-0-8-t"
-                                                                   value="<?php echo get_result('time_duration',6,0,8) ?>"></td>
-                                                        <td><input type="text" id="sg-rn-r2-perf" name="6-0-8-p" autocomplete="on"
-                                                                   value="<?php echo get_result('performer',6,0,8) ?>"></td>
-                                                    </tr>                                                    
+                                                    <td>All Surgery Activities</td>
+                                                        <td><input type="text" id="sg-rn-r1-time" name="0-0-8-t"
+                                                                   value="<?php echo get_result('time_duration',0,0,8) ?>"></td>
+                                                        <td><input type="text" id="sg-rn-r1-perf" name="0-0-8-p" autocomplete="on"
+                                                                   value="<?php echo get_result('performer',0,0,8) ?>"></td>
+                                                    </tr>                                                  
                                                 </tbody>
                                             </table>
                                         </div>
@@ -280,25 +273,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                    <td>Pre-Surgical Procedures</td>
-                                                        <td><input type="text" id="sg-st-r1-time" name="2-0-13-t"
-                                                                   value="<?php echo get_result('time_duration',2,0,13) ?>"></td>
-                                                        <td><input type="text" id="sg-st-r1-perf" name="2-0-13-p" autocomplete="on"
-                                                                   value="<?php echo get_result('performer',2,0,13) ?>"></td>
-                                                    </tr>
-                                                    <tr>
-                                                    <td>Median Sternotomy</td>
-                                                        <td><input type="text" id="sg-st-r2-time" name="4-0-13-t"
-                                                                   value="<?php echo get_result('time_duration',4,0,13) ?>"></td>
-                                                        <td><input type="text" id="sg-st-r2-perf" name="4-0-13-p" autocomplete="on"
-                                                                   value="<?php echo get_result('performer',4,0,13) ?>"></td>
-                                                    </tr>                                                    
-                                                    <tr>
-                                                    <td>Grafting</td>
-                                                        <td><input type="text" id="sg-st-r3-time" name="5-0-13-t"
-                                                                   value="<?php echo get_result('time_duration',5,0,13) ?>"></td>
-                                                        <td><input type="text" id="sg-st-r3-perf" name="5-0-13-p" autocomplete="on"
-                                                                   value="<?php echo get_result('performer',5,0,13) ?>"></td>
+                                                    <td>All Surgery Activities</td>
+                                                        <td><input type="text" id="sg-st-r1-time" name="0-0-13-t"
+                                                                   value="<?php echo get_result('time_duration',0,0,13) ?>"></td>
+                                                        <td><input type="text" id="sg-st-r1-perf" name="0-0-13-p" autocomplete="on"
+                                                                   value="<?php echo get_result('performer',0,0,13) ?>"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
