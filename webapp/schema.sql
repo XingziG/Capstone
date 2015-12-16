@@ -106,7 +106,7 @@ END;
 CREATE TRIGGER update_dl_oh BEFORE UPDATE ON patients
 FOR EACH ROW
 BEGIN 
-    IF NEW.checkout <> OLD.checkout
+    IF NEW.checkout <> OLD.checkout OR OLD.checkout IS NULL
     THEN
     SET NEW.total_labor_cost = (SELECT SUM(r.freq * r.time_duration * ro.salary / 124800 *
                             (CASE r.activity_day
