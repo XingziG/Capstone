@@ -1,6 +1,6 @@
 .container-fluid { /* Set background color and height */
     background: 
-        url("bg01.jpg") no-repeat center center fixed; 
+        url("bg01.jpg") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
