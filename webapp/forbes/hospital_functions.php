@@ -97,11 +97,11 @@ function get_value($graph, $input, $bar) {
         } else { // age
             switch($bar){
                 case "1":
-                    $start = 0; $end = 45; break;
+                    $start = 0; $end = 65; break;
                 case "2":
-                    $start = 45; $end = 65; break;
-                default:
                     $start = 65; $end = 200; break;
+                default:
+                    break;
             }
             $q = "SELECT AVG(IFNULL(total_labor_cost,0) + IFNULL(over_head,0) + IFNULL(direct_material,0)) as 'result' 
                   FROM patients WHERE checkout IS NOT NULL AND TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN $start AND $end";  
@@ -120,11 +120,11 @@ function get_value($graph, $input, $bar) {
         } else { // age
             switch($bar){
                 case "1":
-                    $start = 0; $end = 45; break;
+                    $start = 0; $end = 65; break;
                 case "2":
-                    $start = 45; $end = 65; break;
-                default:
                     $start = 65; $end = 200; break;
+                default:
+                    break;
             }
             $q = "SELECT IFNULL(AVG(DATEDIFF(checkout, checkin)),0) as 'result' FROM patients 
                   WHERE checkout IS NOT NULL AND TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN $start AND $end";
@@ -136,17 +136,19 @@ function get_value($graph, $input, $bar) {
             $q = "SELECT COUNT(DISTINCT patient_id) as 'result' FROM patients WHERE checkout IS NOT NULL AND gender='$bar'";
         } else if ($input == "insurance") {
             $q = "SELECT COUNT(DISTINCT patient_id) as 'result' FROM patients WHERE checkout IS NOT NULL AND insurance='$bar'";
-        } else { // age
+        } else if ($input == "age"){ // age
             switch($bar){
                 case "1":
-                    $start = 0; $end = 45; break;
+                    $start = 0; $end = 65; break;
                 case "2":
-                    $start = 45; $end = 65; break;
-                default:
                     $start = 65; $end = 200; break;
+                default:
+                    break;
             }
             $q = "SELECT COUNT(DISTINCT patient_id) as 'result' FROM patients 
                   WHERE checkout IS NOT NULL AND TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN $start AND $end";            
+        } else { // total num of patients
+            $q = "SELECT COUNT(DISTINCT patient_id) as 'result' FROM patients WHERE checkout IS NOT NULL";
         }
     }
     $r = @mysqli_query($dbc, $q);  // run query
@@ -162,7 +164,7 @@ function get_value($graph, $input, $bar) {
 
 function get_all_dm() {
     require ('../mysqli_connect.php'); // Connect to the db.
-    $q = "SELECT TRUNCATE(AVG(direct_material), 2) AS 'result' FROM patients";
+    $q = "SELECT TRUNCATE(IFNULL(AVG(direct_material), 0), 2) AS 'result' FROM patients";
     $r = @mysqli_query($dbc, $q);  // run query
     if (mysqli_num_rows($r) == 1) { // ok
         $row = mysqli_fetch_array($r);
@@ -176,7 +178,7 @@ function get_all_dm() {
 
 function get_all_oh() {
     require ('../mysqli_connect.php'); // Connect to the db.
-    $q = "SELECT TRUNCATE(AVG(over_head), 2) AS 'result' FROM patients";
+    $q = "SELECT TRUNCATE(IFNULL(AVG(over_head), 0), 2) AS 'result' FROM patients";
     $r = @mysqli_query($dbc, $q);  // run query
     if (mysqli_num_rows($r) == 1) { // ok
         $row = mysqli_fetch_array($r);

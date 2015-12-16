@@ -79,6 +79,16 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             <!-- Table -->
                             <div id="sg" class="panel-collapse collapse in">
                                 <div class="panel-body">
+                                    <!--Total patients-->
+                                    <table id="sg-num" class="table compact" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-8">Total Number of Patients</th>
+                                                <th class="col-md-4"><?php echo get_value('num','total','')?></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    <!-- Direct Labor -->                                    
                                     <table id="sg-dl" class="table table-striped" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
@@ -111,6 +121,16 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             <!-- Table -->
                             <div id="po" class="panel-collapse collapse in">
                                 <div class="panel-body">
+                                    <!--Total patients-->
+                                    <table id="po-num" class="table compact" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-8">Total Number of Patients</th>
+                                                <th class="col-md-4"><?php echo get_value('num','total','')?></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    <!-- Direct Labor -->
                                     <table id="po-dl" class="table table-striped" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
@@ -143,6 +163,15 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             <!-- Table -->
                             <div id="to" class="panel-collapse collapse in">
                                 <div class="panel-body">
+                                    <!--Total patients-->
+                                    <table id="to-num" class="table compact" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-8">Total Number of Patients</th>
+                                                <th class="col-md-4"><?php echo get_value('num','total','')?></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
                                     <table id="to-dl" class="table table-striped" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
@@ -316,9 +345,11 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             // load the data   
             var dl = parseFloat($("#to-result").text().replace(/\,/g, '')); 
             var dm = parseFloat($("#to-result2").text().replace(/\,/g, ''));
+            if (isNaN(dm)) {dm = 0;}
             var oh = parseFloat($("#to-result3").text().replace(/\,/g, ''));
+            if (isNaN(oh)) {oh = 0;}
             var toc = dl + dm + oh; // total cost
-            var ri = 29689;  // reimbursment
+            var ri = 11662;  // overall average hospital reimbursment
             if (toc > ri) {
                 var de = toc - ri; // deficit
                 var graph = {"nodes":
@@ -454,9 +485,10 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var tip = d3.tip()
                         .attr('class', 'd3-tip')
                         .html(function(d) {
-                var total = d3.sum(data.map(function(d) { return d.value; }));                                                     // NEW
+                var total = d3.sum(data.map(function(d) { return d.value; })); // NEW
                 var percent = Math.round(1000 * d.data.value / total) / 10;
-                return "<strong>" + d.data.label + ":<span style='color:orange'> " + percent + "%</span></strong>"});
+                return "<strong>" + d.data.label + ":<span style='color:orange'> " + percent + 
+                    "%</span><br/>" + d.value + " patients</strong>"});
             svg.call(tip);
             
             var path = svg.selectAll('path')
@@ -562,26 +594,23 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         $(sankeyChartFunction);
         
         // Age Population Chart
-        var data = [{label: "Age 35-", value:parseInt("<?php echo get_value('num','age','1'); ?>")}, 
-                    {label: "Age 35-65", value: parseInt("<?php echo get_value('num','age','2'); ?>")}, 
-                    {label: "Age 65+", value: parseInt("<?php echo get_value('num','age','3'); ?>")}];        
+        var data = [{label: "Age 65-", value:parseInt("<?php echo get_value('num','age','1'); ?>")}, 
+                    {label: "Age 65+", value: parseInt("<?php echo get_value('num','age','2'); ?>")}];        
         $(pieChartFunction("ageDistribution", "#ageDistribution", data)); 
         
         // Age Cost Chart
         var age1_cost = parseFloat("<?php echo get_value('cost','age','1'); ?>");
         var age2_cost = parseFloat("<?php echo get_value('cost','age','2'); ?>");
-        var age3_cost = parseFloat("<?php echo get_value('cost','age','3'); ?>");
-        var data = [age1_cost, age2_cost, age3_cost];
+        var data = [age1_cost, age2_cost];
         var data2 = [21070, 21998, 23773];
-        var dataLabel = ["Average Cost (Age: 45-)","Average Cost (Age: 45 - 65)","Average Cost (Age: 65+)"];        
+        var dataLabel = ["Average Cost (Age: 65-)","Average Cost (Age: 65+)"];        
         $(barChartFunction("ageCost", "#ageCost", data, data2, dataLabel, "cost", 3)); 
         
         // Age Stay Chart
         var age1_stay = parseFloat("<?php echo get_value('stay','age','1'); ?>");
         var age2_stay = parseFloat("<?php echo get_value('stay','age','2'); ?>");
-        var age3_stay = parseFloat("<?php echo get_value('stay','age','3'); ?>");
-        var data = [age1_stay, age2_stay, age3_stay];
-        var dataLabel = ["Average Stay (Age: 45-)","Average Stay (Age: 45 - 65)","Average Stay (Age: 65+)"];
+        var data = [age1_stay, age2_stay];
+        var dataLabel = ["Average Stay (Age: 65-)","Average Stay (Age: 65+)"];
         $(barChartFunction("ageStay", "#ageStay", data, data2, dataLabel, "stay", 3)); 
  
 

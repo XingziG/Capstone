@@ -300,10 +300,19 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             var path = sankey.link();
 
             // load the data   
+            var ri; // insurance-dependent reimbursement
+            switch("<?php echo get_insurance(); ?>") {
+                case "medicare":     ri = 10433; break; // medicare
+                case "securityblue": ri = 11124; break; // mc security blue
+                case "bluecross":    ri = 12856; break; // blue cross managed care
+                case "advantra":     ri = 12565; break; // advantra
+                default:             ri = 12512; break; // all others
+            }
+
+            // cost data
             var dl = parseFloat($("#to-result").text().replace(/\,/g, '')); 
             var dm = parseFloat($("#to-result2").text().replace(/\,/g, ''));
             var oh = parseFloat($("#to-result3").text().replace(/\,/g, ''));
-            var ri = 29689; 
             var toc = dl + dm + oh; // total cost
             if (toc > ri) {
                 var de = toc - ri; // deficit
@@ -325,7 +334,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             {"source":3,"target":5,"value":de}
                         ]};   
             } else {
-                var re = ri - toc; // revenue
+                var re = ri - toc; // profit
                 var graph = {"nodes":
                             [
                             {"node":0,"name":"Direct Labor"},
@@ -333,7 +342,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             {"node":2,"name":"Overhead"},
                             {"node":3,"name":"Total Cost"},
                             {"node":4,"name":"Reimbursement"},
-                            {"node":5,"name":"Revenue"}
+                            {"node":5,"name":"Profit"}
                             ],
                         "links":
                             [

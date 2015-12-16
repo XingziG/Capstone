@@ -2,7 +2,7 @@
 function get_dm() {
     require "../mysqli_connect.php"; // Connect to the db.
     $pid = $_GET["id"];
-    $q = "SELECT direct_material AS 'result' FROM patients WHERE patient_id='$pid'";
+    $q = "SELECT TRUNCATE(IFNULL(direct_material, 0), 2) AS 'result' FROM patients WHERE patient_id='$pid'";
     $r = @mysqli_query($dbc, $q);  // run query
     if (mysqli_num_rows($r) > 0) { // ok
         $row = mysqli_fetch_assoc($r);
@@ -14,7 +14,7 @@ function get_dm() {
 function get_oh() {
     require "../mysqli_connect.php"; // Connect to the db.
     $pid = $_GET["id"];
-    $q = "SELECT over_head AS 'result' FROM patients WHERE patient_id='$pid'";
+    $q = "SELECT TRUNCATE(IFNULL(over_head, 0), 2) AS 'result' FROM patients WHERE patient_id='$pid'";
     $r = @mysqli_query($dbc, $q);  // run query
     if (mysqli_num_rows($r) > 0) { // ok
         $row = mysqli_fetch_assoc($r);
@@ -129,6 +129,21 @@ function get_total_cost_query() {
     return $q;
 }
 
+function get_insurance() { // get insurance provider
+    require "../mysqli_connect.php"; // Connect to the db.
+    $pid = $_GET["id"];
+    $q = "SELECT insurance AS 'result' FROM patients WHERE patient_id='$pid'";
+    $r = @mysqli_query($dbc, $q);  // run query
+    if (mysqli_num_rows($r) > 0) { // ok
+        $row = mysqli_fetch_assoc($r);
+        if ($row == null) {
+            return "NA";
+        } else {
+            return $row['result'];
+        }
+    }
+    mysqli_close($dbc);
+}
 
 function get_barchart_value($graph, $input) {
     require ('../mysqli_connect.php'); // Connect to the db.
