@@ -193,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         });
         // remove warning message when on focus
         $('form#patientForm :input').focus(function () {
-            $(this).next("span").empty();
+            $(this).next("label").empty();
         });
     });
 </script>

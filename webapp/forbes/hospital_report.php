@@ -538,14 +538,17 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
             // tool tip
             var tip = d3.tip()
                         .attr("class", "d3-tip")
-                        .offset([1, 1])
+                        .offset([1, -w/2])
                         .html(function(d, i) {
-                            if (type == "cost") {
-                                var diff = d.toFixed(0) - data2[i];                                
+                            if (type == "cost" & elementId != "insuranceCost") {
+                                var diff = d.toFixed(0) - data2[i]; 
                                 return "<strong>Cost: </strong><span style='color:orange'>$" + commaSeparateNumber(d.toFixed(0)) + 
                                     "</span><br/>National: <span style='color:yellow'>$" + commaSeparateNumber(data2[i]) + "</span><br/>Difference: $" +
-                                    commaSeparateNumber(diff);    
-                            } else {
+                                    commaSeparateNumber(diff);
+                            } else if (elementId != "insuranceCost") {
+                                return "<strong>Cost: </strong><span style='color:orange'>$" + commaSeparateNumber(d.toFixed(0)) + "</span>";
+                            } 
+                            else {
                                 return "<strong>Stay:</strong> <span style='color:orange'>" + d.toFixed(1) + " days</span>";
                             }
                         });
@@ -575,7 +578,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .attr("x", function(d){ return 0 + "px"; })
                             .attr("width", function(d){ return x(d.toFixed(1)) + "px"; })
                             .attr("height", function(d){ return barWidth-1 + "px"; })
-                            .attr("fill", function(d) {if (type=="cost") { return "#CBE32D";} else {return "#67BCDB"}})
+                            .attr("fill", function(d) {if (type=="cost") {return "#CBE32D";} else {return "#67BCDB"}})
                             .on("mouseover", tip.show)
                             .on("mouseout", tip.hide);
 
@@ -604,14 +607,14 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         var data = [age1_cost, age2_cost];
         var data2 = [21070, 21998, 23773];
         var dataLabel = ["Average Cost (Age: 65-)","Average Cost (Age: 65+)"];        
-        $(barChartFunction("ageCost", "#ageCost", data, data2, dataLabel, "cost", 3)); 
+        $(barChartFunction("ageCost", "#ageCost", data, data2, dataLabel, "cost", 2)); 
         
         // Age Stay Chart
         var age1_stay = parseFloat("<?php echo get_value('stay','age','1'); ?>");
         var age2_stay = parseFloat("<?php echo get_value('stay','age','2'); ?>");
         var data = [age1_stay, age2_stay];
         var dataLabel = ["Average Stay (Age: 65-)","Average Stay (Age: 65+)"];
-        $(barChartFunction("ageStay", "#ageStay", data, data2, dataLabel, "stay", 3)); 
+        $(barChartFunction("ageStay", "#ageStay", data, data2, dataLabel, "stay", 2)); 
  
 
         // Gender Population Chart
@@ -681,7 +684,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
         var bc_stay = parseFloat("<?php echo get_value('stay','insurance','bluecross'); ?>");
         var ad_stay = parseFloat("<?php echo get_value('stay','insurance','advantra'); ?>");
         var other_stay = parseFloat("<?php echo get_value('stay','insurance','others'); ?>");
-        var data = [mc_stay, sb_stay, bc_stay, ad_stay, other_stay];
+        var data = [mc_stay, sb_stay, bc_stay, ad_stay, other_stay];        
         var dataLabel = ["Average Stay (Medicare)","Average Stay (Security Blue)",
                          "Average Stay (Blue Cross)","Average Stay (Advantra)","Average Stay (Others)"];
         $(barChartFunction("insuranceStay", "#insuranceStay", data, data2, dataLabel, "stay", 5));                        
