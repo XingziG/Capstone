@@ -485,7 +485,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .append("text")
                             .attr("class", "title")
                             .text(function(d, i) { return d; })
-                            .attr("x", function(d, i){ return 150 + "px"; })
+                            .attr("x", function(d, i){ return w/2 + "px"; })
                             .attr("y", function(d, i){ return barWidth*i+22+ "px"; });
         }
         $(costChartFunction);
@@ -549,7 +549,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .append("text")
                             .attr("class", "title")
                             .text(function(d, i) { return d; })
-                            .attr("x", function(d, i){ return 150 + "px"; })
+                            .attr("x", function(d, i){ return w/2 + "px"; })
                             .attr("y", function(d, i){ return barWidth*i+22+ "px"; });
         }
         $(timeChartFunction);          
