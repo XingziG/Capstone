@@ -543,7 +543,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .on("mouseout", tip.hide);
 
             // add text labels            
-            var lab1 = svg.selectAll("text.lab")
+            var lab = svg.selectAll("text.lab")
                             .data(dataLabel)
                             .enter()
                             .append("text")
