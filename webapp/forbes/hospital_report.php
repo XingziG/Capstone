@@ -402,9 +402,9 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                         .attr("d", path)
                         .style("fill", "none")
                         .style("stroke", "tan")
-                        .style("stroke-opacity", ".33")
-                        .on("mouseover", function() { d3.select(this).style("stroke-opacity", ".5") } )
-                        .on("mouseout", function()  { d3.select(this).style("stroke-opacity", ".2") } )
+                        .style("stroke-opacity", ".5")
+                        .on("mouseover", function() { d3.select(this).style("stroke-opacity", ".7") } )
+                        .on("mouseout", function()  { d3.select(this).style("stroke-opacity", ".5") } )
                         .style("stroke-width", function(d) { return Math.max(1, d.dy); })
                         .sort(function(a, b) { return b.dy - a.dy; });
 
@@ -545,7 +545,7 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                                 return "<strong>Cost: </strong><span style='color:orange'>$" + commaSeparateNumber(d.toFixed(0)) + 
                                     "</span><br/>National: <span style='color:yellow'>$" + commaSeparateNumber(data2[i]) + "</span><br/>Difference: $" +
                                     commaSeparateNumber(diff);
-                            } else if (elementId != "insuranceCost") {
+                            } else if (elementId == "insuranceCost") {
                                 return "<strong>Cost: </strong><span style='color:orange'>$" + commaSeparateNumber(d.toFixed(0)) + "</span>";
                             } 
                             else {
@@ -583,13 +583,14 @@ if (!isset($_COOKIE['email'])) { // If no cookie is present, redirect:
                             .on("mouseout", tip.hide);
 
             // add text labels            
-            var lab1 = svg.selectAll("text.lab")
+            var lab = svg.selectAll("text.lab")
+            var lab = svg.selectAll("text.lab")
                             .data(dataLabel)
                             .enter()
                             .append("text")
                             .attr("class", "title")
                             .text(function(d, i) { return d; })
-                            .attr("x", function(d, i){ return 150 + "px"; })
+                            .attr("x", function(d, i){ return w/2 + "px"; })
                             .attr("y", function(d, i){ return barWidth*i+22+ "px"; });
         }
 
